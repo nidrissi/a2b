@@ -1,15 +1,17 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 export default function MyNavbar() {
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
-      <Navbar.Brand href="/">arXiv2bib</Navbar.Brand>
+      <NavLink to="/" className="navbar-brand">arXiv2bib</NavLink>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
+          <NavLink to="/" className="nav-link">Home</NavLink>
+          <NavLink to="/about" className="nav-link">About</NavLink>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
