@@ -27,7 +27,7 @@ function parseEntry(xmlEntry) {
 
 export async function arxivSearch(id) {
   const escapedId = encodeURIComponent(id.trim());
-  const urlQuery = `http://export.arxiv.org/api/query?search_query=id:${escapedId}`;
+  const urlQuery = `https://export.arxiv.org/api/query?search_query=id:${escapedId}`;
 
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
