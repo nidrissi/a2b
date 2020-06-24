@@ -35,7 +35,7 @@ export default resultsSlice.reducer;
 export const fetchEntries = (id) => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    const entries = arxivSearch(id);
+    const entries = await arxivSearch(id);
     dispatch(getEntriesSuccess(entries));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))
