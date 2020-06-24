@@ -6,7 +6,7 @@ import About from './features/About';
 import Err404 from './features/Err404';
 import Footer from './features/Footer';
 import MyNavbar from './features/MyNavbar';
-import Search from './features/search/Search';
+import Search from './features/Search';
 
 function App() {
   return (
