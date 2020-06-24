@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -7,13 +7,22 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import {
-  selectId,
   setId,
 } from './searchFormSlice';
 
+function handleSubmit(e) {
+  e.preventDefault();
+  
+}
+
 export default function SearchForm() {
   const dispatch = useDispatch();
-  const id = useSelector(selectId);
+  const [currId, setCurrId] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setId(currId));
+  }
 
   return (
     <Form>
@@ -21,8 +30,8 @@ export default function SearchForm() {
         <Form.Label column sm="2">ID</Form.Label>
         <Col sm={10}>
           <Form.Control
-            value={id}
-            onChange={e => dispatch(setId(e.target.value))}
+            value={currId}
+            onChange={e => setCurrId(e.target.value)}
           />
         </Col>
       </Form.Group>
@@ -30,7 +39,7 @@ export default function SearchForm() {
         <Col sm={{ span: 10, offset: 2 }}>
           <Button
             type="submit"
-            onClick={e => e.preventDefault()}
+            onClick={handleSubmit}
           >
             Search
           </Button>
