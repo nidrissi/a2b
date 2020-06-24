@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export const searchFormSlice = createSlice({
   name: 'searchForm',
   initialState : {
-    author: ''
+    id: ''
   },
   reducers : {
-    setAuthor : (state, action) => { state.author = action.payload }
+    setId : (state, action) => { state.id = action.payload }
   }
 });
 
-export const { setAuthor } = searchFormSlice.actions;
+export const { setId } = searchFormSlice.actions;
 
-export const selectAuthor = state => state.searchForm.author;
+export const selectId = state => state.searchForm.id;
 
 export default searchFormSlice.reducer;
