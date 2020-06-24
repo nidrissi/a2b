@@ -2,8 +2,11 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import About from './features/About';
+import Err404 from './features/Err404';
 import Footer from './features/Footer';
 import MyNavbar from './features/MyNavbar';
+import Search from './features/search/Search';
 
 function App() {
   return (
@@ -12,13 +15,13 @@ function App() {
         <MyNavbar />
         <Switch>
           <Route path="/" exact>
-            <p>Hello!</p>
+            <Search />
           </Route>
           <Route path="/about">
-            <p>About?!</p>
+            <About />
           </Route>
           <Route path="*">
-            <p>404</p>
+            <Err404 />
           </Route>
         </Switch>
       </Router>
