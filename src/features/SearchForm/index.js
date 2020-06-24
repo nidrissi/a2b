@@ -34,7 +34,10 @@ export default function SearchForm() {
       </Form.Group>
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit">
+          <Button
+            type="submit"
+            disabled={!currId}
+          >
             Search
           </Button>
         </Col>
