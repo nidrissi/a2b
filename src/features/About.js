@@ -10,7 +10,6 @@ export default function About() {
         Caveat emptor!
       </p>
       <p>
-        It was written by <a href="https://idrissi.eu">Najib Idrissi</a>.
         The source is <a href="https://github.com/nidrissi/arxiv2bib">available on GitHub</a> and the code is licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">AGPLv3</a>.
         Feel free to <a href="https://github.com/nidrissi/arxiv2bib/issues">report issues there</a>.
       </p>
