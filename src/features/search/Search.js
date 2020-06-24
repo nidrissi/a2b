@@ -1,9 +1,13 @@
 import React from 'react';
 
-import SearchForm from './SearchForm'
+import Results from './Results';
+import SearchForm from './SearchForm';
 
 export default function Search() {
   return (
-    <SearchForm />
+    <div>
+      <SearchForm />
+      <Results />
+    </div>
   )
 }
