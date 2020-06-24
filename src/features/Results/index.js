@@ -15,6 +15,8 @@ import {
   selectId,
 } from '../SearchForm/searchFormSlice';
 
+import EntryList from './EntryList';
+
 function LoadingAlert({ isLoading = false }) {
   if (isLoading) {
     return (
@@ -40,17 +42,6 @@ function ErrorAlert({ error }) {
   } else {
     return null
   }
-}
-
-function EntryList({ entries }) {
-  const renderedEntries = entries.map(s =>
-    <Alert variant="dark" key={s}>
-      <pre className="m-0">
-        {s}
-      </pre>
-    </Alert>
-  );
-  return <div>{renderedEntries}</div>
 }
 
 export default function Results() {

@@ -30,11 +30,15 @@ export const selectError = state => state.results.error;
 
 export default resultsSlice.reducer;
 
+const fakeEntries = [
+  { id: 12345},
+  { id : 123456}
+]
+
 export const fetchEntries = (id) => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    await new Promise(r => setTimeout(r, 2000));
-    const entries = [`coucou ${id}`];
+    const entries = fakeEntries;
     dispatch(getEntriesSuccess(entries));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))
