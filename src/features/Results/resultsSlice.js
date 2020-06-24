@@ -31,8 +31,8 @@ export const selectError = state => state.results.error;
 export default resultsSlice.reducer;
 
 const fakeEntries = [
-  { id: 12345},
-  { id : 123456}
+  { id: 12345, authors: ['Dr. X', 'Dr. Y'], year: 2020, title: 'Theory of Z' },
+  { id: 123456, authors: ['A. Laurel', 'B. Hardy'], year: 1975, title: 'Greatest Hits' }
 ]
 
 export const fetchEntries = (id) => async dispatch => {
