@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { arxivSearch } from '../../api/arxiv';
+
 export const resultsSlice = createSlice({
   name: 'results',
   initialState: {
@@ -30,15 +32,10 @@ export const selectError = state => state.results.error;
 
 export default resultsSlice.reducer;
 
-const fakeEntries = [
-  { id: 12345, authors: ['Dr. X', 'Dr. Y'], year: 2020, title: 'Theory of Z' },
-  { id: 123456, authors: ['A. Laurel', 'B. Hardy'], year: 1975, title: 'Greatest Hits' }
-]
-
 export const fetchEntries = (id) => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    const entries = fakeEntries;
+    const entries = arxivSearch(id);
     dispatch(getEntriesSuccess(entries));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))
