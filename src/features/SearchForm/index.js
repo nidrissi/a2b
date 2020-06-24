@@ -6,9 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-import {
-  setId,
-} from './searchFormSlice';
+import { setQuery } from './searchFormSlice';
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -19,13 +17,17 @@ export default function SearchForm() {
   const dispatch = useDispatch();
   const [currId, setCurrId] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    dispatch(setId(currId));
-  }
+    e.stopPropagation();
+    const query = {
+      id: currId,
+    };
+    dispatch(setQuery(query));
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} controlId="id">
         <Form.Label column sm="2">ID</Form.Label>
         <Col sm={10}>
@@ -37,10 +39,7 @@ export default function SearchForm() {
       </Form.Group>
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-          >
+          <Button type="submit">
             Search
           </Button>
         </Col>

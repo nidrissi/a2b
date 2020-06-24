@@ -6,11 +6,14 @@ export const searchFormSlice = createSlice({
     id: ''
   },
   reducers : {
-    setId : (state, action) => { state.id = action.payload }
+    setQuery : (state, action) => {
+      const query = action.payload;
+      state.id = query.id;
+    }
   }
 });
 
-export const { setId } = searchFormSlice.actions;
+export const { setQuery } = searchFormSlice.actions;
 
 export const selectId = state => state.searchForm.id;
 
