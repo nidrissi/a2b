@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
@@ -8,9 +8,14 @@ import {
   selectError,
   selectIsLoading,
   selectEntries,
+  fetchEntries,
 } from './resultsSlice';
 
-function LoadingAlert({isLoading=false}) {
+import {
+  selectId,
+} from '../SearchForm/searchFormSlice';
+
+function LoadingAlert({ isLoading = false }) {
   if (isLoading) {
     return (
       <Alert variant="info">
@@ -24,7 +29,7 @@ function LoadingAlert({isLoading=false}) {
   }
 }
 
-function ErrorAlert({error}) {
+function ErrorAlert({ error }) {
   if (error !== null) {
     return (
       <Alert variant="danger">
@@ -37,8 +42,7 @@ function ErrorAlert({error}) {
   }
 }
 
-function EntryList({entries}) {
-  console.log(entries);
+function EntryList({ entries }) {
   const renderedEntries = entries.map(s =>
     <Alert variant="dark" key={s}>
       <pre className="m-0">
@@ -50,9 +54,18 @@ function EntryList({entries}) {
 }
 
 export default function Results() {
+  const dispatch = useDispatch();
+
   const error = useSelector(selectError);
   const isLoading = useSelector(selectIsLoading);
   const entries = useSelector(selectEntries);
+
+  const id = useSelector(selectId);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchEntries(id));
+    }
+  }, [dispatch, id])
 
   return (
     <div>
