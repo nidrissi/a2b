@@ -12,7 +12,7 @@ export const resultsSlice = createSlice({
     getEntriesSuccess: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      // TODO
+      state.entries = action.payload;
     },
     getEntriesError: (state, action) => {
       state.isLoading = false;
