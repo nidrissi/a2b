@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchFormReducer from './features/search/searchFormSlice';
-import resultsReducer from './features/search/resultsSlice';
+import searchFormReducer from './features/SearchForm/searchFormSlice';
+import resultsReducer from './features/Results/resultsSlice';
 
 export default configureStore({
   reducer: {
