@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 import {
   selectId,
@@ -13,12 +16,14 @@ export default function SearchForm() {
 
   return (
     <Form>
-      <Form.Group controlId="id">
-        <Form.Label>ID</Form.Label>
-        <Form.Control
-          value={id}
-          onChange={e => dispatch(setId(e.target.value))}
-        />
+      <Form.Group as={Row} controlId="id">
+        <Form.Label column sm="2">ID</Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            value={id}
+            onChange={e => dispatch(setId(e.target.value))}
+          />
+        </Col>
       </Form.Group>
     </Form>
   );
