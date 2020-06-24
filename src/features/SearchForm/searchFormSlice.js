@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const searchFormSlice = createSlice({
   name: 'searchForm',
-  initialState : {
+  initialState: {
     id: ''
   },
-  reducers : {
-    setQuery : (state, action) => {
+  reducers: {
+    setQuery: (state, action) => {
       const query = action.payload;
       state.id = query.id;
     }

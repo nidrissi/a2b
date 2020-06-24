@@ -8,11 +8,6 @@ import Row from 'react-bootstrap/Row';
 
 import { setQuery } from './searchFormSlice';
 
-function handleSubmit(e) {
-  e.preventDefault();
-  
-}
-
 export default function SearchForm() {
   const dispatch = useDispatch();
   const [currId, setCurrId] = useState('');
