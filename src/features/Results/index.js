@@ -7,22 +7,11 @@ import Spinner from 'react-bootstrap/Spinner';
 import {
   selectError,
   selectIsLoading,
-  selectResults,
+  selectEntries,
 } from './resultsSlice';
 
-export default function Results() {
-  const error = useSelector(selectError);
-  const isLoading = useSelector(selectIsLoading);
-  const results = useSelector(selectResults);
-
-  if (error !== null) {
-    return (
-      <Alert variant="danger">
-        <strong>Error: </strong>
-        {error}
-      </Alert>
-    )
-  } else if (isLoading) {
+function LoadingAlert({isLoading=false}) {
+  if (isLoading) {
     return (
       <Alert variant="info">
         <Spinner animation="border" size="sm" />
@@ -31,20 +20,45 @@ export default function Results() {
       </Alert>
     )
   } else {
-    return (
-      <div>
-        {
-          results.map(s =>
-            <Alert variant="dark" key={s}>
-              <pre className="m-0">
-                <code>
-                  {s}
-                </code>
-              </pre>
-            </Alert>
-          )
-        }
-      </div>
-    )
+    return null
   }
+}
+
+function ErrorAlert({error}) {
+  if (error !== null) {
+    return (
+      <Alert variant="danger">
+        <strong>Error: </strong>
+        {error.toString()}
+      </Alert>
+    )
+  } else {
+    return null
+  }
+}
+
+function EntryList({entries}) {
+  console.log(entries);
+  const renderedEntries = entries.map(s =>
+    <Alert variant="dark" key={s}>
+      <pre className="m-0">
+        {s}
+      </pre>
+    </Alert>
+  );
+  return <div>{renderedEntries}</div>
+}
+
+export default function Results() {
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+  const entries = useSelector(selectEntries);
+
+  return (
+    <div>
+      <LoadingAlert isLoading={isLoading} />
+      <ErrorAlert error={error} />
+      <EntryList entries={entries} />
+    </div>
+  )
 }

@@ -5,21 +5,26 @@ export const resultsSlice = createSlice({
   initialState :{
     error: null,
     isLoading: false,
-    data: ['salut']
+    entries: ['salut']
   },
   reducers : {
-    pushEntry : (state, action) => {
-      state.data.push(action.payload)
+    getEntriesStart: state => { state.isLoading = true },
+    getEntriesSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      // TODO
     },
-    clean : state => {
-      state.data = []
-    }
+    getEntriesError: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.entries = [];
+    },
   }
 });
 
-export const { pushEntry, clean } = resultsSlice.actions;
+export const { getEntriesStart, getEntriesSuccess, getEntriesError } = resultsSlice.actions;
 
-export const selectResults = state => state.results.data;
+export const selectEntries = state => state.results.entries;
 export const selectIsLoading = state => state.results.isLoading;
 export const selectError = state => state.results.error;
 
