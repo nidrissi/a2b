@@ -1,3 +1,9 @@
+// see https://arxiv.org/help/api/user-manual
+
+function getUniqueNamedTag(xmlEntry, tag) {
+  return xmlEntry.getElementsByTagName(tag).item(0).textContent.trim();
+}
+
 function parseEntry(xmlEntry) {
   // the end result
   const entry = {};
@@ -9,15 +15,22 @@ function parseEntry(xmlEntry) {
   }
 
   // title
-  entry.title = xmlEntry.getElementsByTagName('title').item(0).textContent.trim().replace(/\s+/gm, " ");
+  try {
+    entry.title = getUniqueNamedTag(xmlEntry, 'title').replace(/\s+/gm, " ")
+  } catch (err) {
+    // With id_list, if there is no entry for a given id, arXiv
+    // returns a malformed empty entry instead of an error.
+    // No, it doesn't make any sense.
+    return null
+  }
 
   // date
-  entry.year = xmlEntry.getElementsByTagName('published').item(0).textContent.trim().substr(0, 4);
+  entry.year = getUniqueNamedTag(xmlEntry, 'published').substr(0, 4);
 
   // id
   // the URL has the form http://arxiv.org/abs/{id}v{version}
-  // id can be of the form YYMM.ID (where I are numbers) or CLASS/ID
-  const idURL = xmlEntry.getElementsByTagName('id').item(0).textContent.trim();
+  // id can be of the form YYMM.IIII (where I are id numbers) or CLASS/IIII
+  const idURL = getUniqueNamedTag(xmlEntry, 'id');
   const regex = /\/abs\/(?<id>[-a-z0-9.]+)v\d+/;
   const found = idURL.match(regex);
   entry.id = found.groups.id;
@@ -30,6 +43,17 @@ function parseEntry(xmlEntry) {
   }
 
   return entry;
+}
+
+// If there is an error, arXiv returns a single error entry.
+// In this case we just throw the error for fetchEntries to deal with.
+function checkEntryForErrors(xmlEntry) {
+  for (let l of xmlEntry.getElementsByTagName('link')) {
+    if (l.getAttribute('href').match('api/errors')) {
+      const error = getUniqueNamedTag(xmlEntry, 'summary');
+      throw(error);
+    }
+  }
 }
 
 export async function arxivSearch(idList) {
@@ -45,7 +69,11 @@ export async function arxivSearch(idList) {
 
   const entries = [];
   for (let w of xmlEntries) {
-    entries.push(parseEntry(w));
+    checkEntryForErrors(w);
+    const parsedEntry = parseEntry(w);
+    if (parsedEntry !== null) {
+      entries.push(parsedEntry);
+    }
   }
 
   return entries;
