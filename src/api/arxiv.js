@@ -28,10 +28,10 @@ function parseEntry(xmlEntry) {
   entry.year = getUniqueNamedTag(xmlEntry, 'published').substr(0, 4);
 
   // id
-  // the URL has the form http://arxiv.org/abs/{id}v{version}
-  // id can be of the form YYMM.IIII (where I are id numbers) or CLASS/IIII
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
-  const regex = /\/abs\/(?<id>[-a-z0-9.]+)v\d+/;
+  console.log(idURL);
+  // the URL has the form http://arxiv.org/abs/{id}v{version}
+  const regex = /arxiv.org\/abs\/(?<id>.+)v\d+/;
   const found = idURL.match(regex);
   entry.id = found.groups.id;
 
@@ -51,14 +51,19 @@ function checkEntryForErrors(xmlEntry) {
   for (let l of xmlEntry.getElementsByTagName('link')) {
     if (l.getAttribute('href').match('api/errors')) {
       const error = getUniqueNamedTag(xmlEntry, 'summary');
-      throw(error);
+      throw (error);
     }
   }
 }
 
-export async function arxivSearch(idList) {
-  const escapedIdList = encodeURIComponent(idList.trim());
-  const urlQuery = `https://export.arxiv.org/api/query?id_list=${escapedIdList}`;
+export async function arxivSearch({ author, idList }) {
+  const escapedIdList = encodeURIComponent(idList);
+  const escapedAuthor = encodeURIComponent(author)
+  const params = [
+    escapedIdList ? `id_list=${escapedIdList}` : null,
+    author ? `search_query=au:"${escapedAuthor}"` : null,
+  ];
+  const urlQuery = `https://export.arxiv.org/api/query?${params.join(';')}`;
 
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
