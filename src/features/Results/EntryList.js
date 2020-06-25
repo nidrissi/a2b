@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 
 function Entry({ entry }) {
+  // for the clipboard
+  const preRef = useRef();
+
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -15,11 +19,12 @@ function Entry({ entry }) {
     </a>
   );
 
-  // very ugly ☹
-  return (
-    <Alert variant="dark">
-      <pre className="m-0">
-        {`@Misc{${key}${entry.year},
+  const formattedEntry = (
+    <pre
+      ref={preRef}
+      className="m-0"
+    >
+      {`@Misc{${key}${entry.year},
   date       = {${entry.year}},
   author     = {${authorList}},
   title      = {${entry.title}},
@@ -27,10 +32,27 @@ function Entry({ entry }) {
   eprinttype = {arXiv},
   pubstate   = {prepublished},
   file       = {`}
-        {fileLink}
-        {`}
+      {fileLink}
+      {`}
 }`}
-      </pre>
+    </pre>
+  );
+
+  const onClickCopy = _e => {
+    navigator.clipboard.writeText(preRef.current.innerText)
+  };
+
+  // very ugly ☹
+  return (
+    <Alert variant="dark">
+      <span className="float-right">
+        <Button
+          onClick={onClickCopy}
+        >
+          Copy
+        </Button>
+      </span>
+      {formattedEntry}
     </Alert>
   )
 }

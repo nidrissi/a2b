@@ -1,6 +1,6 @@
 {
   "name": "arxiv2bib",
-  "version": "0.2.1",
+  "version": "0.3.0-alpha",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
