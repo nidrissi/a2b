@@ -16,7 +16,7 @@ export default function SearchForm() {
     e.preventDefault();
     e.stopPropagation();
     const query = {
-      idList: currIdList.split(',').map(s => s.trim()).join(','),
+      idList: currIdList.split(/\s+,\s+/).join(','),
     };
     dispatch(setQuery(query));
   };
