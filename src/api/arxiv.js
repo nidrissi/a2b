@@ -29,7 +29,6 @@ function parseEntry(xmlEntry) {
 
   // id
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
-  console.log(idURL);
   // the URL has the form http://arxiv.org/abs/{id}v{version}
   const regex = /arxiv.org\/abs\/(?<id>.+)v\d+/;
   const found = idURL.match(regex);
@@ -56,15 +55,25 @@ function checkEntryForErrors(xmlEntry) {
   }
 }
 
-export async function arxivSearch({ author, idList }) {
-  const escapedIdList = encodeURIComponent(idList);
-  const escapedAuthor = encodeURIComponent(author)
-  const params = [
-    escapedIdList ? `id_list=${escapedIdList}` : null,
-    author ? `search_query=au:"${escapedAuthor}"&sortBy=submittedDate&sortOrder=descending` : null,
-  ];
-  const urlQuery = `https://export.arxiv.org/api/query?${params.join(';')}`;
+function buildURLQuery({ authors, ids }) {
+  const base = 'https://export.arxiv.org/api/query?';
 
+  let idQuery = '';
+  if (ids.length > 0) {
+    idQuery = ';id_list=' + encodeURIComponent(ids.join(','))
+  }
+
+  let authorQuery = '';
+  if (authors.length > 0) {
+    authorQuery = authors.map(encodeURIComponent).map(a => `au:"${a}"`).join('+AND+');
+  }
+  const searchQuery = 'search_query=' + authorQuery + '&sortBy=submittedDate&sortOrder=descending';
+
+  return base + searchQuery + idQuery;
+}
+
+export async function arxivSearch(query) {
+  const urlQuery = buildURLQuery(query);
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
 
