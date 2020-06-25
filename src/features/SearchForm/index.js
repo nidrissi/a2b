@@ -11,19 +11,21 @@ import { setQuery } from './searchFormSlice';
 export default function SearchForm() {
   const dispatch = useDispatch();
   const [currIdList, setCurrIdList] = useState('');
+  const [currAuthor, setAuthor] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     e.stopPropagation();
     const query = {
-      idList: currIdList.split(/\s+,\s+/).join(','),
+      idList: currIdList.trim().split(/\s+,\s+/).join(','),
+      author: currAuthor.trim(),
     };
     dispatch(setQuery(query));
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group as={Row} controlId="id">
+      <Form.Group as={Row} controlId="idList">
         <Form.Label column sm="2">ID List</Form.Label>
         <Col sm={10}>
           <Form.Control
@@ -33,11 +35,20 @@ export default function SearchForm() {
           />
         </Col>
       </Form.Group>
+      <Form.Group as={Row} controlId="author">
+        <Form.Label column sm="2">Author(s)</Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            value={currAuthor}
+            onChange={e => setAuthor(e.target.value)}
+            placeholder="Carl Gauß"
+          />
+        </Col>
+      </Form.Group>
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
           <Button
             type="submit"
-            disabled={!currIdList}
           >
             Search
           </Button>

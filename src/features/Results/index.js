@@ -12,6 +12,7 @@ import {
 } from './resultsSlice';
 
 import {
+  selectAuthor,
   selectIdList,
 } from '../SearchForm/searchFormSlice';
 
@@ -51,11 +52,13 @@ export default function Results() {
   const entries = useSelector(selectEntries);
 
   const idList = useSelector(selectIdList);
+  const author = useSelector(selectAuthor);
+
   useEffect(() => {
-    if (idList) {
-      dispatch(fetchEntries(idList));
+    if (idList || author) {
+      dispatch(fetchEntries({ author, idList }));
     }
-  }, [dispatch, idList])
+  }, [dispatch, idList, author])
 
   return (
     <div>
