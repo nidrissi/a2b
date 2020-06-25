@@ -8,17 +8,22 @@ import Row from 'react-bootstrap/Row';
 
 import { setQuery } from './searchFormSlice';
 
+function splitter(current) {
+  const rx = /\s*&\s*/;
+  return current.split(rx).filter(s => s !== '');
+}
+
 export default function SearchForm() {
   const dispatch = useDispatch();
-  const [currIdList, setCurrIdList] = useState('');
-  const [currAuthor, setAuthor] = useState('');
+  const [currentIds, setCurrentIds] = useState('');
+  const [currentAuthors, setCurrentAuthors] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     e.stopPropagation();
     const query = {
-      idList: currIdList.trim().split(/\s+,\s+/).join(','),
-      author: currAuthor.trim(),
+      ids: splitter(currentIds),
+      authors: splitter(currentAuthors),
     };
     dispatch(setQuery(query));
   };
@@ -29,21 +34,21 @@ export default function SearchForm() {
         <Form.Label column sm="2">ID List</Form.Label>
         <Col sm={10}>
           <Form.Control
-            value={currIdList}
-            onChange={e => setCurrIdList(e.target.value)}
-            placeholder="ID1,ID2,..."
-            title="List of IDs, separated by commas (or spaces)."
+            value={currentIds}
+            onChange={e => setCurrentIds(e.target.value)}
+            placeholder="ID1 & ID2 & ..."
+            title="List of IDs, separated by '&'."
           />
         </Col>
       </Form.Group>
       <Form.Group as={Row} controlId="author">
-        <Form.Label column sm="2">Author</Form.Label>
+        <Form.Label column sm="2">Author(s)</Form.Label>
         <Col sm={10}>
           <Form.Control
-            value={currAuthor}
-            onChange={e => setAuthor(e.target.value)}
-            placeholder="Carl Gauß"
-            title="Name of one author."
+            value={currentAuthors}
+            onChange={e => setCurrentAuthors(e.target.value)}
+            placeholder="Carl Gauß & David Hilbert & ..."
+            title="Author(s) separated by '&'."
           />
         </Col>
       </Form.Group>
