@@ -21,7 +21,7 @@ function Entry({ entry }) {
       <pre className="m-0">
         {`@Misc{${key}${entry.year},
   date       = {${entry.year}},
-  authors    = {${authorList}},
+  author     = {${authorList}},
   title      = {${entry.title}},
   eprint     = {${entry.id}},
   eprinttype = {arXiv},
