@@ -61,7 +61,7 @@ export async function arxivSearch({ author, idList }) {
   const escapedAuthor = encodeURIComponent(author)
   const params = [
     escapedIdList ? `id_list=${escapedIdList}` : null,
-    author ? `search_query=au:"${escapedAuthor}"` : null,
+    author ? `search_query=au:"${escapedAuthor}"&sortBy=submittedDate&sortOrder=descending` : null,
   ];
   const urlQuery = `https://export.arxiv.org/api/query?${params.join(';')}`;
 
