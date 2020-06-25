@@ -12,7 +12,7 @@ function parseEntry(xmlEntry) {
   entry.title = xmlEntry.getElementsByTagName('title').item(0).textContent.trim().replace(/\s+/gm, " ");
 
   // date
-  entry.year = xmlEntry.getElementsByTagName('published').item(0).textContent.trim().substr(0,4);
+  entry.year = xmlEntry.getElementsByTagName('published').item(0).textContent.trim().substr(0, 4);
 
   // id
   // the URL has the form http://arxiv.org/abs/{id}v{version}
@@ -25,9 +25,9 @@ function parseEntry(xmlEntry) {
   return entry;
 }
 
-export async function arxivSearch(id) {
-  const escapedId = encodeURIComponent(id.trim());
-  const urlQuery = `https://export.arxiv.org/api/query?search_query=id:${escapedId}`;
+export async function arxivSearch(idList) {
+  const escapedIdList = encodeURIComponent(idList.trim());
+  const urlQuery = `https://export.arxiv.org/api/query?id_list=${escapedIdList}`;
 
   const response = await fetch(urlQuery);
   const xmlData = await response.text();

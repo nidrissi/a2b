@@ -10,13 +10,13 @@ import { setQuery } from './searchFormSlice';
 
 export default function SearchForm() {
   const dispatch = useDispatch();
-  const [currId, setCurrId] = useState('');
+  const [currIdList, setCurrIdList] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     e.stopPropagation();
     const query = {
-      id: currId,
+      idList: currIdList.split(' ').join(','),
     };
     dispatch(setQuery(query));
   };
@@ -24,11 +24,12 @@ export default function SearchForm() {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} controlId="id">
-        <Form.Label column sm="2">ID</Form.Label>
+        <Form.Label column sm="2">ID List</Form.Label>
         <Col sm={10}>
           <Form.Control
-            value={currId}
-            onChange={e => setCurrId(e.target.value)}
+            value={currIdList}
+            onChange={e => setCurrIdList(e.target.value)}
+            placeholder="ID1,ID2,..."
           />
         </Col>
       </Form.Group>
@@ -36,7 +37,7 @@ export default function SearchForm() {
         <Col sm={{ span: 10, offset: 2 }}>
           <Button
             type="submit"
-            disabled={!currId}
+            disabled={!currIdList}
           >
             Search
           </Button>
