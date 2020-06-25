@@ -22,6 +22,13 @@ function parseEntry(xmlEntry) {
   const found = idURL.match(regex);
   entry.id = found.groups.id;
 
+  // link to PDF
+  for (let l of xmlEntry.getElementsByTagName('link')) {
+    if (l.getAttribute('title') === 'pdf') {
+      entry.pdfLink = l.getAttribute('href');
+    }
+  }
+
   return entry;
 }
 
