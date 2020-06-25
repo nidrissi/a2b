@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga';
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -9,6 +10,11 @@ import MyNavbar from './features/MyNavbar';
 import Search from './features/Search';
 
 function App() {
+  useEffect(() => {
+    ReactGA.initialize('UA-170792065-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  })
+
   return (
     <Container>
       <Router>
