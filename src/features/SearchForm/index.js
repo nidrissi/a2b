@@ -32,16 +32,18 @@ export default function SearchForm() {
             value={currIdList}
             onChange={e => setCurrIdList(e.target.value)}
             placeholder="ID1,ID2,..."
+            title="List of IDs, separated by commas (or spaces)."
           />
         </Col>
       </Form.Group>
       <Form.Group as={Row} controlId="author">
-        <Form.Label column sm="2">Author(s)</Form.Label>
+        <Form.Label column sm="2">Author</Form.Label>
         <Col sm={10}>
           <Form.Control
             value={currAuthor}
             onChange={e => setAuthor(e.target.value)}
             placeholder="Carl Gauß"
+            title="Name of one author."
           />
         </Col>
       </Form.Group>
