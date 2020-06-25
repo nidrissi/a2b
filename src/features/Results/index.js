@@ -35,7 +35,6 @@ function ErrorAlert({ error }) {
   if (error !== null) {
     return (
       <Alert variant="danger">
-        <strong>Error: </strong>
         {error.toString()}
       </Alert>
     )
