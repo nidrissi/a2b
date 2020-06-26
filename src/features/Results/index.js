@@ -14,6 +14,7 @@ import {
 import {
   selectAuthors,
   selectIds,
+  selectTitles,
 } from '../SearchForm/searchFormSlice';
 
 import EntryList from './EntryList';
@@ -53,12 +54,13 @@ export default function Results() {
 
   const ids = useSelector(selectIds);
   const authors = useSelector(selectAuthors);
+  const titles = useSelector(selectTitles);
 
   useEffect(() => {
-    if (authors.length > 0 || ids.length > 0) {
-      dispatch(fetchEntries({ authors, ids }));
+    if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
+      dispatch(fetchEntries({ authors, ids, titles }));
     }
-  }, [dispatch, ids, authors])
+  }, [dispatch, ids, authors, titles])
 
   return (
     <div>
