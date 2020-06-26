@@ -14,6 +14,24 @@ function splitter(current) {
   return current.split(rx).filter(s => s !== '');
 }
 
+function InputField({ value, setValue, label, placeholder, title }) {
+  return (
+    <Form.Group as={Row}>
+      <Form.Label column sm="2">
+        {label}
+      </Form.Label>
+      <Col sm={10}>
+        <Form.Control
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          placeholder={placeholder}
+          title={title}
+        />
+      </Col>
+    </Form.Group>
+  );
+}
+
 export default function SearchForm() {
   const dispatch = useDispatch();
   const [currentIds, setCurrentIds] = useState('');
@@ -33,28 +51,20 @@ export default function SearchForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group as={Row} controlId="idList">
-        <Form.Label column sm="2">ID List</Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            value={currentIds}
-            onChange={e => setCurrentIds(e.target.value)}
-            placeholder="ID1 & ID2 & ..."
-            title="List of IDs, separated by '&'."
-          />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row} controlId="author">
-        <Form.Label column sm="2">Author(s)</Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            value={currentAuthors}
-            onChange={e => setCurrentAuthors(e.target.value)}
-            placeholder="Carl Gauß & David Hilbert & ..."
-            title="Author(s) separated by '&'."
-          />
-        </Col>
-      </Form.Group>
+      <InputField
+        value={currentIds}
+        setValue={setCurrentIds}
+        label="ID list"
+        placeholder="ID1 & ID2 & ..."
+        title="List of IDs, separated by '&'."
+      />
+      <InputField
+        value={currentAuthors}
+        setValue={setCurrentAuthors}
+        label="Authors"
+        placeholder="Carl Gauß & David Hilbert & ..."
+        title="Author(s) separated by '&'."
+      />
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
           <Button
