@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { setQuery } from './searchFormSlice';
 import { selectIsLoading } from '../Results/resultsSlice';
@@ -80,7 +81,7 @@ export default function SearchForm() {
           type="submit"
           block
         >
-          Search
+          <FontAwesomeIcon icon="search" /> Search
         </Button>
       </Form.Group>
     </Form>

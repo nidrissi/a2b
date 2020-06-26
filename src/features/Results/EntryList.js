@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Entry({ entry }) {
   // for the clipboard
@@ -32,8 +33,8 @@ function Entry({ entry }) {
   eprint     = {${entry.id}},
   eprinttype = {arXiv},
   `
-       + (entry.doi ? `doi        = {${entry.doi}}` : 'pubstate   = {prepublished}')
-       + `,
+        + (entry.doi ? `doi        = {${entry.doi}}` : 'pubstate   = {prepublished}')
+        + `,
   file       = {`}
       {fileLink}
       {`}
@@ -49,7 +50,7 @@ function Entry({ entry }) {
     <Alert variant="dark">
       <span className="float-right">
         <Button onClick={onClickCopy}>
-          Copy
+          <FontAwesomeIcon icon="clipboard" /> Copy
         </Button>
       </span>
       {formattedEntry}
