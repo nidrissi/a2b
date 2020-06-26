@@ -46,8 +46,9 @@ function parseEntry(xmlEntry) {
   return entry;
 }
 
-// If there is an error, arXiv returns a single error entry.
-// In this case we just throw the error for fetchEntries to deal with.
+/** If there is an error, arXiv returns a single error entry.
+    In this case we just throw the error for fetchEntries to deal with.
+ */
 function checkEntryForErrors(xmlEntry) {
   for (let l of xmlEntry.getElementsByTagName('link')) {
     if (l.getAttribute('href').match('api/errors')) {
