@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Router, Switch, Route } from 'react-router-dom';
+
+import ReactGA from 'react-ga';
 import { createBrowserHistory } from 'history';
 
 import Container from 'react-bootstrap/Container';
 
-// my components
-import About from './features/About';
-import Err404 from './features/Err404';
+// these components are always loaded
 import Footer from './features/Footer';
 import MyNavbar from './features/MyNavbar';
-import Search from './features/Search';
 
 // state
 import {
@@ -21,8 +20,12 @@ import {
 } from './features/SearchForm/searchFormSlice';
 import { fetchEntries } from './features/Results/resultsSlice';
 
+// lazy loaded components
+const Search = React.lazy(() => import('./features/Search'));
+const Err404 = React.lazy(() => import('./features/Err404'));
+const About = React.lazy(() => import('./features/About'));
+
 // GA
-import ReactGA from 'react-ga';
 const history = createBrowserHistory()
 history.listen(location => {
   ReactGA.set({ page: location.pathname })
@@ -51,17 +54,19 @@ function App() {
     <Container>
       <Router history={history}>
         <MyNavbar />
-        <Switch>
-          <Route path="/" exact>
-            <Search />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="*">
-            <Err404 />
-          </Route>
-        </Switch>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/" exact>
+              <Search />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="*">
+              <Err404 />
+            </Route>
+          </Switch>
+        </Suspense>
       </Router>
       <Footer />
     </Container>
