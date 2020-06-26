@@ -77,7 +77,6 @@ function buildURLQuery({ authors, ids, titles }) {
     buildSearchQueryPart(authors, 'au'),
     buildSearchQueryPart(titles, 'ti')
   ].filter(s => s.length > 0).join('+AND+');
-  console.log(searchQuery);
   const fullSearchQuery = 'search_query=' + searchQuery + '&sortBy=submittedDate&sortOrder=descending';
 
   return base + fullSearchQuery + idQuery;
