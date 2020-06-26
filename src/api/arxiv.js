@@ -57,6 +57,14 @@ function checkEntryForErrors(xmlEntry) {
   }
 }
 
+function buildSearchQueryPart(list, label) {
+  let result = '';
+  if (list.length > 0) {
+    result = list.map(encodeURIComponent).map(a => `${label}:"${a}"`).join('+AND+');
+  }
+  return result;
+}
+
 function buildURLQuery({ authors, ids }) {
   const base = 'https://export.arxiv.org/api/query?';
 
@@ -65,13 +73,12 @@ function buildURLQuery({ authors, ids }) {
     idQuery = ';id_list=' + encodeURIComponent(ids.join(','))
   }
 
-  let authorQuery = '';
-  if (authors.length > 0) {
-    authorQuery = authors.map(encodeURIComponent).map(a => `au:"${a}"`).join('+AND+');
-  }
-  const searchQuery = 'search_query=' + authorQuery + '&sortBy=submittedDate&sortOrder=descending';
+  const searchQuery = [
+    buildSearchQueryPart(authors, 'au'),
+  ].filter(s => s.length > 0).join('+AND');
+  const fullSearchQuery = 'search_query=' + searchQuery + '&sortBy=submittedDate&sortOrder=descending';
 
-  return base + searchQuery + idQuery;
+  return base + fullSearchQuery + idQuery;
 }
 
 export async function arxivSearch(query) {
