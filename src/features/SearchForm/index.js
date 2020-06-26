@@ -36,6 +36,7 @@ export default function SearchForm() {
   const dispatch = useDispatch();
   const [currentIds, setCurrentIds] = useState('');
   const [currentAuthors, setCurrentAuthors] = useState('');
+  const [currentTitles, setCurrentTitles] = useState('');
 
   const isLoading = useSelector(selectIsLoading);
 
@@ -45,6 +46,7 @@ export default function SearchForm() {
     const query = {
       ids: splitter(currentIds),
       authors: splitter(currentAuthors),
+      titles: splitter(currentTitles)
     };
     dispatch(setQuery(query));
   };
@@ -64,6 +66,13 @@ export default function SearchForm() {
         label="Authors"
         placeholder="Carl Gauß & David Hilbert & ..."
         title="Author(s) separated by '&'."
+      />
+      <InputField
+        value={currentTitles}
+        setValue={setCurrentTitles}
+        label="Title"
+        placeholder="Operad & Configuration spaces & ..."
+        title="Words/sentences to search in the title separated by '&'."
       />
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
