@@ -19,6 +19,7 @@ function Entry({ entry }) {
     </a>
   );
 
+  // very ugly ☹
   const formattedEntry = (
     <pre
       ref={preRef}
@@ -44,13 +45,10 @@ function Entry({ entry }) {
     navigator.clipboard.writeText(preRef.current.innerText)
   };
 
-  // very ugly ☹
   return (
     <Alert variant="dark">
       <span className="float-right">
-        <Button
-          onClick={onClickCopy}
-        >
+        <Button onClick={onClickCopy}>
           Copy
         </Button>
       </span>
