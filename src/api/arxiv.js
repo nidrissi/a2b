@@ -30,7 +30,7 @@ function parseEntry(xmlEntry) {
   // id
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
   // the URL has the form http://arxiv.org/abs/{id}v{version}
-  const regex = /arxiv.org\/abs\/(?<id>.+)v\d+/;
+  const regex = /arxiv\.org\/abs\/(?<id>.+)v\d+/;
   const found = idURL.match(regex);
   entry.id = found.groups.id;
 
