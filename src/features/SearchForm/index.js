@@ -74,15 +74,14 @@ export default function SearchForm() {
         placeholder="Operad & Configuration spaces & ..."
         title="Words/sentences to search in the title separated by '&'."
       />
-      <Form.Group as={Row}>
-        <Col sm={{ span: 10, offset: 2 }}>
-          <Button
-            disabled={isLoading}
-            type="submit"
-          >
-            Search
-          </Button>
-        </Col>
+      <Form.Group>
+        <Button
+          disabled={isLoading}
+          type="submit"
+          block
+        >
+          Search
+        </Button>
       </Form.Group>
     </Form>
   );
