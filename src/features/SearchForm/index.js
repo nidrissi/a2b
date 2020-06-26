@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import { setQuery } from './searchFormSlice';
+import { selectIsLoading } from '../Results/resultsSlice';
 
 function splitter(current) {
   const rx = /\s*&\s*/;
@@ -17,6 +18,8 @@ export default function SearchForm() {
   const dispatch = useDispatch();
   const [currentIds, setCurrentIds] = useState('');
   const [currentAuthors, setCurrentAuthors] = useState('');
+
+  const isLoading = useSelector(selectIsLoading);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -55,6 +58,7 @@ export default function SearchForm() {
       <Form.Group as={Row}>
         <Col sm={{ span: 10, offset: 2 }}>
           <Button
+            disabled={isLoading}
             type="submit"
           >
             Search
