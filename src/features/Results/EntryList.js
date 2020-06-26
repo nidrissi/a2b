@@ -30,7 +30,9 @@ function Entry({ entry }) {
   title      = {${entry.title}},
   eprint     = {${entry.id}},
   eprinttype = {arXiv},
-  pubstate   = {prepublished},
+  `
+       + (entry.doi ? `doi        = {${entry.doi}}` : 'pubstate   = {prepublished}')
+       + `,
   file       = {`}
       {fileLink}
       {`}

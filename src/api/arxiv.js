@@ -38,6 +38,8 @@ function parseEntry(xmlEntry) {
   for (let l of xmlEntry.getElementsByTagName('link')) {
     if (l.getAttribute('title') === 'pdf') {
       entry.pdfLink = l.getAttribute('href');
+    } else if (l.getAttribute('title') === 'doi') {
+      entry.doi = l.getAttribute('href').replace('http://dx.doi.org/', '')
     }
   }
 
