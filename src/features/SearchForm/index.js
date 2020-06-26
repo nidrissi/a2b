@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Spinner from 'react-bootstrap/Spinner';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { setQuery } from './searchFormSlice';
@@ -29,6 +31,22 @@ function InputField({ value, setValue, label, placeholder, title }) {
           title={title}
         />
       </Col>
+    </Form.Group>
+  );
+}
+
+function SubmitButton({ isLoading }) {
+  return (
+    <Form.Group>
+      <Button
+        disabled={isLoading}
+        type="submit"
+        block
+      >
+        {isLoading ?
+         <span><Spinner animation="border" size="sm" /> Loading...</span>
+         : <span><FontAwesomeIcon icon="search" /> Search</span>}
+      </Button>
     </Form.Group>
   );
 }
@@ -75,15 +93,7 @@ export default function SearchForm() {
         placeholder="Operad & Configuration spaces & ..."
         title="Words/sentences to search in the title separated by '&'."
       />
-      <Form.Group>
-        <Button
-          disabled={isLoading}
-          type="submit"
-          block
-        >
-          <FontAwesomeIcon icon="search" /> Search
-        </Button>
-      </Form.Group>
+      <SubmitButton isLoading={isLoading} />
     </Form>
   );
 }
