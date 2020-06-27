@@ -43,6 +43,13 @@ function parseEntry(xmlEntry) {
     }
   }
 
+  // comment (may not exist)
+  try {
+    entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s*\n\s*/, ' ');
+  } catch (_err) {
+    entry.comment = null;
+  }
+
   return entry;
 }
 
