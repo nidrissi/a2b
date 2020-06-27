@@ -3,10 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Entry({ entry }) {
-  // for the clipboard
-  const preRef = useRef();
-
+function formatEntry(entry) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -21,11 +18,8 @@ export default function Entry({ entry }) {
   );
 
   // very ugly ☹
-  const formattedEntry = (
-    <pre
-      ref={preRef}
-      className="m-0"
-    >
+  return (
+    <React.Fragment>
       {`@Misc{${key}${entry.year},
   date       = {${entry.year}},
   author     = {${authorList}},
@@ -40,8 +34,13 @@ export default function Entry({ entry }) {
       {`},
   comment    = {${entry.comment}},
 }`}
-    </pre>
+    </React.Fragment>
   );
+}
+
+export default function Entry({ entry }) {
+  // for the clipboard
+  const preRef = useRef();
 
   const onClickCopy = _e => {
     navigator.clipboard.writeText(preRef.current.innerText)
@@ -54,7 +53,12 @@ export default function Entry({ entry }) {
           <FontAwesomeIcon icon="clipboard" /> Copy
         </Button>
       </span>
-      {formattedEntry}
+      <pre
+        ref={preRef}
+        className="m-0"
+      >
+        {formatEntry(entry)}
+      </pre>
     </Alert>
   )
 }
