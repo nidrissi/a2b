@@ -15,5 +15,6 @@ export const settingsSlice = createSlice({
 export const { setIncludeFile } = settingsSlice.actions;
 
 export const selectIncludeFile = state => state.settings.includeFile;
+export const selectSettings = state => state.settings;
 
 export default settingsSlice.reducer;
