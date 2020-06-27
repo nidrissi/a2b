@@ -22,9 +22,10 @@ import {
 import { fetchEntries } from './features/Results/resultsSlice';
 
 // lazy loaded components
-const Search = React.lazy(() => import('./features/Search'));
-const Err404 = React.lazy(() => import('./features/Err404'));
 const About = React.lazy(() => import('./features/About'));
+const Err404 = React.lazy(() => import('./features/Err404'));
+const Search = React.lazy(() => import('./features/Search'));
+const Settings = React.lazy(() => import('./features/Settings'));
 
 // GA
 const history = createBrowserHistory()
@@ -62,6 +63,9 @@ function App() {
             </Route>
             <Route path="/about">
               <About />
+            </Route>
+            <Route path="/settings">
+              <Settings />
             </Route>
             <Route path="*">
               <Err404 />
