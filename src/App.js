@@ -7,6 +7,7 @@ import ReactGA from 'react-ga';
 import { createBrowserHistory } from 'history';
 
 import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
 
 // these components are always loaded
 import Footer from './features/Footer';
@@ -54,7 +55,7 @@ function App() {
     <Container>
       <Router history={history}>
         <MyNavbar />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="text-center h1"><Spinner animation="grow" /> Loading...</div>}>
           <Switch>
             <Route path="/" exact>
               <Search />
