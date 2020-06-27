@@ -1,9 +1,12 @@
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { selectSettings } from '../Settings/settingsSlice';
+
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry(entry) {
+function formatEntry({ entry, settings }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -26,7 +29,7 @@ function formatEntry(entry) {
     eprinttype: 'arXiv',
     doi: entry.doi,
     pubstate: entry.doi ? null : 'prepublished',
-    file: fileLink,
+    file: settings.includeFile ? fileLink : null,
     comment: entry.comment
   };
   // delete all empty values
@@ -55,6 +58,8 @@ function formatEntry(entry) {
 }
 
 export default function Entry({ entry }) {
+  const settings = useSelector(selectSettings);
+
   // for the clipboard
   const preRef = useRef();
 
@@ -73,7 +78,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry(entry)}
+        {formatEntry({ entry, settings })}
       </pre>
     </Alert>
   )
