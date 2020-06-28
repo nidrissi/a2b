@@ -43,12 +43,14 @@ function parseEntry(xmlEntry) {
     }
   }
 
-  // comment (may not exist)
+  // comment & journal ref (may not exist)
   try {
     entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s*\n\s*/, ' ');
-  } catch (_err) {
-    entry.comment = null;
-  }
+  } catch (_err) {}
+
+  try {
+    entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s*\n\s*/, ' ');
+  } catch (_err) {}
 
   return entry;
 }

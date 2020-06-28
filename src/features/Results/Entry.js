@@ -30,7 +30,8 @@ function formatEntry({ entry, settings }) {
     doi: entry.doi,
     pubstate: entry.doi ? null : 'prepublished',
     file: settings.includeFile ? fileLink : null,
-    comment: entry.comment
+    comment: entry.comment,
+    howpublished: entry.journalRef,
   };
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
