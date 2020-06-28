@@ -14,12 +14,15 @@ export default function Settings() {
 
   return (
     <div>
+      <p className="lead">
+        Settings are automatically saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
+      </p>
       <Form onChange={() => dispatch(saveSettings())}>
         <Form.Group>
           <Form.Check
             checked={includeFile}
             onChange={e => dispatch(setIncludeFile(e.target.checked))}
-            id='IncludeFile'
+            id='includeFile'
             label='Include file field in entries'
           />
         </Form.Group>
