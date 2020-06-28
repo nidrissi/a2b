@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 
 import {
+  saveSettings,
   selectIncludeFile, setIncludeFile,
 } from './settingsSlice';
 
@@ -13,7 +14,7 @@ export default function Settings() {
 
   return (
     <div>
-      <Form>
+      <Form onChange={() => dispatch(saveSettings())}>
         <Form.Group>
           <Form.Check
             checked={includeFile}
