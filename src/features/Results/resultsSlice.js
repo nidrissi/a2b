@@ -40,10 +40,10 @@ export const selectErrorShown = state => state.results.errorShown;
 
 export default resultsSlice.reducer;
 
-export const fetchEntries = (id) => async dispatch => {
+export const fetchEntries = query => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    const entries = await arxivSearch(id);
+    const entries = await arxivSearch(query);
     dispatch(getEntriesSuccess(entries));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))
