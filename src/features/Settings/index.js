@@ -69,7 +69,7 @@ export default function Settings() {
           </Form.Control>
         </Form.Group>
       </Form>
-      <p>
+      <p className="text-muted">
         Settings are automatically saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
       </p>
     </div>
