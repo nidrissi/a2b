@@ -1,19 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Alert from 'react-bootstrap/Alert';
 
 import {
+  errorWasShown,
   selectError,
+  selectErrorShown,
   selectEntries,
 } from './resultsSlice';
 
 import EntryList from './EntryList';
 
-function ErrorAlert({ error }) {
-  if (error !== null) {
+function ErrorAlert({ error, errorShown }) {
+  const dispatch = useDispatch();
+
+  if (error !== null && !errorShown) {
     return (
-      <Alert variant="danger">
+      <Alert
+        variant="danger"
+        dismissible
+        onClose={() => dispatch(errorWasShown())}
+      >
         {error.toString()}
       </Alert>
     )
@@ -25,10 +33,11 @@ function ErrorAlert({ error }) {
 export default function Results() {
   const error = useSelector(selectError);
   const entries = useSelector(selectEntries);
+  const errorShown = useSelector(selectErrorShown);
 
   return (
     <div>
-      <ErrorAlert error={error} />
+      <ErrorAlert error={error} errorShown={errorShown} />
       <EntryList entries={entries} />
     </div>
   )
