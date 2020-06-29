@@ -37,7 +37,6 @@ export const selectIncludeFile = state => state.settings.includeFile;
 export const selectSortBy = state => state.settings.sortBy;
 export const selectSortOrder = state => state.settings.sortOrder;
 export const selectMaxResults = state => state.settings.maxResults;
-export const selectSettings = state => state.settings; // for easier serialization
 
 export const { setIncludeFile, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
 
