@@ -29,6 +29,14 @@ const faq = [
        BibTeX and Biber are two external programs that convert a <code>.bib</code> file into a <code>.bbl</code> file readable by LaTeX. One of the main advantages of Biber over BibTeX is its support of Unicode characters. <a href="https://tex.stackexchange.com/q/25701/14965">Read more about this on TeX.SE.</a></span>],
       ['But I want to use the usual bibliography package!',
        <span>I plan to add support for it in the future. In the meantime, <a href="https://github.com/nidrissi/arxiv2bib">feel free to contribute</a> 😃. But be aware that unlike BibLaTeX, the style you choose for your article will influence greatly the required format for the bibliography entry.</span>],
+      ['How does the program handle surnames?',
+       <span>
+         ArXiv stores author names as e.g. "Jane H. Doe." However, BibLaTeX expects surnames to be separated from given names, e.g. "Doe, Jane H." This allows it to make special formatting of names, for example by automatically abbreviating given names ("J. H. Doe") or capitalizing surnames in some styles (e.g. in French: "Jane H. Dᴏᴇ").
+         <br />
+         To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails when people have two or more surname (e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names), or when there is an addendum such as "John Doe, Jr." or "Jean de la Fontaine." Due to the large number of possible variations, it is not possible to automatically deal with this issue and it must be fixed by hand every time.
+         <br />
+         If you feel strongly enough about this, you can try to contact arXiv so that they start storing author names in a more adequate fashion; there is nothing I can do on my end.
+       </span>]
     ],
   }
 ];
