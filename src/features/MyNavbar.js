@@ -11,7 +11,7 @@ export default function MyNavbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <NavLink to="/" className="nav-link"><FontAwesomeIcon icon="search" /> Search</NavLink>
+          <NavLink to="/" exact className="nav-link"><FontAwesomeIcon icon="search" /> Search</NavLink>
           <NavLink to="/settings" className="nav-link"><FontAwesomeIcon icon="cog" /> Settings</NavLink>
           <NavLink to="/help" className="nav-link"><FontAwesomeIcon icon="question" /> Help</NavLink>
           <NavLink to="/about" className="nav-link"><FontAwesomeIcon icon="project-diagram" /> About</NavLink>
