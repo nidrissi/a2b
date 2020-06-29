@@ -8,9 +8,17 @@ const faq = [
       ['Who wrote it?',
        <span>I am <a href="https://idrissi.eu">Najib Idrissi</a>, a mathematician.</span>],
       ['What license is this program?',
-       <span>It is licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">AGPLv3</a>. The source code is <a href="https://github.com/nidrissi/arxiv2bib">available on GitHub</a>.</span>],
+       <span>
+         This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+         <br/>
+         The source code is <a href="https://github.com/nidrissi/arxiv2bib">available on GitHub</a>.
+       </span>],
       ['Does it work?',
-       'I guess it does, however it is in a preliminary state. There is little error checking in the code, and no tests. Caveat emptor!'],
+       <span>
+         I guess it does, however it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the AGPLv3:
+         <br/>
+         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+       </span>],
       ['I found a bug!',
        <span>Please <a href="https://github.com/nidrissi/arxiv2bib/issues">report an issue on Github</a> (or contact me by email).</span>],
       ['How does it fetch entries?',
