@@ -29,6 +29,7 @@ import { fetchEntries } from './features/Results/resultsSlice';
 // lazy loaded components
 const About = React.lazy(() => import('./features/About'));
 const Err404 = React.lazy(() => import('./features/Err404'));
+const Help = React.lazy(() => import('./features/Help'));
 const Search = React.lazy(() => import('./features/Search'));
 const Settings = React.lazy(() => import('./features/Settings'));
 
@@ -76,6 +77,9 @@ function App() {
             </Route>
             <Route path="/settings">
               <Settings />
+            </Route>
+            <Route path="/help">
+              <Help />
             </Route>
             <Route path="*">
               <Err404 />
