@@ -16,7 +16,10 @@ function parseEntry(xmlEntry) {
 
   // title
   try {
-    entry.title = getUniqueNamedTag(xmlEntry, 'title').replace(/\s+/gm, " ")
+    entry.title =
+      getUniqueNamedTag(xmlEntry, 'title')
+      .replace(/\s+/gm, " ")
+      .replace(/\$([^$]+)\$/g, '{$$$1$$}') // deal with latex in title
   } catch (err) {
     // With id_list, if there is no entry for a given id, arXiv
     // returns a malformed empty entry instead of an error.
