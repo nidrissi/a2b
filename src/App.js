@@ -27,7 +27,6 @@ import {
 import { fetchEntries } from './features/Results/resultsSlice';
 
 // lazy loaded components
-const About = React.lazy(() => import('./features/About'));
 const Err404 = React.lazy(() => import('./features/Err404'));
 const Help = React.lazy(() => import('./features/Help'));
 const Search = React.lazy(() => import('./features/Search'));
@@ -71,9 +70,6 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Search />
-            </Route>
-            <Route path="/about">
-              <About />
             </Route>
             <Route path="/settings">
               <Settings />

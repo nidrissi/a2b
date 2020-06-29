@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="text-center">
       <hr />
       <p>
-        arXiv2bib v{version} &bull; maintained by <a href="https://idrissi.eu">Najib Idrissi</a>
+        arXiv2bib v{version}
       </p>
     </footer>
 
