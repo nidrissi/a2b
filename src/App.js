@@ -15,6 +15,10 @@ import MyNavbar from './features/MyNavbar';
 
 // state
 import {
+  selectSortBy,
+  selectSortOrder,
+} from './features/Settings/settingsSlice';
+import {
   selectIds,
   selectAuthors,
   selectTitles,
@@ -41,15 +45,19 @@ function App() {
 
   // keep here to avoid re-fetching on route change
   const dispatch = useDispatch();
+  // query
   const ids = useSelector(selectIds);
   const authors = useSelector(selectAuthors);
   const titles = useSelector(selectTitles);
+  // settings
+  const sortBy = useSelector(selectSortBy);
+  const sortOrder = useSelector(selectSortOrder);
 
   useEffect(() => {
     if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
-      dispatch(fetchEntries({ authors, ids, titles }));
+      dispatch(fetchEntries({ authors, ids, titles }, { sortBy, sortOrder }));
     }
-  }, [dispatch, ids, authors, titles])
+  }, [dispatch, ids, authors, titles, sortBy, sortOrder])
 
 
   return (
