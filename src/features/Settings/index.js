@@ -20,9 +20,7 @@ export default function Settings() {
 
   return (
     <div>
-      <p>
-        Settings are automatically saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
-      </p>
+      <h1>Settings</h1>
       <Form onChange={() => dispatch(saveSettings())}>
         <h3>Entry display</h3>
         <Form.Group>
@@ -71,6 +69,9 @@ export default function Settings() {
           </Form.Control>
         </Form.Group>
       </Form>
+      <p>
+        Settings are automatically saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
+      </p>
     </div>
   );
 }

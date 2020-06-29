@@ -3,6 +3,7 @@ import React from 'react';
 export default function About() {
   return (
     <div>
+      <h1>About</h1>
       <p>
         This tool is designed to produce a biblatex entry from an arXiv id.
         It is in a very preliminary state and probably full of bugs.
