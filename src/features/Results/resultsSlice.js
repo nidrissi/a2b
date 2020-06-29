@@ -24,14 +24,14 @@ export const resultsSlice = createSlice({
       state.errorShown = false;
       state.entries = [];
     },
-    errorWasShown: state => {
+    closeError: state => {
       state.errorShown = true;
     }
   }
 });
 
 const { getEntriesStart, getEntriesSuccess, getEntriesError } = resultsSlice.actions;
-export const  { errorWasShown } = resultsSlice.actions;
+export const  { closeError } = resultsSlice.actions;
 
 export const selectEntries = state => state.results.entries;
 export const selectIsLoading = state => state.results.isLoading;
@@ -40,10 +40,10 @@ export const selectErrorShown = state => state.results.errorShown;
 
 export default resultsSlice.reducer;
 
-export const fetchEntries = query => async dispatch => {
+export const fetchEntries = (query, settings) => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    const entries = await arxivSearch(query);
+    const entries = await arxivSearch(query, settings);
     dispatch(getEntriesSuccess(entries));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))

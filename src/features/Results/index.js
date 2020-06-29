@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 
 import {
-  errorWasShown,
+  closeError,
   selectError,
   selectErrorShown,
   selectEntries,
@@ -20,7 +20,7 @@ function ErrorAlert({ error, errorShown }) {
       <Alert
         variant="danger"
         dismissible
-        onClose={() => dispatch(errorWasShown())}
+        onClose={() => dispatch(closeError())}
       >
         {error.toString()}
       </Alert>

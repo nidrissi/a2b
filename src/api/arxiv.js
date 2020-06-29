@@ -18,8 +18,8 @@ function parseEntry(xmlEntry) {
   try {
     entry.title =
       getUniqueNamedTag(xmlEntry, 'title')
-      .replace(/\s+/gm, " ")
-      .replace(/\$([^$]+)\$/g, '{$$$1$$}') // deal with latex in title
+        .replace(/\s+/gm, " ")
+        .replace(/\$([^$]+)\$/g, '{$$$1$$}') // deal with latex in title
   } catch (err) {
     // With id_list, if there is no entry for a given id, arXiv
     // returns a malformed empty entry instead of an error.
@@ -49,11 +49,11 @@ function parseEntry(xmlEntry) {
   // comment & journal ref (may not exist)
   try {
     entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s*\n\s*/, ' ');
-  } catch (_err) {}
+  } catch (_err) { }
 
   try {
     entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s*\n\s*/, ' ');
-  } catch (_err) {}
+  } catch (_err) { }
 
   return entry;
 }
@@ -78,7 +78,7 @@ function buildSearchQueryPart(list, label) {
   return result;
 }
 
-function buildURLQuery({ authors, ids, titles }) {
+function buildURLQuery({ authors, ids, titles }, { sortBy, sortOrder }) {
   const base = 'https://export.arxiv.org/api/query?';
 
   let idQuery = '';
@@ -90,13 +90,14 @@ function buildURLQuery({ authors, ids, titles }) {
     buildSearchQueryPart(authors, 'au'),
     buildSearchQueryPart(titles, 'ti')
   ].filter(s => s.length > 0).join('+AND+');
-  const fullSearchQuery = 'search_query=' + searchQuery + '&sortBy=submittedDate&sortOrder=descending';
+  const searchSettings = `sortBy=${sortBy}&sortOrder=${sortOrder}`;
+  const fullSearchQuery = `search_query=${searchQuery}&${searchSettings}`;
 
   return base + fullSearchQuery + idQuery;
 }
 
-export async function arxivSearch(query) {
-  const urlQuery = buildURLQuery(query);
+export async function arxivSearch(query, settings) {
+  const urlQuery = buildURLQuery(query, settings);
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
 
