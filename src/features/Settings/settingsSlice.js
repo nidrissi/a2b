@@ -4,6 +4,7 @@ const defaultInitialState = {
   includeFile: true,
   sortBy: 'submittedDate',
   sortOrder: 'descending',
+  maxResults: 10
 };
 
 const persistentState = localStorage.getItem('settings');
@@ -24,6 +25,9 @@ export const settingsSlice = createSlice({
     },
     setSortOrder : (state, action) => {
       state.sortOrder = action.payload;
+    },
+    setMaxResults: (state, action) => {
+      state.maxResults = action.payload;
     }
   }
 });
@@ -32,9 +36,10 @@ export default settingsSlice.reducer;
 export const selectIncludeFile = state => state.settings.includeFile;
 export const selectSortBy = state => state.settings.sortBy;
 export const selectSortOrder = state => state.settings.sortOrder;
+export const selectMaxResults = state => state.settings.maxResults;
 export const selectSettings = state => state.settings; // for easier serialization
 
-export const { setIncludeFile, setSortBy, setSortOrder } = settingsSlice.actions;
+export const { setIncludeFile, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
 
 export function saveSettings() {
   return (_dispatch, getState) => {

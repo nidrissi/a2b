@@ -78,7 +78,7 @@ function buildSearchQueryPart(list, label) {
   return result;
 }
 
-function buildURLQuery({ authors, ids, titles }, { sortBy, sortOrder }) {
+function buildURLQuery({ authors, ids, titles }, { maxResults, sortBy, sortOrder }) {
   const base = 'https://export.arxiv.org/api/query?';
 
   let idQuery = '';
@@ -90,7 +90,7 @@ function buildURLQuery({ authors, ids, titles }, { sortBy, sortOrder }) {
     buildSearchQueryPart(authors, 'au'),
     buildSearchQueryPart(titles, 'ti')
   ].filter(s => s.length > 0).join('+AND+');
-  const searchSettings = `sortBy=${sortBy}&sortOrder=${sortOrder}`;
+  const searchSettings = `sortBy=${sortBy}&sortOrder=${sortOrder}&max_results=${maxResults}`;
   const fullSearchQuery = `search_query=${searchQuery}&${searchSettings}`;
 
   return base + fullSearchQuery + idQuery;

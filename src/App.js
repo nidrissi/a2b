@@ -15,6 +15,7 @@ import MyNavbar from './features/MyNavbar';
 
 // state
 import {
+  selectMaxResults,
   selectSortBy,
   selectSortOrder,
 } from './features/Settings/settingsSlice';
@@ -50,14 +51,15 @@ function App() {
   const authors = useSelector(selectAuthors);
   const titles = useSelector(selectTitles);
   // settings
+  const maxResults = useSelector(selectMaxResults);
   const sortBy = useSelector(selectSortBy);
   const sortOrder = useSelector(selectSortOrder);
 
   useEffect(() => {
     if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
-      dispatch(fetchEntries({ authors, ids, titles }, { sortBy, sortOrder }));
+      dispatch(fetchEntries({ authors, ids, titles }, { maxResults, sortBy, sortOrder }));
     }
-  }, [dispatch, ids, authors, titles, sortBy, sortOrder])
+  }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder])
 
 
   return (
