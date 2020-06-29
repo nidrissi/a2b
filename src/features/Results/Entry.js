@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { selectSettings } from '../Settings/settingsSlice';
+import { selectIncludeFile } from '../Settings/settingsSlice';
 
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, settings }) {
+function formatEntry({ entry, includeFile }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -29,7 +29,7 @@ function formatEntry({ entry, settings }) {
     eprinttype: 'arXiv',
     doi: entry.doi,
     pubstate: entry.doi ? null : 'prepublished',
-    file: settings.includeFile ? fileLink : null,
+    file: includeFile ? fileLink : null,
     comment: entry.comment,
     howpublished: entry.journalRef ? <abbr title="Consider converting this entry to e.g. @article.">{entry.journalRef}</abbr> : null,
   };
@@ -59,14 +59,13 @@ function formatEntry({ entry, settings }) {
 }
 
 export default function Entry({ entry }) {
-  const settings = useSelector(selectSettings);
-
   // for the clipboard
   const preRef = useRef();
-
   const onClickCopy = _e => {
     navigator.clipboard.writeText(preRef.current.innerText)
   };
+
+  const includeFile = useSelector(selectIncludeFile);
 
   return (
     <Alert variant="dark">
@@ -79,7 +78,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, settings })}
+        {formatEntry({ entry, includeFile })}
       </pre>
     </Alert>
   )
