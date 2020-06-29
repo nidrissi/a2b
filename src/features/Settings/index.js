@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import {
   saveSettings,
   selectIncludeFile, setIncludeFile,
+  selectMaxResults, setMaxResults,
   selectSortBy, setSortBy,
   selectSortOrder, setSortOrder,
 } from './settingsSlice';
@@ -13,6 +14,7 @@ import {
 export default function Settings() {
   const dispatch = useDispatch();
   const includeFile = useSelector(selectIncludeFile);
+  const maxResults = useSelector(selectMaxResults);
   const sortBy = useSelector(selectSortBy);
   const sortOrder = useSelector(selectSortOrder);
 
@@ -55,6 +57,17 @@ export default function Settings() {
           >
             <option value="descending">Descending</option>
             <option value="ascending">Ascending</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Max results</Form.Label>
+          <Form.Control
+            as="select"
+            id="maxResults"
+            value={maxResults}
+            onChange={e => dispatch(setMaxResults(e.target.value))}
+          >
+            {[10, 20, 50, 100].map(i => <option key={i} value={i}>{i}</option>)}
           </Form.Control>
         </Form.Group>
       </Form>
