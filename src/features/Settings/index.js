@@ -65,7 +65,7 @@ export default function Settings() {
             value={maxResults}
             onChange={e => dispatch(setMaxResults(e.target.value))}
           >
-            {[10, 20, 50, 100].map(i => <option key={i} value={i}>{i}</option>)}
+            {[10, 20, 50, 100, 200, 500, 1000].map(i => <option key={i} value={i}>{i}</option>)}
           </Form.Control>
         </Form.Group>
       </Form>
