@@ -3,10 +3,14 @@ import React from 'react';
 const faq = [
   { title: "This program",
     entries: [
-      ['What is this?',
+      ['What (is this)?',
        <span>This program fetches entries from the <a href="https://arxiv.org">arXiv</a> and formats them to be used with BibLaTeX.</span>],
-      ['Who wrote it?',
+      ['Who (wrote it)?',
        <span>I am <a href="https://idrissi.eu">Najib Idrissi</a>, a mathematician.</span>],
+      ['Why (did you write this)?',
+       'There are several programs around for making a bib(la)tex entry out of an arXiv preprint. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no biblatex support, “arXiv” in the journal field where it doesn\'t belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.'],
+      ['How (does it work)?',
+       <span>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons. It uses the <a href="https://arxiv.org/help/api/index">arXiv API</a> (with all its quirks…) to fetch entries.</span>],
       ['What license is this program?',
        <span>
          This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -21,8 +25,6 @@ const faq = [
        </span>],
       ['I found a bug!',
        <span>Please <a href="https://github.com/nidrissi/arxiv2bib/issues">report an issue on Github</a> (or contact me by email). I cannot really promise anything, though.</span>],
-      ['How does it fetch entries?',
-       <span>It uses the <a href="https://arxiv.org/help/api/index">arXiv API</a> with all its quirks.</span>],
     ],
   },
   { title: "Output",
