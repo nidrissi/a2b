@@ -35,7 +35,7 @@ function formatEntry({ entry, includeFile, includePrimaryCategory }) {
     pubstate: entry.doi ? null : 'prepublished',
     file: includeFile ? fileLink : null,
     comment: entry.comment,
-    howpublished: entry.journalRef ? <abbr title="Consider converting this entry to e.g. @article.">{entry.journalRef}</abbr> : null,
+    howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
   };
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
