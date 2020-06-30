@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import {
   selectIncludeFile,
+  selectFilePrefix,
   selectIncludePrimaryCategory,
 } from '../Settings/settingsSlice';
 
@@ -9,7 +10,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, includeFile, includePrimaryCategory }) {
+function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -19,7 +20,7 @@ function formatEntry({ entry, includeFile, includePrimaryCategory }) {
 
   const fileLink = (
     <a href={entry.pdfLink}>
-      {key[0]}/{key}.pdf
+      {filePrefix ? `${key[0]}/` : ''}{key}.pdf
     </a>
   );
 
@@ -70,6 +71,7 @@ export default function Entry({ entry }) {
   };
 
   const includeFile = useSelector(selectIncludeFile);
+  const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
 
   return (
@@ -81,7 +83,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, includeFile, includePrimaryCategory })}
+        {formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory })}
       </pre>
     </Card>
   )
