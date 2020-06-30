@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const defaultInitialState = {
   includeFile: true,
+  includePrimaryCategory: false,
   sortBy: 'submittedDate',
   sortOrder: 'descending',
   maxResults: 10
@@ -20,6 +21,9 @@ export const settingsSlice = createSlice({
     setIncludeFile: (state, action) => {
       state.includeFile = action.payload
     },
+    setIncludePrimaryCategory: (state, action) => {
+      state.includePrimaryCategory = action.payload;
+    },
     setSortBy : (state, action) => {
       state.sortBy = action.payload;
     },
@@ -34,11 +38,13 @@ export const settingsSlice = createSlice({
 export default settingsSlice.reducer;
 
 export const selectIncludeFile = state => state.settings.includeFile;
+export const selectIncludePrimaryCategory = state => state.settings.includePrimaryCategory;
+
 export const selectSortBy = state => state.settings.sortBy;
 export const selectSortOrder = state => state.settings.sortOrder;
 export const selectMaxResults = state => state.settings.maxResults;
 
-export const { setIncludeFile, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
+export const { setIncludeFile, setIncludePrimaryCategory, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
 
 export function saveSettings() {
   return (_dispatch, getState) => {
