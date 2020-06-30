@@ -5,7 +5,7 @@ import {
   selectIncludePrimaryCategory,
 } from '../Settings/settingsSlice';
 
-import Alert from 'react-bootstrap/Alert';
+import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -73,18 +73,16 @@ export default function Entry({ entry }) {
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
 
   return (
-    <Alert variant="dark">
-      <span className="float-right">
-        <Button onClick={onClickCopy}>
-          <FontAwesomeIcon icon="clipboard" /> Copy
+    <Card body bg="light" text="dark">
+      <Button onClick={onClickCopy} className="float-right">
+        <FontAwesomeIcon icon="clipboard" /> Copy
         </Button>
-      </span>
       <pre
         ref={preRef}
         className="m-0"
       >
         {formatEntry({ entry, includeFile, includePrimaryCategory })}
       </pre>
-    </Alert>
+    </Card>
   )
 }
