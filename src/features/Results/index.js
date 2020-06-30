@@ -7,13 +7,14 @@ import {
   closeError,
   selectError,
   selectErrorShown,
-  selectEntries,
 } from './resultsSlice';
 
 import EntryList from './EntryList';
 
-function ErrorAlert({ error, errorShown }) {
+function ErrorAlert() {
   const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const errorShown = useSelector(selectErrorShown);
 
   if (error !== null && !errorShown) {
     return (
@@ -31,14 +32,10 @@ function ErrorAlert({ error, errorShown }) {
 }
 
 export default function Results() {
-  const error = useSelector(selectError);
-  const entries = useSelector(selectEntries);
-  const errorShown = useSelector(selectErrorShown);
-
   return (
     <div>
-      <ErrorAlert error={error} errorShown={errorShown} />
-      <EntryList entries={entries} />
+      <ErrorAlert />
+      <EntryList />
     </div>
   )
 }

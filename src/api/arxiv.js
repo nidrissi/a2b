@@ -105,8 +105,8 @@ export async function arxivSearch(query, settings) {
 
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlData, "text/xml");
-  const xmlEntries = xmlDoc.getElementsByTagName("entry");
 
+  const xmlEntries = xmlDoc.getElementsByTagName("entry");
   const entries = [];
   for (let w of xmlEntries) {
     checkEntryForErrors(w);
@@ -116,5 +116,7 @@ export async function arxivSearch(query, settings) {
     }
   }
 
-  return entries;
+  const totalEntriesFound = getUniqueNamedTag(xmlDoc, 'opensearch:totalResults');
+
+  return { entries, totalEntriesFound };
 }
