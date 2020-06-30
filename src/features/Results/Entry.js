@@ -28,7 +28,7 @@ function formatEntry({ entry, includeFile, includePrimaryCategory }) {
     author: authorList,
     date: entry.year,
     title: entry.title,
-    eprint: entry.id,
+    eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}</a>,
     eprinttype: 'arXiv',
     eprintclass: includePrimaryCategory ? entry.primaryCategory : null,
     doi: entry.doi,
