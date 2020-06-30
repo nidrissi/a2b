@@ -85,7 +85,7 @@ function buildURLQuery({ authors, ids, titles }, { maxResults, sortBy, sortOrder
 
   let idQuery = '';
   if (ids.length > 0) {
-    idQuery = ';id_list=' + encodeURIComponent(ids.join(','))
+    idQuery = ';id_list=' + encodeURIComponent(ids.join(',').replace(/v\d+$/, ''))
   }
 
   const searchQuery = [

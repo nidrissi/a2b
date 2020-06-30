@@ -77,7 +77,7 @@ export default function SearchForm() {
         setValue={setCurrentIds}
         label="ID list"
         placeholder="ID1 & ID2 & ..."
-        title="List of IDs, separated by '&'."
+        title="List of IDs, separated by '&'. Version will be stripped, e.g. 1911.12281v1 => 1911.12281."
       />
       <InputField
         value={currentAuthors}
