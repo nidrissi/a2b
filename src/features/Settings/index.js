@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import {
   saveSettings,
   selectIncludeFile, setIncludeFile,
+  selectFilePrefix, setFilePrefix,
   selectIncludePrimaryCategory, setIncludePrimaryCategory,
   selectMaxResults, setMaxResults,
   selectSortBy, setSortBy,
@@ -15,6 +16,7 @@ import {
 export default function Settings() {
   const dispatch = useDispatch();
   const includeFile = useSelector(selectIncludeFile);
+  const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
   const maxResults = useSelector(selectMaxResults);
   const sortBy = useSelector(selectSortBy);
@@ -31,6 +33,15 @@ export default function Settings() {
             onChange={e => dispatch(setIncludeFile(e.target.checked))}
             id='includeFile'
             label='Include file field in entries'
+          />
+        </Form.Group>
+        <Form.Group className="ml-3">
+          <Form.Check
+            checked={filePrefix}
+            onChange={e => dispatch(setFilePrefix(e.target.checked))}
+            id='filePrefix'
+            disabled={!includeFile}
+            label={<span>Add a prefix to the file field (<code>Doe2020.pdf</code> ⇒ <code>D/Doe2020.pdf</code>)</span>}
           />
         </Form.Group>
         <Form.Group>
