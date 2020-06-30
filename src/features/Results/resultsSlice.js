@@ -8,7 +8,8 @@ export const resultsSlice = createSlice({
     error: null,
     errorShown: false,
     isLoading: false,
-    entries: []
+    entries: [],
+    totalEntriesFound: null,
   },
   reducers: {
     getEntriesStart: state => { state.isLoading = true },
@@ -16,7 +17,8 @@ export const resultsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.errorShown = true;
-      state.entries = action.payload;
+      state.entries = action.payload.entries;
+      state.totalEntriesFound = action.payload.totalEntriesFound;
     },
     getEntriesError: (state, action) => {
       state.isLoading = false;
@@ -31,9 +33,10 @@ export const resultsSlice = createSlice({
 });
 
 const { getEntriesStart, getEntriesSuccess, getEntriesError } = resultsSlice.actions;
-export const  { closeError } = resultsSlice.actions;
+export const { closeError } = resultsSlice.actions;
 
 export const selectEntries = state => state.results.entries;
+export const selectTotalEntriesFound = state => state.results.totalEntriesFound;
 export const selectIsLoading = state => state.results.isLoading;
 export const selectError = state => state.results.error;
 export const selectErrorShown = state => state.results.errorShown;
@@ -43,8 +46,8 @@ export default resultsSlice.reducer;
 export const fetchEntries = (query, settings) => async dispatch => {
   try {
     dispatch(getEntriesStart());
-    const entries = await arxivSearch(query, settings);
-    dispatch(getEntriesSuccess(entries));
+    const { entries, totalEntriesFound } = await arxivSearch(query, settings);
+    dispatch(getEntriesSuccess({ entries, totalEntriesFound }));
   } catch (err) {
     dispatch(getEntriesError(err.toString()))
   }
