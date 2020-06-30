@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import {
   saveSettings,
   selectIncludeFile, setIncludeFile,
+  selectIncludePrimaryCategory, setIncludePrimaryCategory,
   selectMaxResults, setMaxResults,
   selectSortBy, setSortBy,
   selectSortOrder, setSortOrder,
@@ -14,6 +15,7 @@ import {
 export default function Settings() {
   const dispatch = useDispatch();
   const includeFile = useSelector(selectIncludeFile);
+  const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
   const maxResults = useSelector(selectMaxResults);
   const sortBy = useSelector(selectSortBy);
   const sortOrder = useSelector(selectSortOrder);
@@ -29,6 +31,14 @@ export default function Settings() {
             onChange={e => dispatch(setIncludeFile(e.target.checked))}
             id='includeFile'
             label='Include file field in entries'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Check
+            checked={includePrimaryCategory}
+            onChange={e => dispatch(setIncludePrimaryCategory(e.target.checked))}
+            id='includePrimaryCategory'
+            label={<span>Include the primary category (e.g. <code>math.AT</code>), if any.</span>}
           />
         </Form.Group>
         <h3>Search settings</h3>

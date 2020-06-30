@@ -50,9 +50,11 @@ function parseEntry(xmlEntry) {
   try {
     entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s*\n\s*/, ' ');
   } catch (_err) { }
-
   try {
     entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s*\n\s*/, ' ');
+  } catch (_err) { }
+  try {
+    entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0).getAttribute('term');
   } catch (_err) { }
 
   return entry;

@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIncludeFile } from '../Settings/settingsSlice';
+import {
+  selectIncludeFile,
+  selectIncludePrimaryCategory,
+} from '../Settings/settingsSlice';
 
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, includeFile }) {
+function formatEntry({ entry, includeFile, includePrimaryCategory }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -27,6 +30,7 @@ function formatEntry({ entry, includeFile }) {
     title: entry.title,
     eprint: entry.id,
     eprinttype: 'arXiv',
+    eprintclass: includePrimaryCategory ? entry.primaryCategory : null,
     doi: entry.doi,
     pubstate: entry.doi ? null : 'prepublished',
     file: includeFile ? fileLink : null,
@@ -66,6 +70,7 @@ export default function Entry({ entry }) {
   };
 
   const includeFile = useSelector(selectIncludeFile);
+  const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
 
   return (
     <Alert variant="dark">
@@ -78,7 +83,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, includeFile })}
+        {formatEntry({ entry, includeFile, includePrimaryCategory })}
       </pre>
     </Alert>
   )
