@@ -35,18 +35,29 @@ function InputField({ value, setValue, label, placeholder, title }) {
   );
 }
 
-function SubmitButton({ isLoading }) {
+function SubmitClearButtons({ isLoading }) {
   return (
-    <Form.Group>
-      <Button
-        disabled={isLoading}
-        type="submit"
-        block
-      >
-        {isLoading ?
-         <span><Spinner animation="border" size="sm" /> Loading...</span>
-         : <span><FontAwesomeIcon icon="search" /> Search</span>}
-      </Button>
+    <Form.Group as={Form.Row}>
+      <Col sm={10}>
+        <Button
+          disabled={isLoading}
+          type="submit"
+          block
+        >
+          {isLoading ?
+            <span><Spinner animation="border" size="sm" /> Loading...</span>
+            : <span><FontAwesomeIcon icon="search" /> Search</span>}
+        </Button>
+      </Col>
+      <Col>
+        <Button
+          type="reset"
+          variant="secondary"
+          block
+        >
+          <FontAwesomeIcon icon="trash-alt" /> Clear
+        </Button>
+      </Col>
     </Form.Group>
   );
 }
@@ -70,8 +81,15 @@ export default function SearchForm() {
     dispatch(setQuery(query));
   };
 
+  const handleReset = _e => {
+    [setCurrentIds, setCurrentTitles, setCurrentAuthors].forEach(set => { set('') })
+  };
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit}
+      onReset={handleReset}
+    >
       <InputField
         value={currentIds}
         setValue={setCurrentIds}
@@ -93,7 +111,7 @@ export default function SearchForm() {
         placeholder="Operad & Configuration spaces & ..."
         title="Words/sentences to search in the title separated by '&'."
       />
-      <SubmitButton isLoading={isLoading} />
+      <SubmitClearButtons isLoading={isLoading} />
     </Form>
   );
 }
