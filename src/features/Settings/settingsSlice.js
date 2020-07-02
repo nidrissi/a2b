@@ -4,6 +4,7 @@ const defaultInitialState = {
   includeFile: true,
   filePrefix: true,
   includePrimaryCategory: false,
+  includeVersion: false,
   sortBy: 'submittedDate',
   sortOrder: 'descending',
   maxResults: 10
@@ -28,6 +29,9 @@ export const settingsSlice = createSlice({
     setIncludePrimaryCategory: (state, action) => {
       state.includePrimaryCategory = action.payload;
     },
+    setIncludeVersion: (state, action) => {
+      state.includeVersion = action.payload;
+    },
     setSortBy : (state, action) => {
       state.sortBy = action.payload;
     },
@@ -44,12 +48,13 @@ export default settingsSlice.reducer;
 export const selectIncludeFile = state => state.settings.includeFile;
 export const selectFilePrefix = state => state.settings.filePrefix;
 export const selectIncludePrimaryCategory = state => state.settings.includePrimaryCategory;
+export const selectIncludeVersion = state => state.settings.includeVersion;
 
 export const selectSortBy = state => state.settings.sortBy;
 export const selectSortOrder = state => state.settings.sortOrder;
 export const selectMaxResults = state => state.settings.maxResults;
 
-export const { setIncludeFile, setFilePrefix, setIncludePrimaryCategory, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
+export const { setIncludeFile, setFilePrefix, setIncludePrimaryCategory, setIncludeVersion, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
 
 export function saveSettings() {
   return (_dispatch, getState) => {

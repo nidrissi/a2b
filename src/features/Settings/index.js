@@ -8,6 +8,7 @@ import {
   selectIncludeFile, setIncludeFile,
   selectFilePrefix, setFilePrefix,
   selectIncludePrimaryCategory, setIncludePrimaryCategory,
+  selectIncludeVersion, setIncludeVersion,
   selectMaxResults, setMaxResults,
   selectSortBy, setSortBy,
   selectSortOrder, setSortOrder,
@@ -18,6 +19,8 @@ export default function Settings() {
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
+  const includeVersion = useSelector(selectIncludeVersion);
+
   const maxResults = useSelector(selectMaxResults);
   const sortBy = useSelector(selectSortBy);
   const sortOrder = useSelector(selectSortOrder);
@@ -49,7 +52,15 @@ export default function Settings() {
             checked={includePrimaryCategory}
             onChange={e => dispatch(setIncludePrimaryCategory(e.target.checked))}
             id='includePrimaryCategory'
-            label={<span>Include the primary category (e.g. <code>math.AT</code>), if any.</span>}
+            label={<span>Include the primary category (e.g. <code>math.AT</code>), if any</span>}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Check
+            checked={includeVersion}
+            onChange={e => dispatch(setIncludeVersion(e.target.checked))}
+            id='includeVersion'
+            label={<span>Include version information</span>}
           />
         </Form.Group>
         <h3>Search settings</h3>
