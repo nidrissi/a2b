@@ -70,8 +70,20 @@ const faq = [
       },
       {
         key: 'usual',
-        q: 'But I want to use the usual bibliography package!',
+        q: 'But I want to use the old bibliography packages!',
         a: <>I plan to add support for it in the future. In the meantime, <a href="https://github.com/nidrissi/arxiv2bib">feel free to contribute</a> 😃. But be aware that unlike BibLaTeX, the <code>.bst</code> style you choose for your article will influence greatly the required format for the bibliography entry.</>
+      },
+      {
+        key: 'compile-arxiv',
+        q: 'How do I submit an article using BibLaTeX to arXiv? I always get errors…',
+        a: <>
+             There are two issues that make it more difficult than it should be:
+             <ul className="mb-0">
+               <li>ArXiv is not very diligent when it comes to updating their TeX distribution. As of July 2020, they are nominally using TeX Live 2016, but <a href="https://arxiv.org/new/#feb-2017">they installed it in February 2017</a> and as such their distribution contains BibLaTeX v3.7, which is found in the historic archives of TeX Live 2017. The current version of BibLaTeX is v3.14.</li>
+               <li>ArXiv <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a> to compile <code>.bib</code> files with Biber or BibTeX. They require authors to send their compiled <code>.bbl</code> file. Unfortunately, files compiled for a newer version of BibLaTeX are not compatible with old versions. BibTeX has not been updated for decades so this is not an issue, but BibLaTeX is under active development.</li>
+             </ul>
+             There are several ways to solve this, <a href="https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv">as explained in the BibLaTeX development wiki</a>. The simplest one, in my opinion, is to install TeX Live 2017 from the <a href="https://tug.org/historic/">historic archives</a> and compile your article with the old binaries before sending the <code>.bbl</code> to arXiv.
+           </>
       },
     ],
   },
