@@ -28,7 +28,7 @@ export const resultsSlice = createSlice({
     errorShown: false,
   },
   reducers: {
-    closeError: state => {
+    closeError(state) {
       state.errorShown = true;
     }
   },

@@ -20,25 +20,25 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState: initialState,
   reducers: {
-    setIncludeFile: (state, action) => {
+    setIncludeFile(state, action) {
       state.includeFile = action.payload
     },
-    setFilePrefix: (state, action) => {
+    setFilePrefix(state, action) {
       state.filePrefix = action.payload
     },
-    setIncludePrimaryCategory: (state, action) => {
+    setIncludePrimaryCategory(state, action) {
       state.includePrimaryCategory = action.payload;
     },
-    setIncludeVersion: (state, action) => {
+    setIncludeVersion(state, action) {
       state.includeVersion = action.payload;
     },
-    setSortBy : (state, action) => {
+    setSortBy(state, action) {
       state.sortBy = action.payload;
     },
-    setSortOrder : (state, action) => {
+    setSortOrder(state, action) {
       state.sortOrder = action.payload;
     },
-    setMaxResults: (state, action) => {
+    setMaxResults(state, action) {
       state.maxResults = action.payload;
     }
   }
