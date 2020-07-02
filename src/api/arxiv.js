@@ -68,7 +68,7 @@ function checkEntryForErrors(xmlEntry) {
   for (let l of xmlEntry.getElementsByTagName('link')) {
     if (l.getAttribute('href').match('api/errors')) {
       const error = getUniqueNamedTag(xmlEntry, 'summary');
-      throw (Error(`arXiv reported “${error}”.`));
+      throw (Error(`ArXiv reported “${error}”.`));
     }
   }
 }

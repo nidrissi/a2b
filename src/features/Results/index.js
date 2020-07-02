@@ -1,34 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Alert from 'react-bootstrap/Alert';
 
-import {
-  closeError,
-  selectError,
-  selectErrorShown,
-} from './resultsSlice';
+import { selectError } from './resultsSlice';
 
 import EntryList from './EntryList';
 
 function ErrorAlert() {
-  const dispatch = useDispatch();
   const error = useSelector(selectError);
-  const errorShown = useSelector(selectErrorShown);
 
-  if (error !== null && !errorShown) {
-    return (
-      <Alert
-        variant="danger"
-        dismissible
-        onClose={() => dispatch(closeError())}
-      >
-        {error.toString()}
-      </Alert>
-    )
-  } else {
-    return null
-  }
+  return (
+    <Alert
+      variant="danger"
+      show={error !== null}
+    >
+      {error !== null ? error.toString() : null}
+    </Alert>
+  );
 }
 
 export default function Results() {

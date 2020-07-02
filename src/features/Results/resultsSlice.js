@@ -25,13 +25,8 @@ export const resultsSlice = createSlice({
     isLoading: false,
     currentRequestId: null,
     error: null,
-    errorShown: false,
   },
-  reducers: {
-    closeError(state) {
-      state.errorShown = true;
-    }
-  },
+  reducers: {},
   extraReducers: {
     [fetchEntries.pending]: (state, action) => {
       if (!state.isLoading) {
@@ -53,18 +48,14 @@ export const resultsSlice = createSlice({
     [fetchEntries.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
-      state.errorShown = false;
       state.currentRequestId = null;
     }
   }
 });
 
-export const { closeError } = resultsSlice.actions;
-
 export const selectEntries = state => state.results.entries;
 export const selectTotalEntriesFound = state => state.results.totalEntriesFound;
 export const selectIsLoading = state => state.results.isLoading;
 export const selectError = state => state.results.error;
-export const selectErrorShown = state => state.results.errorShown;
 
 export default resultsSlice.reducer;
