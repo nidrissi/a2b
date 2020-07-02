@@ -33,9 +33,10 @@ function parseEntry(xmlEntry) {
   // id
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
   // the URL has the form http://arxiv.org/abs/{id}v{version}
-  const regex = /arxiv\.org\/abs\/(?<id>.+)v\d+/;
+  const regex = /arxiv\.org\/abs\/(?<id>.+)v(?<version>\d+)/;
   const found = idURL.match(regex);
   entry.id = found.groups.id;
+  entry.version = found.groups.version;
 
   // link to PDF
   for (let l of xmlEntry.getElementsByTagName('link')) {

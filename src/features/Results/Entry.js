@@ -4,13 +4,14 @@ import {
   selectIncludeFile,
   selectFilePrefix,
   selectIncludePrimaryCategory,
+  selectIncludeVersion,
 } from '../Settings/settingsSlice';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory }) {
+function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory, includeVersion }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -32,6 +33,7 @@ function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory })
     eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}</a>,
     eprinttype: 'arXiv',
     eprintclass: includePrimaryCategory ? entry.primaryCategory : null,
+    version: includeVersion ? entry.version : null,
     doi: entry.doi,
     pubstate: entry.doi ? null : 'prepublished',
     file: includeFile ? fileLink : null,
@@ -73,6 +75,7 @@ export default function Entry({ entry }) {
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
+  const includeVersion = useSelector(selectIncludeVersion);
 
   return (
     <Card body bg="light" text="dark">
@@ -83,7 +86,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory })}
+        {formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory, includeVersion })}
       </pre>
     </Card>
   )
