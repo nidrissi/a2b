@@ -76,7 +76,7 @@ const faq = [
     ],
   },
   {
-    title: 'Common problems & required manual fixes',
+    title: 'Common problems & manual interventions',
     entries: [
       {
         key: 'surnames',
@@ -92,12 +92,12 @@ const faq = [
       {
         key: 'pubstate',
         q: <span>What is <code>pubstate</code>?</span>,
-        a: <span>In BibLaTeX, it indicates the publication state of the entry. For a preprint, the correct value is <code>prepublished</code>. Other possible values include <code>submitted</code>, <code>forthcoming</code>, <code>inpress</code>, and so on (see the BibLaTeX manual). It is added automatically to every entry, except those which have a DOI or a journal reference. Note that the author may have forgotten to update these fields after publication, so the value may be wrong: if the paper is already published, remove <code>pubstate</code>.</span>,
+        a: <span>In BibLaTeX, it indicates the publication state of the entry. For a preprint, the correct value is <code>prepublished</code>. Other possible values include <code>submitted</code>, <code>forthcoming</code>, <code>inpress</code>, and so on (see the BibLaTeX manual). It is added automatically to every entry, except those which have a DOI or a journal reference. Note that the author may have forgotten to update these fields after publication, so the value may be wrong: if the paper is already published, update or remove <code>pubstate</code> as appropriate.</span>,
       },
       {
         key: 'howpublished',
         q: <span>What is <code>howpublished</code>?</span>,
-        a: <span>In BibLaTeX, it is a free-form field that indicates how an <code>@misc</code> entry was published. I populate it with the journal reference if present in arXiv. Consider converting entries with a journal reference to a more appropriate entry type such as <code>@article</code>, <code>@book</code>, <code>@inproceedings</code>…</span>
+        a: <span>In BibLaTeX, this denotes a free-form field that indicates how an entry was published. It is populated with the journal reference if present in arXiv. Consider converting entries with a journal reference to a more appropriate entry type such as <code>@article</code>, <code>@book</code>, <code>@inproceedings</code>…</span>
       },
       {
         key: 'comment',
@@ -105,11 +105,21 @@ const faq = [
         a: <span>
              This field is populated from the comment left by the author(s) on arXiv. It is meaningless to BibLaTeX and will not be rendered in the bibliographical entry. It sometimes contains information that should go in other fields:
              <ul>
-               <li>"XX pages": should go in the <code>pagetotal</code> field (used for <code>@book</code> entries, other types requires special configuration);</li>
+               <li>"XX pages": should go in the <code>pagetotal</code> field (used by default for <code>@book</code> entries only, other types requires special configuration);</li>
                <li>"to appear in J. XYZ": convert the entry to <code>@article</code>, put the journal in <code>journaltitle</code>, and set <code>pubstate</code> to <code>forthcoming</code>;</li>
                <li>other: consider adding them to the <code>note</code> field – which will be rendered into the bibliographical entry – if relevant.</li>
              </ul>
            </span>
+      },
+      {
+        key: 'capitals',
+        q: 'Do you deal with capital letters?',
+        a: <span>No. If a title contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that letter. This should not be done for <em>every</em> capital letter in the title. Indeed, in some styles/languages, titles must follow “title case” (titles look like “A Theory of Everything and Beyond”), but in other styles/languages they must <em>not</em> follow it (e.g. in French titles must look like “Théorie du tout et du reste”). BibLaTeX already handles this automatically; don't force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must be dealt with manually.</span>
+      },
+      {
+        key: 'math',
+        q: 'Do you deal with math?',
+        a: <span>In titles, everything between a pair of dollar signs is enclosed by braces: <code>$...$</code> becomes <code>{'{$...$}'}</code>. This is relatively crude and may require manual intervention.</span>
       },
     ],
   }
