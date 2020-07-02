@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 
 import {
   saveSettings,
+  selectIncludeAbstract, setIncludeAbstract,
   selectIncludeFile, setIncludeFile,
   selectFilePrefix, setFilePrefix,
   selectIncludePrimaryCategory, setIncludePrimaryCategory,
@@ -16,6 +17,7 @@ import {
 
 export default function Settings() {
   const dispatch = useDispatch();
+  const includeAbstract = useSelector(selectIncludeAbstract);
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
@@ -49,6 +51,14 @@ export default function Settings() {
         </Form.Group>
         <Form.Group>
           <Form.Check
+            checked={includeAbstract}
+            onChange={e => dispatch(setIncludeAbstract(e.target.checked))}
+            id='includeAbstract'
+            label='Include the abstract'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Check
             checked={includePrimaryCategory}
             onChange={e => dispatch(setIncludePrimaryCategory(e.target.checked))}
             id='includePrimaryCategory'
@@ -60,7 +70,7 @@ export default function Settings() {
             checked={includeVersion}
             onChange={e => dispatch(setIncludeVersion(e.target.checked))}
             id='includeVersion'
-            label={<span>Include version information</span>}
+            label='Include version information'
           />
         </Form.Group>
         <h3>Search settings</h3>

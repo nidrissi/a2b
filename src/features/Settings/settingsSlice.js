@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const defaultInitialState = {
+  includeAbstract: false,
   includeFile: true,
   filePrefix: true,
   includePrimaryCategory: false,
@@ -20,31 +21,19 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState: initialState,
   reducers: {
-    setIncludeFile(state, action) {
-      state.includeFile = action.payload
-    },
-    setFilePrefix(state, action) {
-      state.filePrefix = action.payload
-    },
-    setIncludePrimaryCategory(state, action) {
-      state.includePrimaryCategory = action.payload;
-    },
-    setIncludeVersion(state, action) {
-      state.includeVersion = action.payload;
-    },
-    setSortBy(state, action) {
-      state.sortBy = action.payload;
-    },
-    setSortOrder(state, action) {
-      state.sortOrder = action.payload;
-    },
-    setMaxResults(state, action) {
-      state.maxResults = action.payload;
-    }
+    setIncludeAbstract(state, action) { state.includeAbstract = action.payload },
+    setIncludeFile(state, action) { state.includeFile = action.payload },
+    setFilePrefix(state, action) { state.filePrefix = action.payload },
+    setIncludePrimaryCategory(state, action) { state.includePrimaryCategory = action.payload },
+    setIncludeVersion(state, action) { state.includeVersion = action.payload },
+    setSortBy(state, action) { state.sortBy = action.payload },
+    setSortOrder(state, action) { state.sortOrder = action.payload },
+    setMaxResults(state, action) { state.maxResults = action.payload }
   }
 });
 export default settingsSlice.reducer;
 
+export const selectIncludeAbstract = state => state.settings.includeAbstract;
 export const selectIncludeFile = state => state.settings.includeFile;
 export const selectFilePrefix = state => state.settings.filePrefix;
 export const selectIncludePrimaryCategory = state => state.settings.includePrimaryCategory;
@@ -54,7 +43,16 @@ export const selectSortBy = state => state.settings.sortBy;
 export const selectSortOrder = state => state.settings.sortOrder;
 export const selectMaxResults = state => state.settings.maxResults;
 
-export const { setIncludeFile, setFilePrefix, setIncludePrimaryCategory, setIncludeVersion, setMaxResults, setSortBy, setSortOrder } = settingsSlice.actions;
+export const {
+  setIncludeAbstract,
+  setIncludeFile,
+  setFilePrefix,
+  setIncludePrimaryCategory,
+  setIncludeVersion,
+  setMaxResults,
+  setSortBy,
+  setSortOrder
+} = settingsSlice.actions;
 
 export function saveSettings() {
   return (_dispatch, getState) => {
