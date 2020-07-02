@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="text-center">
       <hr />
       <p>
-        arXiv2bib v{version}
+        arXiv2bib v{version} • licensed under AGPLv3 • <a href="https://github.com/nidrissi/arxiv2bib">source</a>
       </p>
     </footer>
 

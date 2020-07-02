@@ -26,7 +26,11 @@ export const resultsSlice = createSlice({
     currentRequestId: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    closeError(state) {
+      state.error = null
+    }
+  },
   extraReducers: {
     [fetchEntries.pending]: (state, action) => {
       if (!state.isLoading) {
@@ -52,6 +56,8 @@ export const resultsSlice = createSlice({
     }
   }
 });
+
+export const { closeError } = resultsSlice.actions;
 
 export const selectEntries = state => state.results.entries;
 export const selectTotalEntriesFound = state => state.results.totalEntriesFound;
