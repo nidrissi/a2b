@@ -9,9 +9,9 @@ import store from './store';
 import { Provider } from 'react-redux';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faClipboard, faCog, faQuestion, faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faCheck, faCog, faQuestion, faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faClipboard, faCog, faQuestion, faSearch, faTrashAlt);
+library.add(faClipboard, faCheck, faCog, faQuestion, faSearch, faTrashAlt);
 
 ReactGA.initialize('UA-170792065-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
