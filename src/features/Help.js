@@ -1,7 +1,7 @@
 import React from 'react';
 
 const faq = [
-  { title: "This program",
+  { title: 'This program',
     entries: [
       ['What (is this)?',
        <span>This program fetches entries from the <a href="https://arxiv.org">arXiv</a> and formats them to be used with BibLaTeX.</span>],
@@ -11,7 +11,7 @@ const faq = [
        'There are several programs around for making a bib(la)tex entry out of an arXiv preprint. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no biblatex support, “arXiv” in the journal field where it doesn\'t belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.'],
       ['How (does it work)?',
        <span>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons. It uses the <a href="https://arxiv.org/help/api/index">arXiv API</a> (with all its quirks…) to fetch entries.</span>],
-      ['What license is this program?',
+      ["What license is this program?",
        <span>
          This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
          <br />
@@ -27,7 +27,7 @@ const faq = [
        <span>Please <a href="https://github.com/nidrissi/arxiv2bib/issues">report an issue on Github</a> (or contact me by email). I cannot really promise anything, though.</span>],
     ],
   },
-  { title: "Output",
+  { title: 'Output',
     entries: [
       ['What format is the output?',
        <span>
@@ -39,6 +39,10 @@ const faq = [
        BibTeX and Biber are two external programs that convert a <code>.bib</code> file into a <code>.bbl</code> file readable by LaTeX. One of the main advantages of Biber over BibTeX is its support of Unicode characters. <a href="https://tex.stackexchange.com/q/25701/14965">Read more about this on TeX.SE.</a></span>],
       ['But I want to use the usual bibliography package!',
        <span>I plan to add support for it in the future. In the meantime, <a href="https://github.com/nidrissi/arxiv2bib">feel free to contribute</a> 😃. But be aware that unlike BibLaTeX, the <code>.bst</code> style you choose for your article will influence greatly the required format for the bibliography entry.</span>],
+    ],
+  },
+  { title: 'Common problems & required manual fixes',
+    entries: [
       ['How does the program handle surnames?',
        <span>
          ArXiv stores author names as e.g. "Jane H. Doe." However, BibLaTeX expects surnames to be separated from given names, e.g. "Doe, Jane H." This allows it to make special formatting of names, for example by automatically abbreviating given names ("J. H. Doe") or capitalizing surnames in some styles (e.g. in French: "Jane H. Dᴏᴇ").
@@ -51,6 +55,14 @@ const faq = [
        <span>In BibLaTeX, it indicates the publication state of the entry. For a preprint, the correct value is <code>prepublished</code>. Other possible values include <code>submitted</code>, <code>forthcoming</code>, and so on (see the BibLaTeX manual). It is added automatically to every entry, except those which have a DOI or a journal reference. Note that the author may have forgotten to update these fields after publication, so the value may be wrong.</span>,],
       [<span>What is <code>howpublished</code>?</span>,
        <span>In BibLaTeX, it is a free-form field that indicates how an <code>@misc</code> entry was published. I populate it with the journal reference if present in arXiv. Consider converting entries with a journal reference to a more appropriate entry type such as <code>@article</code>, <code>@book</code>…</span>],
+      [<span>What is <code>comment</code>?</span>,
+       <span>This field is populated from the comment left by the author(s) on arXiv. It is meaningless to BibLaTeX and will not be rendered in the bibliographical entry. It sometimes contains information that should go in other fields:
+         <ul>
+           <li>"XX pages": should go in the <code>pagetotal</code> field (used for <code>@book</code> entries, other types requires special configuration);</li>
+           <li>"to appear in J. XYZ": convert the entry to <code>@article</code>, put the journal in <code>journaltitle</code>, set <code>pubstate</code> to <code>forthcoming</code>.</li>
+         </ul>
+       </span>
+      ],
     ],
   }
 ];
@@ -60,7 +72,7 @@ export default function Help() {
     <div>
       <h1>Help</h1>
       {faq.map(({ title, entries }) => (
-        <React.Fragment key="title">
+        <React.Fragment key={title}>
           <h2>{title}</h2>
           <dl>
             {entries.map(([q, a]) => (
