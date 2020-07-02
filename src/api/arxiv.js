@@ -8,10 +8,10 @@ function parseEntry(xmlEntry) {
   // the end result
   const entry = {};
 
-  // authors
-  entry.authors = []
+  // authors are of the form <author> <name>John Doe</name> (<arxiv:affiliation>University </arxiv.affiliation>)? </author>
+  entry.authors = [];
   for (let a of xmlEntry.getElementsByTagName('author')) {
-    entry.authors.push(a.textContent.trim())
+    entry.authors.push(getUniqueNamedTag(a, 'name'));
   }
 
   // title
@@ -49,10 +49,10 @@ function parseEntry(xmlEntry) {
 
   // comment & journal ref (may not exist)
   try {
-    entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s*\n\s*/, ' ');
+    entry.comment = getUniqueNamedTag(xmlEntry, 'arxiv:comment').replace(/\s+/g, ' ');
   } catch (_err) { }
   try {
-    entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s*\n\s*/, ' ');
+    entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s+/g, ' ');
   } catch (_err) { }
   try {
     entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0).getAttribute('term');
