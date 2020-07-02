@@ -6,7 +6,7 @@ import SearchForm from './SearchForm';
 export default function Search() {
   return (
     <div>
-      <h1>Search</h1>
+      <h1>Search arXiv</h1>
       <SearchForm />
       <Results />
     </div>
