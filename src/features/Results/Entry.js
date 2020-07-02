@@ -55,7 +55,7 @@ function formatEntry({ entry, includeAbstract, includeFile, filePrefix, includeP
 
   // not great but better than before...
   return (
-    <React.Fragment>
+    <>
       {`@Misc{${key},\n`}
       {Object.keys(pairing).map(key => (
         <React.Fragment key={key}>
@@ -68,7 +68,7 @@ function formatEntry({ entry, includeAbstract, includeFile, filePrefix, includeP
         </React.Fragment>
       ))}
       {'}'}
-    </React.Fragment>
+    </>
   );
 }
 
