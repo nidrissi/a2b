@@ -34,9 +34,9 @@ function parseEntry(xmlEntry) {
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
   // the URL has the form http://arxiv.org/abs/{id}v{version}
   const regex = /arxiv\.org\/abs\/(?<id>.+)v(?<version>\d+)/;
-  const found = idURL.match(regex);
-  entry.id = found.groups.id;
-  entry.version = found.groups.version;
+  const { id, version } = idURL.match(regex).groups;
+  entry.id = id;
+  entry.version = version;
 
   // link to PDF
   for (let l of xmlEntry.getElementsByTagName('link')) {
@@ -68,7 +68,7 @@ function checkEntryForErrors(xmlEntry) {
   for (let l of xmlEntry.getElementsByTagName('link')) {
     if (l.getAttribute('href').match('api/errors')) {
       const error = getUniqueNamedTag(xmlEntry, 'summary');
-      throw (Error(`ArXiv reported “${error}”.`));
+      throw (Error(`ArXiv reported: “${error}”.`));
     }
   }
 }
