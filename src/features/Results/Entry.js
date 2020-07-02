@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import {
+  selectIncludeAbstract,
   selectIncludeFile,
   selectFilePrefix,
   selectIncludePrimaryCategory,
@@ -11,7 +12,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory, includeVersion }) {
+function formatEntry({ entry, includeAbstract, includeFile, filePrefix, includePrimaryCategory, includeVersion }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -34,17 +35,23 @@ function formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory, i
     eprinttype: 'arXiv',
     eprintclass: includePrimaryCategory ? entry.primaryCategory : null,
     version: includeVersion ? entry.version : null,
+    pubstate: (entry.doi || entry.journaRef) ? null : 'prepublished',
+    howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
     doi: entry.doi,
-    pubstate: entry.doi ? null : 'prepublished',
     file: includeFile ? fileLink : null,
     comment: entry.comment,
-    howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
+    abstract: includeAbstract ? entry.abstract : null,
   };
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
 
   // the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
+
+  // pad the abstract
+  if (includeAbstract) {
+    pairing.abstract = pairing.abstract.replace(/\n/g, "\n" + ' '.repeat(maxKeyLength + 6));
+  }
 
   // not great but better than before...
   return (
@@ -72,6 +79,7 @@ export default function Entry({ entry }) {
     navigator.clipboard.writeText(preRef.current.innerText)
   };
 
+  const includeAbstract = useSelector(selectIncludeAbstract);
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
@@ -86,7 +94,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, includeFile, filePrefix, includePrimaryCategory, includeVersion })}
+        {formatEntry({ entry, includeAbstract, includeFile, filePrefix, includePrimaryCategory, includeVersion })}
       </pre>
     </Card>
   )

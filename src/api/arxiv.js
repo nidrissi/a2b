@@ -30,6 +30,9 @@ function parseEntry(xmlEntry) {
   // date
   entry.year = getUniqueNamedTag(xmlEntry, 'published').substr(0, 4);
 
+  // abstract
+  entry.abstract = getUniqueNamedTag(xmlEntry, 'summary')
+
   // id
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
   // the URL has the form http://arxiv.org/abs/{id}v{version}
