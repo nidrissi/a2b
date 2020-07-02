@@ -8,7 +8,7 @@ export const searchFormSlice = createSlice({
     titles: []
   },
   reducers: {
-    setQuery: (state, action) => {
+    setQuery(state, action) {
       const query = action.payload;
       state.ids = query.ids;
       state.authors = query.authors;
