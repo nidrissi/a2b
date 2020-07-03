@@ -18,13 +18,19 @@ function splitter(current) {
 }
 
 function InputField({ value, setValue, label, placeholder, title }) {
+  const id = title.replace(/\s+/g, '-').toLowerCase();
   return (
     <Form.Group as={Row}>
-      <Form.Label column sm="2">
+      <Form.Label
+        htmlFor={id}
+        column
+        sm="2"
+      >
         {label}
       </Form.Label>
       <Col sm={10}>
         <Form.Control
+          id={id}
           value={value}
           onChange={e => setValue(e.target.value)}
           placeholder={placeholder}
