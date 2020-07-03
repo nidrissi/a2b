@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+import { selectEntryById } from './resultsSlice';
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -92,13 +94,15 @@ function formatEntry({ pairing, key }) {
   );
 }
 
-export default function Entry({ entry }) {
+export default function Entry({ entryId }) {
   // for the clipboard
   const preRef = useRef();
   const onClickCopy = _e => {
     navigator.clipboard.writeText(preRef.current.innerText)
   };
 
+  const entry = useSelector(selectEntryById(entryId));
+  
   const settings = useSelector(state => state.settings);
 
   return (

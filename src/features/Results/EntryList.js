@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
-  selectEntries,
+  selectEntryIds,
   selectTotalEntriesFound,
 } from './resultsSlice';
 import { selectMode } from '../Settings/settingsSlice';
@@ -13,14 +13,13 @@ import { selectMode } from '../Settings/settingsSlice';
 import Entry from './Entry';
 
 export default function EntryList() {
-  const entries = useSelector(selectEntries);
+  const entryIds = useSelector(selectEntryIds);
   const mode = useSelector(selectMode);
 
-  const uniqueEntries = [...new Set(entries)];
-  const renderedEntries = uniqueEntries.map(e =>
+  const renderedEntries = entryIds.map(id =>
     <Entry
-      key={e.id}
-      entry={e}
+      key={id}
+      entryId={id}
     />
   );
 
@@ -37,7 +36,7 @@ export default function EntryList() {
   const totalText =
         totalEntriesFound !== null
         ? <>
-            Showing {entries.length} entries out of {totalEntriesFound} in total.
+            Showing {entryIds.length} entries out of {totalEntriesFound} in total.
             {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
           </>
         : null;
