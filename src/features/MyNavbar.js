@@ -12,6 +12,7 @@ export default function MyNavbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <NavLink to="/" exact className="nav-link"><FontAwesomeIcon icon="search" /> Search</NavLink>
+          <NavLink to="/diy" className="nav-link"><FontAwesomeIcon icon="tools" /> DIY</NavLink>
           <NavLink to="/settings" className="nav-link"><FontAwesomeIcon icon="cog" /> Settings</NavLink>
           <NavLink to="/help" className="nav-link"><FontAwesomeIcon icon="question" /> Help</NavLink>
         </Nav>
