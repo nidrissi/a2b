@@ -38,7 +38,7 @@ export default function EntryList() {
         totalEntriesFound !== null
         ? <>
             Showing {entries.length} entries out of {totalEntriesFound} in total.
-            {mode === 'bibtex' ? <span className="text-danger"><br/>Running in legacy BibTeX mode. Check entries for issues.</span> : null}
+            {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
           </>
         : null;
 
