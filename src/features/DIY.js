@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -25,6 +26,7 @@ export default function DIY() {
   return (
     <>
       <h1>Do It Yourself</h1>
+      <Alert variant="warning">Not feature complete yet!</Alert>
       <Form>
         <Form.Group as={Row}>
           <Form.Label
