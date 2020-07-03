@@ -22,7 +22,7 @@ const faq = [
       {
         key: 'how',
         q: 'How (does it work)?',
-        a: <>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons. It uses the <a href="https://arxiv.org/help/api/index">arXiv API</a> (with all its quirks…) to fetch entries.</>
+        a: <>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.</>
       },
       {
         key: 'license',
@@ -46,6 +46,26 @@ const faq = [
         key: 'bug',
         q: 'I found a bug!',
         a: <>Please <a href="https://github.com/nidrissi/arxiv2bib/issues">report an issue on Github</a> (or contact me by email). I cannot really promise anything, though.</>
+      },
+    ],
+  },
+  {
+    title: 'Search',
+    entries: [
+      {
+        key: 'api',
+        q: 'How do you find entries?',
+        a: <>I use the <a href="https://arxiv.org/help/api/index">arXiv API</a> to fetch entries. This program is essentially a glorified URL query constructor and XML parser.</>
+      },
+      {
+        key: 'andor',
+        q: 'What are the conditions for an entry to be displayed?',
+        a: <>An entry will appear in the search results if it matches <em>all</em> the conditions inputted in the search form. It is theoretically possible to build more complex search queries using the API, but this would require revamping the form. Feel free to <a href="https://github.com/nidrissi/arxiv2bib/issues">suggest changes</a> if you have an idea on how to do that nicely, and/or <a href="https://github.com/nidrissi/arxiv2bib/pulls">contribute to the code</a> ☺.</>
+      },
+      {
+        key: 'accents',
+        q: 'I cannot find entries with special characters',
+        a: <>It appears that the API does not allow searching for entries with non-ASCII characters: for example, to find Poincaré's paper, you would have to search for "Henri Poincare". I use a <a href="https://stackoverflow.com/a/37511463">trick</a> to remove accents from all characters, but there are probably many edge cases that I did not deal with.</>
       },
     ],
   },
