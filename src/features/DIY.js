@@ -12,6 +12,7 @@ export default function DIY() {
   const [authors, setAuthors] = useState([]);
   const [year, setYear] = useState(0);
   const [journal, setJournal] = useState('');
+  const [pubstate, setPubstate] = useState(null);
   const [id, setId] = useState('');
   const [doi, setDoi] = useState('');
 
@@ -20,6 +21,7 @@ export default function DIY() {
     authors: authors.map(s => s.trim()),
     year: year || 0,
     journal: (type === 'Article') ? journal : null,
+    pubstate,
     id,
     doi
   };
@@ -81,25 +83,51 @@ export default function DIY() {
             />
           </Col>
         </Form.Group>
-        <Form.Group
-          as={Row}
-          className={type !== 'Article' ? 'd-none' : ''}
-        >
+
+        {/* @article-specific */}
+        <div className={type !== 'Article' ? 'd-none' : ''}>
+          <Form.Group as={Row}>
+            <Form.Label
+              column sm={2}
+              htmlFor='journal'
+            >
+              Journal
+            </Form.Label>
+            <Col>
+              <Form.Control
+                id='journal'
+                value={journal}
+                onChange={e => setJournal(e.target.value)}
+                disabled={type !== 'Article'}
+              />
+            </Col>
+          </Form.Group>
+        </div>
+
+        <Form.Group as={Row}>
           <Form.Label
             column sm={2}
-            htmlFor='journal'
+            htmlFor='pubstate'
           >
-            Journal
+            Publication state
           </Form.Label>
           <Col>
             <Form.Control
-              id='journal'
-              value={journal}
-              onChange={e => setJournal(e.target.value)}
-              disabled={type !== 'Article'}
-            />
+              id='pubstate'
+              as='select'
+              value={pubstate}
+              onChange={e => setPubstate(e.target.value)}
+            >
+              <option value=''>(leave blank)</option>
+              <option value='inpreparation'>In preparation</option>
+              <option value='prepublished'>Preprint</option>
+              <option value='submitted'>Submitted</option>
+              <option value='forthcoming'>Forthcoming (accepted by editor)</option>
+              <option value='inpress'>In press (final stages, out of author's hands)</option>
+            </Form.Control>
           </Col>
         </Form.Group>
+
         <Form.Group as={Row}>
           <Form.Label
             column sm={2}
