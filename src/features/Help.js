@@ -71,7 +71,7 @@ const faq = [
       {
         key: 'usual',
         q: 'But I want to use the old bibliography packages!',
-        a: <>I plan to add support for it in the future. In the meantime, <a href="https://github.com/nidrissi/arxiv2bib">feel free to contribute</a> 😃. But be aware that unlike BibLaTeX, the <code>.bst</code> style you choose for your article will influence greatly the required format for the bibliography entry.</>
+        a: <>This program has a legacy BibTeX mode. However, the required format for the entry heavily depends on the chosen <code>.bst</code> style. Default styles do not support URLs, DOIs, eprints, etc. Those that do, not necessarily support all of them. Please make sure that the entry produced is compatible with your style. <a href="https://arxiv.org/help/hypertex/bibstyles">Check also arXiv's official help.</a></>
       },
       {
         key: 'compile-arxiv',

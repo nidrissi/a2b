@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const defaultInitialState = {
+  mode: 'biblatex',
   includeAbstract: false,
   includeFile: true,
   filePrefix: true,
@@ -21,6 +22,7 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState: initialState,
   reducers: {
+    setMode(state, action) { state.mode = action.payload },
     setIncludeAbstract(state, action) { state.includeAbstract = action.payload },
     setIncludeFile(state, action) { state.includeFile = action.payload },
     setFilePrefix(state, action) { state.filePrefix = action.payload },
@@ -33,6 +35,7 @@ export const settingsSlice = createSlice({
 });
 export default settingsSlice.reducer;
 
+export const selectMode = state => state.settings.mode;
 export const selectIncludeAbstract = state => state.settings.includeAbstract;
 export const selectIncludeFile = state => state.settings.includeFile;
 export const selectFilePrefix = state => state.settings.filePrefix;
@@ -44,6 +47,7 @@ export const selectSortOrder = state => state.settings.sortOrder;
 export const selectMaxResults = state => state.settings.maxResults;
 
 export const {
+  setMode,
   setIncludeAbstract,
   setIncludeFile,
   setFilePrefix,
