@@ -56,11 +56,14 @@ function buildPairing({ entry, settings }) {
 
   const journalRefLink = <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>;
 
+  const doiLink = entry.doi ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a> : null;
+
   // the end result
   let pairing = {
     author: authorList,
     date: entry.year,
     title: entry.title,
+    [goodMode ? 'journaltitle' : 'journal']: entry.journal,
   };
 
   if (entry.id) {
@@ -95,7 +98,7 @@ function buildPairing({ entry, settings }) {
 
   pairing = {
     ...pairing,
-    doi: entry.doi,
+    doi: doiLink,
     file: settings.includeFile ? fileLink : null,
     comment: entry.comment,
     abstract: settings.includeAbstract ? entry.abstract : null,
