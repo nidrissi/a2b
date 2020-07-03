@@ -44,45 +44,53 @@ function formatEntry({ type, pairing, key }) {
 }
 
 function buildPairing({ entry, settings }) {
+  const goodMode = settings.mode === 'biblatex';
+
   const { key, authorList } = splitAuthors({ authors: entry.authors, year: entry.year });
 
-  const fileLink = (
-    <a href={entry.pdfLink}>
-      {settings.filePrefix ? `${key[0]}/` : ''}{key}.pdf
-    </a>
-  );
+  const fileName = (settings.filePrefix ? `${key[0]}/` : '') + `${key}.pdf`;
+  const fileLink =
+        entry.pdfLink
+        ? <a href={entry.pdfLink}>{fileName}</a>
+        : {fileName};
 
-  // the key is displayed
+  const journalRefLink = <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>;
+
+  // the end result
   let pairing = {
     author: authorList,
     date: entry.year,
     title: entry.title,
   };
 
-  // deal with mode
-  if (settings.mode === 'biblatex') {
+  if (entry.id) {
+    const fullId = entry.id + (settings.includeVersion ? `v${entry.version}` : '')
+    const absURL = `https://arxiv.org/abs/${fullId}`;
+
     pairing = {
       ...pairing,
-      eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}</a>,
-      eprinttype: 'arXiv',
-      eprintclass: settings.includePrimaryCategory ? entry.primaryCategory : null,
-      version: settings.includeVersion ? entry.version : null,
-      pubstate: (entry.doi || entry.journalRef) ? null : 'prepublished',
-      howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
+      eprint: <a href={absURL}>{fullId}</a>,
+      [goodMode ? 'eprinttype' : 'archiveprefix']: 'arXiv',
+      [goodMode ? 'eprintclass' : 'primaryclass']: settings.includePrimaryCategory ? entry.primaryCategory : null,
+      version: (goodMode && settings.includeVersion) ? entry.version : null,
+      url: goodMode ? null : absURL,
     }
-  } else if (settings.mode === 'bibtex') {
+  }
+
+  // deal with mode
+  if (goodMode) {
     pairing = {
       ...pairing,
-      eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}v{entry.version}</a>,
-      archivePrefix: 'arXiv',
-      primaryClass: settings.includePrimaryCategory ? entry.primaryCategory : null,
-      note: (entry.doi || entry.journalRef)
-        ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
-        : 'Preprint',
-      url: `https://arxiv.org/abs/${entry.id}`
+      pubstate: (entry.doi || entry.journalRef) ? null : 'prepublished',
+      howpublished: entry.journalRef ? journalRefLink : null,
     }
   } else {
-    throw (Error('Unknown mode (should not happen...)'))
+    pairing = {
+      ...pairing,
+      note: (entry.doi || entry.journalRef)
+        ? journalRefLink
+        : 'Preprint',
+    }
   }
 
   pairing = {
@@ -112,7 +120,7 @@ export default function Entry({ entry }) {
     <Card body bg="light" text="dark">
       <Button onClick={onClickCopy} className="float-right">
         <FontAwesomeIcon icon="clipboard" /> Copy
-        </Button>
+      </Button>
       <pre
         ref={preRef}
         className="m-0"
