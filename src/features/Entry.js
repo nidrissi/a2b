@@ -52,7 +52,7 @@ function buildPairing({ entry, settings }) {
   const fileLink =
         entry.pdfLink
         ? <a href={entry.pdfLink}>{fileName}</a>
-        : {fileName};
+        : fileName;
 
   const journalRefLink = <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>;
 
@@ -116,6 +116,8 @@ export default function Entry({ entry }) {
 
   const settings = useSelector(state => state.settings);
 
+  const formattedEntry = formatEntry(buildPairing({ entry, settings }));
+
   return (
     <Card body bg="light" text="dark">
       <Button onClick={onClickCopy} className="float-right">
@@ -125,7 +127,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry(buildPairing({ entry, settings }))}
+        {formattedEntry}
       </pre>
     </Card>
   )
