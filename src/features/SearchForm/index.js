@@ -24,7 +24,7 @@ function InputField({ value, setValue, label, placeholder, title }) {
       <Form.Label
         htmlFor={id}
         column
-        sm="2"
+        sm={2}
       >
         {label}
       </Form.Label>
