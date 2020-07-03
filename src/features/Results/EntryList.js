@@ -10,14 +10,14 @@ import {
 } from './resultsSlice';
 import { selectMode } from '../Settings/settingsSlice';
 
-import Entry from './Entry';
+import EntryById from './EntryById';
 
 export default function EntryList() {
   const entryIds = useSelector(selectEntryIds);
   const mode = useSelector(selectMode);
 
   const renderedEntries = entryIds.map(id =>
-    <Entry
+    <EntryById
       key={id}
       entryId={id}
     />
