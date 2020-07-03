@@ -64,6 +64,7 @@ function buildPairing({ entry, settings }) {
     date: entry.year,
     title: entry.title,
     [goodMode ? 'journaltitle' : 'journal']: entry.journal,
+    series: entry.series,       // TODO: deal with legacy!
   };
 
   if (entry.id) {

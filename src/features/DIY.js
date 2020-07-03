@@ -12,7 +12,8 @@ export default function DIY() {
   const [authors, setAuthors] = useState([]);
   const [year, setYear] = useState(0);
   const [journal, setJournal] = useState('');
-  const [pubstate, setPubstate] = useState(null);
+  const [series, setSeries] = useState('');
+  const [pubstate, setPubstate] = useState('');
   const [id, setId] = useState('');
   const [doi, setDoi] = useState('');
 
@@ -21,6 +22,7 @@ export default function DIY() {
     authors: authors.map(s => s.trim()),
     year: year || 0,
     journal: (type === 'Article') ? journal : null,
+    series,
     pubstate,
     id,
     doi
@@ -93,12 +95,21 @@ export default function DIY() {
             >
               Journal
             </Form.Label>
-            <Col>
+            <Col sm={8}>
               <Form.Control
                 id='journal'
                 value={journal}
                 onChange={e => setJournal(e.target.value)}
                 disabled={type !== 'Article'}
+              />
+            </Col>
+            <Col sm={2}>
+              <Form.Control
+                id='jseries'
+                value={series}
+                onChange={e => setSeries(e.target.value)}
+                placeholder='Journal series'
+                title='The series of the *journal*. Can be a number (e.g. Ann. of Math. 2nd series) or the keys newseries or oldseries (e.g. Selecta Math. N.S.)'
               />
             </Col>
           </Form.Group>
@@ -159,6 +170,7 @@ export default function DIY() {
           </Col>
         </Form.Group>
       </Form>
+
       <Entry entry={entry} />
     </>
   );
