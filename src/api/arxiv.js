@@ -61,6 +61,11 @@ function parseEntry(xmlEntry) {
     entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0).getAttribute('term');
   } catch (_err) { }
 
+  // publication state
+  if (!entry.doi && !entry.journalRef) {
+    entry.pubstate = 'prepublished'
+  }
+
   return entry;
 }
 

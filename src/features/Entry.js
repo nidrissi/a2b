@@ -84,7 +84,7 @@ function buildPairing({ entry, settings }) {
   if (goodMode) {
     pairing = {
       ...pairing,
-      pubstate: (entry.type === 'Misc' && !entry.doi && !entry.journalRef) ? 'prepublished' : null,
+      pubstate: entry.pubstate,
       howpublished: entry.journalRef ? journalRefLink : null,
     }
   } else {
