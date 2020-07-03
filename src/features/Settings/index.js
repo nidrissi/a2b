@@ -40,8 +40,8 @@ export default function Settings() {
             value={mode}
             onChange={e => dispatch(setMode(e.target.value))}
           >
-            <option value="biblatex">BibLaTeX</option>
-            <option value="bibtex">BibTeX (⚠ see help)</option>
+            <option value="biblatex">BibLaTeX (recommended)</option>
+            <option value="bibtex">Legacy BibTeX (⚠ see help)</option>
           </Form.Control>
         </Form.Group>
         <Form.Group>
