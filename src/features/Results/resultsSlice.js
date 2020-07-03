@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { arxivSearch } from '../../api/arxiv';
 
@@ -17,15 +17,16 @@ export const fetchEntries = createAsyncThunk(
   }
 );
 
+const entriesAdapter = createEntityAdapter()
+
 export const resultsSlice = createSlice({
   name: 'results',
-  initialState: {
-    entries: [],
+  initialState: entriesAdapter.getInitialState({
     totalEntriesFound: null,
     isLoading: false,
     currentRequestId: null,
     error: null,
-  },
+  }),
   reducers: {
     closeError(state) {
       state.error = null
@@ -44,7 +45,7 @@ export const resultsSlice = createSlice({
       if (state.isLoading && state.currentRequestId === requestId) {
         state.isLoading = false;
         const { entries, totalEntriesFound } = action.payload;
-        state.entries = entries;
+        entriesAdapter.setAll(state, entries);
         state.totalEntriesFound = totalEntriesFound;
         state.currentRequestId = null;
       }
@@ -59,7 +60,10 @@ export const resultsSlice = createSlice({
 
 export const { closeError } = resultsSlice.actions;
 
-export const selectEntries = state => state.results.entries;
+const entriesSelectors = entriesAdapter.getSelectors(state => state.results);
+
+export const selectEntryIds = state => entriesSelectors.selectIds(state);
+export const selectEntryById = id => state => entriesSelectors.selectById(state, id);
 export const selectTotalEntriesFound = state => state.results.totalEntriesFound;
 export const selectIsLoading = state => state.results.isLoading;
 export const selectError = state => state.results.error;
