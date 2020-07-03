@@ -15,7 +15,7 @@ function splitAuthors({authors, year}) {
   return { key, authorList };
 }
 
-function formatEntry({ pairing, key }) {
+function formatEntry({ type, pairing, key }) {
   // the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
 
@@ -27,7 +27,7 @@ function formatEntry({ pairing, key }) {
   // not great but better than before...
   return (
     <>
-      {`@Misc{${key},\n`}
+      {`@${type}{${key},\n`}
       {Object.keys(pairing).map(key => (
         <React.Fragment key={key}>
           {'  ' /* indent by 2 */}
@@ -59,6 +59,7 @@ function buildPairing({ entry, settings }) {
     title: entry.title,
   };
 
+  // deal with mode
   if (settings.mode === 'biblatex') {
     pairing = {
       ...pairing,
@@ -94,7 +95,8 @@ function buildPairing({ entry, settings }) {
 
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
-  return { pairing, key };
+
+  return { type: entry.type, pairing, key };
 }
 
 export default function Entry({ entry }) {
