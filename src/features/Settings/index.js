@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 
 import {
   saveSettings,
+  selectMode, setMode,
   selectIncludeAbstract, setIncludeAbstract,
   selectIncludeFile, setIncludeFile,
   selectFilePrefix, setFilePrefix,
@@ -17,6 +18,7 @@ import {
 
 export default function Settings() {
   const dispatch = useDispatch();
+  const mode = useSelector(selectMode);
   const includeAbstract = useSelector(selectIncludeAbstract);
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
@@ -32,6 +34,16 @@ export default function Settings() {
       <h1>Settings</h1>
       <Form onChange={() => dispatch(saveSettings())}>
         <h3>Entry display</h3>
+        <Form.Group>
+          <Form.Control
+            as="select"
+            value={mode}
+            onChange={e => dispatch(setMode(e.target.value))}
+          >
+            <option value="biblatex">BibLaTeX</option>
+            <option value="bibtex">BibTeX (⚠ see help)</option>
+          </Form.Control>
+        </Form.Group>
         <Form.Group>
           <Form.Check
             checked={includeFile}

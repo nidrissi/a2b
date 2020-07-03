@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function formatEntry({ entry, settings }) {
+function buildPairing({ entry, settings }) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
@@ -20,29 +20,56 @@ function formatEntry({ entry, settings }) {
   );
 
   // the key is displayed
-  const pairing = {
+  let pairing = {
     author: authorList,
     date: entry.year,
     title: entry.title,
-    eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}</a>,
-    eprinttype: 'arXiv',
-    eprintclass: settings.includePrimaryCategory ? entry.primaryCategory : null,
-    version: settings.includeVersion ? entry.version : null,
-    pubstate: (entry.doi || entry.journaRef) ? null : 'prepublished',
-    howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
+  };
+
+  if (settings.mode === 'biblatex') {
+    pairing = {
+      ...pairing,
+      eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}</a>,
+      eprinttype: 'arXiv',
+      eprintclass: settings.includePrimaryCategory ? entry.primaryCategory : null,
+      version: settings.includeVersion ? entry.version : null,
+      pubstate: (entry.doi || entry.journalRef) ? null : 'prepublished',
+      howpublished: entry.journalRef ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr> : null,
+    }
+  } else if (settings.mode === 'bibtex') {
+    pairing = {
+      ...pairing,
+      eprint: <a href={`https://arxiv.org/abs/${entry.id}`}>{entry.id}v{entry.version}</a>,
+      archivePrefix: 'arXiv',
+      primaryClass: settings.includePrimaryCategory ? entry.primaryCategory : null,
+      note: (entry.doi || entry.journalRef)
+        ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
+        : 'Preprint',
+      url: `https://arxiv.org/abs/${entry.id}`
+    }
+  } else {
+    throw (Error('Unknown mode (should not happen...)'))
+  }
+
+  pairing = {
+    ...pairing,
     doi: entry.doi,
     file: settings.includeFile ? fileLink : null,
     comment: entry.comment,
     abstract: settings.includeAbstract ? entry.abstract : null,
   };
+
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
+  return { pairing, key };
+}
 
+function formatEntry({ pairing, key }) {
   // the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
 
   // pad the abstract
-  if (settings.includeAbstract) {
+  if (pairing.abstract) {
     pairing.abstract = pairing.abstract.replace(/\n/g, "\n" + ' '.repeat(maxKeyLength + 6));
   }
 
@@ -83,7 +110,7 @@ export default function Entry({ entry }) {
         ref={preRef}
         className="m-0"
       >
-        {formatEntry({ entry, settings })}
+        {formatEntry(buildPairing({ entry, settings }))}
       </pre>
     </Card>
   )
