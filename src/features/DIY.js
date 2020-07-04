@@ -3,9 +3,28 @@ import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Row from 'react-bootstrap/Row';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Entry from './Entry';
+
+function HelpTooltip({ children }) {
+  return (
+    <OverlayTrigger
+      placement='top'
+      overlay={
+        <Tooltip>
+          {children}
+        </Tooltip>
+      }
+    >
+      <FontAwesomeIcon icon="question-circle" />
+    </OverlayTrigger>
+  );
+}
 
 export default function DIY() {
   const [type, setType] = useState('Article');
@@ -109,13 +128,21 @@ export default function DIY() {
               />
             </Col>
             <Col sm={2}>
-              <Form.Control
-                id='jseries'
-                value={series}
-                onChange={e => setSeries(e.target.value)}
-                placeholder='Journal series'
-                title='The series of the *journal*. Can be a number (e.g. Ann. of Math. 2nd series) or the keys newseries or oldseries (e.g. Selecta Math. N.S.)'
-              />
+              <InputGroup>
+                <Form.Control
+                  id='jseries'
+                  value={series}
+                  onChange={e => setSeries(e.target.value)}
+                  placeholder='Series'
+                />
+                <InputGroup.Append>
+                  <InputGroup.Text>
+                    <HelpTooltip>
+                      The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys newseries or oldseries (e.g. “Selecta Math. New Series”).
+                    </HelpTooltip>
+                  </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
@@ -124,6 +151,10 @@ export default function DIY() {
               htmlFor='jvolume'
             >
               Volume
+              {' '}
+              <HelpTooltip>
+                The volume of the journal in which the article was published.
+              </HelpTooltip>
             </Form.Label>
             <Col sm={4}>
               <Form.Control
@@ -132,7 +163,6 @@ export default function DIY() {
                 value={volume}
                 onChange={e => setVolume(e.target.value)}
                 disabled={type !== 'Article'}
-                title='The volume of the journal. Typically, one or two volumes a year.'
               />
             </Col>
             <Form.Label
@@ -140,6 +170,10 @@ export default function DIY() {
               htmlFor='jnumber'
             >
               Number
+              {' '}
+              <HelpTooltip>
+                Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.
+              </HelpTooltip>
             </Form.Label>
             <Col sm={4}>
               <Form.Control
@@ -147,7 +181,6 @@ export default function DIY() {
                 type='number'
                 value={number}
                 onChange={e => setNumber(e.target.value)}
-                title='The number of the issue inside the volume.'
               />
             </Col>
           </Form.Group>
