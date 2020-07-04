@@ -13,6 +13,8 @@ export default function DIY() {
   const [year, setYear] = useState(0);
   const [journal, setJournal] = useState('');
   const [series, setSeries] = useState('');
+  const [number, setNumber] = useState('');
+  const [volume, setVolume] = useState('');
   const [pubstate, setPubstate] = useState('');
   const [id, setId] = useState('');
   const [doi, setDoi] = useState('');
@@ -23,10 +25,13 @@ export default function DIY() {
     year: year || 0,
     journal: (type === 'Article') ? journal : null,
     series,
+    number,
+    volume,
     pubstate,
     id,
-    doi
-  };
+    doi,
+  }
+
   return (
     <>
       <h1>Do It Yourself</h1>
@@ -110,6 +115,39 @@ export default function DIY() {
                 onChange={e => setSeries(e.target.value)}
                 placeholder='Journal series'
                 title='The series of the *journal*. Can be a number (e.g. Ann. of Math. 2nd series) or the keys newseries or oldseries (e.g. Selecta Math. N.S.)'
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label
+              column sm={2}
+              htmlFor='jvolume'
+            >
+              Volume
+            </Form.Label>
+            <Col sm={4}>
+              <Form.Control
+                id='jvolume'
+                type='number'
+                value={volume}
+                onChange={e => setVolume(e.target.value)}
+                disabled={type !== 'Article'}
+                title='The volume of the journal. Typically, one or two volumes a year.'
+              />
+            </Col>
+            <Form.Label
+              column sm={2}
+              htmlFor='jnumber'
+            >
+              Number
+            </Form.Label>
+            <Col sm={4}>
+              <Form.Control
+                id='jnumber'
+                type='number'
+                value={number}
+                onChange={e => setNumber(e.target.value)}
+                title='The number of the issue inside the volume.'
               />
             </Col>
           </Form.Group>

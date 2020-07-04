@@ -44,27 +44,36 @@ function formatEntry({ type, pairing, key }) {
 }
 
 function buildPairing({ entry, settings }) {
+  // good = biblatex, bad = bibtex
   const goodMode = settings.mode === 'biblatex';
 
+  // get the key and the list of authors, separated by 'and'
   const { key, authorList } = splitAuthors({ authors: entry.authors, year: entry.year });
 
+  // generate a filename and link to the PDF, if any
   const fileName = (settings.filePrefix ? `${key[0]}/` : '') + `${key}.pdf`;
   const fileLink =
         entry.pdfLink
         ? <a href={entry.pdfLink}>{fileName}</a>
         : fileName;
 
+  // deal with journal ref & doi
   const journalRefLink = <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>;
-
   const doiLink = entry.doi ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a> : null;
 
-  // the end result
+  // journal name & series in bad mode
+  // if in badmode, add the series in parenthesis
+  const journal = entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : '');
+
+  // the end result will be this variable
   let pairing = {
     author: authorList,
     date: entry.year,
     title: entry.title,
-    [goodMode ? 'journaltitle' : 'journal']: entry.journal,
-    series: entry.series,       // TODO: deal with legacy!
+    [goodMode ? 'journaltitle' : 'journal']: journal,
+    series: goodMode ? entry.series : null,
+    volume: entry.volume,
+    number: entry.number,
   };
 
   if (entry.id) {
