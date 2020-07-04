@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Card from 'react-bootstrap/Card';
@@ -115,8 +115,10 @@ function buildPairing({ entry, settings }) {
 export default function Entry({ entry }) {
   // for the clipboard
   const preRef = useRef();
+  const [copied, setCopied] = useState(false);
   const onClickCopy = _e => {
-    navigator.clipboard.writeText(preRef.current.innerText)
+    navigator.clipboard.writeText(preRef.current.innerText);
+    setCopied(true);
   };
 
   const settings = useSelector(state => state.settings);
@@ -126,7 +128,9 @@ export default function Entry({ entry }) {
   return (
     <Card body bg="light" text="dark">
       <Button onClick={onClickCopy} className="float-right">
-        <FontAwesomeIcon icon="clipboard" /> Copy
+        <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />
+        {' '}
+        {copied ? 'Copied!' : 'Copy'}
       </Button>
       <pre
         ref={preRef}
