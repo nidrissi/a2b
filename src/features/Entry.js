@@ -63,7 +63,10 @@ function buildPairing({ entry, settings }) {
 
   // journal name & series in bad mode
   // if in badmode, add the series in parenthesis
-  const journal = entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : '');
+  let journal = null;
+  if (entry.journal) {
+    journal = entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : '');
+  }
 
   // the end result will be this variable
   let pairing = {
