@@ -45,23 +45,44 @@ function TooltipedInput({ children, help }) {
   );
 }
 
-/** Standard input fields. More complex ones are done by hand. 
+/** Standard inputs
  */
-function StandardInput({ as, id, name, label, placeholder, children }) {
+function StandardInput({totalColumns, id, label, help, ...props}) {
+  const labelColumns = 2;
+  const inputColumns = totalColumns - labelColumns;
+
+  const field = (
+    <Field
+      {...props}
+      id={id}
+      className='form-control'
+    />
+  );
+
+  // if there is a help text we put it in a tooltip, otherwise we keep the field
+  const input = help ? <TooltipedInput help={help} children={field} /> : field;
+
   return (
-    <BForm.Group as={Row}>
+    <>
       <BForm.Label
-        column sm={2}
+        column sm={labelColumns}
         htmlFor={id}
       >
         {label}
       </BForm.Label>
-      <Col>
-        <Field
-          {...{as, id, name, placeholder, children}}
-          className='form-control'
-        />
+      <Col sm={inputColumns}>
+        {input}
       </Col>
+    </>
+  )
+}
+
+/** Standard input group fields
+ */
+function StandardGroup(props) {
+  return (
+    <BForm.Group as={Row}>
+      <StandardInput totalColumns={12} {...props} />
     </BForm.Group>
   );
 }
@@ -106,22 +127,22 @@ export default function DIY() {
         {({values}) =>
           <Form>
             {/* common important fields */}
-            <StandardInput as='select' id='type' name='type' label='Type'>
+            <StandardGroup as='select' id='type' name='type' label='Type'>
               <option value='Article'>Journal article</option>
               <option value='Book'>Book</option>
               <option value='InProceedings'>Conference/Talk proceedings</option>
               <option value='Misc'>Other</option>
-            </StandardInput>
-            <StandardInput
+            </StandardGroup>
+            <StandardGroup
               id='authors' name='authors'
               label='Authors'
               placeholder='Author names separated by &'
             />
-            <StandardInput
+            <StandardGroup
               id='title' name='title'
               label='Title'
             />
-            <StandardInput
+            <StandardGroup
               id='year' name='year'
               label='Year'
             />
@@ -129,198 +150,100 @@ export default function DIY() {
             {/* @article-specific */}
             <div className={values.type !== 'Article' ? 'd-none' : null}>
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='journal'
-                >
-                  Journal
-                </BForm.Label>
-                <Col sm={8}>
-                  <Field
-                    id='journal' name='journal'
-                    className='form-control'
-                  />
-                </Col>
-                <Col sm={2}>
-                  <TooltipedInput
-                    help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
-                  >
-                    <Field
-                      id='jseries' name='series'
-                      placeholder='Series ?'
-                      className='form-control'
-                    />
-                    </TooltipedInput>
-                </Col>
+                <StandardInput
+                  id='journal' name='journal'
+                  label='Journal'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='jseries' name='series'
+                  label='Series'
+                  totalColumns={6}
+                  help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
+                />
               </BForm.Group>
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='jvolume'
-                >
-                  Volume
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='The volume of the journal in which the article was published.'
-                  >
-                    <Field
-                      id='jvolume' name='volume'
-                      type='number'
-                      className='form-control'                  
-                    />
-                  </TooltipedInput>
-                </Col>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='jnumber'
-                >
-                  Number
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
-                  >
-                    <Field
-                      id='jnumber' name='number'
-                      type='number'
-                      className='form-control'
-                    />
-                  </TooltipedInput>
-                </Col>
+                <StandardInput
+                  id='jvolume' name='volume'
+                  label='Volume'
+                  type='number'
+                  help='The volume of the journal in which the article was published.'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='jnumber' name='number'
+                  label='Number'
+                  type='number'
+                  totalColumns={6}
+                  help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
+                />
               </BForm.Group>
             </div>
 
             {/* @book specific */}
             <div className={values.type !== 'Book' ? 'd-none' : null}>
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='maintitle'
-                >
-                  Main title
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
-                    >
-                    <Field
-                      id='maintitle' name='maintitle'
-                      className='form-control'
-                    />
-                  </TooltipedInput>
-                </Col>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='bvolume'
-                >
-                  Volume number
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='When you want to quote a specific volume of a book.'
-                  >
-                    <Field
-                      id='bvolume' name='volume'
-                      type='number'
-                      className='form-control'
-                    />
-                  </TooltipedInput>
-                </Col>
+                <StandardInput
+                  id='maintitle' name='maintitle'
+                  label='Main title'
+                  help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='bvolume' name='volume'
+                  label='Volume'
+                  type='number'
+                  help='When you want to quote a specific volume of a book.'
+                  totalColumns={6}
+                />
               </BForm.Group>
 
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='bseries'
-                >
-                  Book series
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
-                  >
-                    <Field
-                      id='bseries' name='series'
-                      className='form-control'
-                    />
-                  </TooltipedInput>
-                </Col>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='bnumber'
-                >
-                  Number in series
-                </BForm.Label>
-                <Col sm={4}>
-                  <TooltipedInput
-                    help='The number of the book in the given series.'
-                  >
-                    <Field
-                      id='bnumber' name='number'
-                      type='number'
-                      className='form-control'
-                    />
-                  </TooltipedInput>
-                </Col>
+                <StandardInput
+                  id='bseries' name='series'
+                  label='Book series'
+                  help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='bnumber' name='number'
+                  label='Number'
+                  type='number'
+                  help='The number of the book in the given series.'
+                  totalColumns={6}
+                />
               </BForm.Group>
+
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='publisher'
-                >
-                  Publisher
-                </BForm.Label>
-                <Col sm={4}>
-                  <Field
-                    id='publisher' name='publisher'
-                    className='form-control'
-                  />
-                </Col>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='location'
-                >
-                  Location (of publisher)
-                </BForm.Label>
-                <Col sm={4}>
-                  <Field
-                    id='location' name='location'
-                    className='form-control'
-                  />
-                </Col>
+                <StandardInput
+                  id='publisher' name='publisher'
+                  label='Publisher'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='location' name='location'
+                  label='Location (of publisher)'
+                  totalColumns={6}
+                />
               </BForm.Group>
+
               <BForm.Group as={Row}>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='isbn'
-                >
-                  ISBN
-                </BForm.Label>
-                <Col sm={4}>
-                  <Field
-                    id='isbn' name='ISBN'
-                    className='form-control'
-                  />
-                </Col>
-                <BForm.Label
-                  column sm={2}
-                  htmlFor='pagetotal'
-                >
-                  Number of pages
-                </BForm.Label>
-                <Col sm={4}>
-                  <Field
-                    id='pagetotal' name='pagetotal'
-                    type='number'
-                    className='form-control'
-                  />
-                </Col>
+                <StandardInput
+                  id='isbn' name='ISBN'
+                  label='ISBN'
+                  totalColumns={6}
+                />
+                <StandardInput
+                  id='pagetotal' name='pagetotal'
+                  label='Number of pages'
+                  type='number'
+                  totalColumns={6}
+                />
               </BForm.Group>
             </div>
 
             {/* general publication information */}
-            <StandardInput
+            <StandardGroup
               as='select'
               id='pubstate' name='pubstate'
               label='Publication state'
@@ -331,13 +254,13 @@ export default function DIY() {
               <option value='submitted'>Submitted</option>
               <option value='forthcoming'>Forthcoming (accepted by editor)</option>
               <option value='inpress'>In press (final stages, out of author's hands)</option>
-            </StandardInput>
+            </StandardGroup>
 
-            <StandardInput
+            <StandardGroup
               id='id' name='id'
               label='ArXiv ID'
             />
-            <StandardInput
+            <StandardGroup
               id='doi' name='doi'
               label='DOI'
             />
