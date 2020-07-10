@@ -32,7 +32,7 @@ function HelpTooltip({ children }) {
 
 /** Standard input fields. More complex ones are done by hand. 
  */
-function StandardInput({ id, label, children }) {
+function StandardInput({ as, id, name, label, placeholder, children }) {
   return (
     <BForm.Group as={Row}>
       <BForm.Label
@@ -42,7 +42,10 @@ function StandardInput({ id, label, children }) {
         {label}
       </BForm.Label>
       <Col>
-        {children}
+        <Field
+          {...{as, id, name, placeholder, children}}
+          className='form-control'
+        />
       </Col>
     </BForm.Group>
   );
@@ -88,38 +91,25 @@ export default function DIY() {
         {({values}) =>
           <Form>
             {/* common important fields */}
-            <StandardInput id='type' label='Type'>
-              <Field
-                id='type' name='type'
-                as='select'
-                className='form-control'
-              >
-                <option value='Article'>Journal article</option>
-                <option value='Book'>Book</option>
-                <option value='InProceedings'>Conference/Talk proceedings</option>
-                <option value='Misc'>Other</option>
-              </Field>
+            <StandardInput as='select' id='type' name='type' label='Type'>
+              <option value='Article'>Journal article</option>
+              <option value='Book'>Book</option>
+              <option value='InProceedings'>Conference/Talk proceedings</option>
+              <option value='Misc'>Other</option>
             </StandardInput>
-            <StandardInput id='authors' label='Authors'>
-              <Field
-                id='authors' name='authors'
-                className='form-control'
-                placeholder='Author names separated by &'
-              />
-            </StandardInput>
-            <StandardInput id='title' label='Title'>
-              <Field
-                id='title' name='title'
-                className='form-control'
-              />
-            </StandardInput>
-            <StandardInput id='year' label='Year'>
-              <Field
-                id='year' name='year'
-                type='number'
-                className='form-control'
-              />
-            </StandardInput>
+            <StandardInput
+              id='authors' name='authors'
+              label='Authors'
+              placeholder='Author names separated by &'
+            />
+            <StandardInput
+              id='title' name='title'
+              label='Title'
+            />
+            <StandardInput
+              id='year' name='year'
+              label='Year'
+            />
 
             {/* @article-specific */}
             <div className={values.type !== 'Article' ? 'd-none' : null}>
@@ -324,33 +314,27 @@ export default function DIY() {
             </div>
 
             {/* general publication information */}
-            <StandardInput id='pubstate' label='Publication state'>
-              <Field
-                id='pubstate' name='pubstate'
-                as='select'
-                className='form-control'
-              >
-                <option value=''>(leave blank)</option>
-                <option value='inpreparation'>In preparation</option>
-                <option value='prepublished'>Preprint</option>
-                <option value='submitted'>Submitted</option>
-                <option value='forthcoming'>Forthcoming (accepted by editor)</option>
-                <option value='inpress'>In press (final stages, out of author's hands)</option>
-              </Field>
+            <StandardInput
+              as='select'
+              id='pubstate' name='pubstate'
+              label='Publication state'
+            >
+              <option value=''>(leave blank)</option>
+              <option value='inpreparation'>In preparation</option>
+              <option value='prepublished'>Preprint</option>
+              <option value='submitted'>Submitted</option>
+              <option value='forthcoming'>Forthcoming (accepted by editor)</option>
+              <option value='inpress'>In press (final stages, out of author's hands)</option>
             </StandardInput>
 
-            <StandardInput id='id' label='ArXiv ID'>
-              <Field
-                id='id' name='id'
-                className='form-control'
-              />
-            </StandardInput>
-            <StandardInput id='doi' label='DOI'>
-              <Field
-                id='doi' name='doi'
-                className='form-control'
-              />
-            </StandardInput>
+            <StandardInput
+              id='id' name='id'
+              label='ArXiv ID'
+            />
+            <StandardInput
+              id='doi' name='doi'
+              label='DOI'
+            />
 
             <BForm.Group>
               <Button
