@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, useField } from 'formik';
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import BForm from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -17,33 +18,31 @@ function splitter(current) {
   return current.split(rx).filter(s => s !== '');
 }
 
-function InputField({ value, setValue, label, placeholder, title }) {
-  const id = title.replace(/\s+/g, '-').toLowerCase();
+function InputField({ label, ...props }) {
+  const [field] = useField(props);
   return (
-    <Form.Group as={Row}>
-      <Form.Label
-        htmlFor={id}
+    <BForm.Group as={Row}>
+      <BForm.Label
+        htmlFor={props.name}
         column
         sm={2}
       >
         {label}
-      </Form.Label>
+      </BForm.Label>
       <Col sm={10}>
-        <Form.Control
-          id={id}
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          placeholder={placeholder}
-          title={title}
+        <BForm.Control
+          id={props.name}
+          {...field}
+          {...props}
         />
       </Col>
-    </Form.Group>
+    </BForm.Group>
   );
 }
 
 function SubmitClearButtons({ isLoading }) {
   return (
-    <Form.Group as={Form.Row}>
+    <BForm.Group as={BForm.Row}>
       <Col sm={10}>
         <Button
           disabled={isLoading}
@@ -64,60 +63,53 @@ function SubmitClearButtons({ isLoading }) {
           <FontAwesomeIcon icon="trash-alt" /> Clear
         </Button>
       </Col>
-    </Form.Group>
+    </BForm.Group>
   );
 }
 
-export default function SearchForm() {
+export default function SearchBForm() {
   const dispatch = useDispatch();
-  const [currentIds, setCurrentIds] = useState('');
-  const [currentAuthors, setCurrentAuthors] = useState('');
-  const [currentTitles, setCurrentTitles] = useState('');
-
   const isLoading = useSelector(selectIsLoading);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const query = {
-      ids: splitter(currentIds),
-      authors: splitter(currentAuthors),
-      titles: splitter(currentTitles)
-    };
-    dispatch(setQuery(query));
-  };
-
-  const handleReset = _e => {
-    [setCurrentIds, setCurrentTitles, setCurrentAuthors].forEach(set => { set('') })
-  };
-
   return (
-    <Form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
+    <Formik
+      initialValues={{
+        ids: '',
+        authors: '',
+        titles: ''
+      }}
+      onSubmit={(values) => {
+        if (!isLoading) {
+          const query = {
+            ids: splitter(values.ids),
+            authors: splitter(values.authors),
+            titles: splitter(values.titles)
+          };
+          dispatch(setQuery(query));
+        }
+      }}
     >
-      <InputField
-        value={currentIds}
-        setValue={setCurrentIds}
-        label="ID list"
-        placeholder="ID1 & ID2 & ..."
-        title="List of IDs, separated by '&'. Version will be stripped, e.g. 1911.12281v1 ⇒ 1911.12281."
-      />
-      <InputField
-        value={currentAuthors}
-        setValue={setCurrentAuthors}
-        label="Authors"
-        placeholder="Henri Poincaré & David Hilbert & ..."
-        title="Author(s) separated by '&'."
-      />
-      <InputField
-        value={currentTitles}
-        setValue={setCurrentTitles}
-        label="Title"
-        placeholder="operad & configuration space & ..."
-        title="Words/sentences to search in the title separated by '&'."
-      />
-      <SubmitClearButtons isLoading={isLoading} />
-    </Form>
+      <Form>
+        <InputField
+          label="ID list"
+          name="ids"
+          placeholder="ID1 & ID2 & ..."
+          title="List of IDs, separated by '&'. Version will be stripped, e.g. 1911.12281v1 ⇒ 1911.12281."
+        />
+        <InputField
+          name="authors"
+          label="Authors"
+          placeholder="Henri Poincaré & David Hilbert & ..."
+          title="Author(s) separated by '&'."
+        />
+        <InputField
+          name="titles"
+          label="Title"
+          placeholder="operad & configuration space & ..."
+          title="Words/sentences to search in the title separated by '&'."
+        />
+        <SubmitClearButtons isLoading={isLoading} />
+      </Form>
+    </Formik>
   );
 }
