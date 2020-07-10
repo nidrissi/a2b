@@ -191,7 +191,7 @@ export default function DIY() {
                   Main title
                   {' '}
                   <HelpTooltip>
-                    If the book is divided in volumes that each have a different name, then “Main title” is the title of the whole book, and “Title” is the title of the volume.
+                    If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).
                   </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
