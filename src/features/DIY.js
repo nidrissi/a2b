@@ -30,6 +30,21 @@ function HelpTooltip({ children }) {
   );
 }
 
+function TooltipedInput({ children, help }) {
+  return (
+    <InputGroup>
+      {children}
+      <InputGroup.Append>
+        <InputGroup.Text>
+          <HelpTooltip>
+            {help}
+          </HelpTooltip>
+        </InputGroup.Text>
+      </InputGroup.Append>
+    </InputGroup>
+  );
+}
+
 /** Standard input fields. More complex ones are done by hand. 
  */
 function StandardInput({ as, id, name, label, placeholder, children }) {
@@ -127,20 +142,15 @@ export default function DIY() {
                   />
                 </Col>
                 <Col sm={2}>
-                  <InputGroup>
+                  <TooltipedInput
+                    help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
+                  >
                     <Field
                       id='jseries' name='series'
                       placeholder='Series ?'
                       className='form-control'
                     />
-                    <InputGroup.Append>
-                      <InputGroup.Text>
-                        <HelpTooltip>
-                          The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).
-                        </HelpTooltip>
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
+                    </TooltipedInput>
                 </Col>
               </BForm.Group>
               <BForm.Group as={Row}>
@@ -149,34 +159,34 @@ export default function DIY() {
                   htmlFor='jvolume'
                 >
                   Volume
-                  {' '}
-                  <HelpTooltip>
-                    The volume of the journal in which the article was published.
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='jvolume' name='volume'
-                    type='number'
-                    className='form-control'                  
-                  />
+                  <TooltipedInput
+                    help='The volume of the journal in which the article was published.'
+                  >
+                    <Field
+                      id='jvolume' name='volume'
+                      type='number'
+                      className='form-control'                  
+                    />
+                  </TooltipedInput>
                 </Col>
                 <BForm.Label
                   column sm={2}
                   htmlFor='jnumber'
                 >
                   Number
-                  {' '}
-                  <HelpTooltip>
-                    Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='jnumber' name='number'
-                    type='number'
-                    className='form-control'
-                  />
+                  <TooltipedInput
+                    help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
+                  >
+                    <Field
+                      id='jnumber' name='number'
+                      type='number'
+                      className='form-control'
+                    />
+                  </TooltipedInput>
                 </Col>
               </BForm.Group>
             </div>
@@ -189,33 +199,33 @@ export default function DIY() {
                   htmlFor='maintitle'
                 >
                   Main title
-                  {' '}
-                  <HelpTooltip>
-                    If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='maintitle' name='maintitle'
-                    className='form-control'
-                  />
+                  <TooltipedInput
+                    help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
+                    >
+                    <Field
+                      id='maintitle' name='maintitle'
+                      className='form-control'
+                    />
+                  </TooltipedInput>
                 </Col>
                 <BForm.Label
                   column sm={2}
                   htmlFor='bvolume'
                 >
                   Volume number
-                  {' '}
-                  <HelpTooltip>
-                    When you want to quote a specific volume of a book.
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='bvolume' name='volume'
-                    type='number'
-                    className='form-control'
-                  />
+                  <TooltipedInput
+                    help='When you want to quote a specific volume of a book.'
+                  >
+                    <Field
+                      id='bvolume' name='volume'
+                      type='number'
+                      className='form-control'
+                    />
+                  </TooltipedInput>
                 </Col>
               </BForm.Group>
 
@@ -225,33 +235,33 @@ export default function DIY() {
                   htmlFor='bseries'
                 >
                   Book series
-                  {' '}
-                  <HelpTooltip>
-                    The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='bseries' name='series'
-                    className='form-control'
-                  />
+                  <TooltipedInput
+                    help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
+                  >
+                    <Field
+                      id='bseries' name='series'
+                      className='form-control'
+                    />
+                  </TooltipedInput>
                 </Col>
                 <BForm.Label
                   column sm={2}
                   htmlFor='bnumber'
                 >
                   Number in series
-                  {' '}
-                  <HelpTooltip>
-                    The number of the book in the series.
-                  </HelpTooltip>
                 </BForm.Label>
                 <Col sm={4}>
-                  <Field
-                    id='bnumber' name='number'
-                    type='number'
-                    className='form-control'
-                  />
+                  <TooltipedInput
+                    help='The number of the book in the given series.'
+                  >
+                    <Field
+                      id='bnumber' name='number'
+                      type='number'
+                      className='form-control'
+                    />
+                  </TooltipedInput>
                 </Col>
               </BForm.Group>
               <BForm.Group as={Row}>
@@ -271,11 +281,7 @@ export default function DIY() {
                   column sm={2}
                   htmlFor='location'
                 >
-                  Location
-                  {' '}
-                  <HelpTooltip>
-                    The location of the publisher.
-                  </HelpTooltip>
+                  Location (of publisher)
                 </BForm.Label>
                 <Col sm={4}>
                   <Field
