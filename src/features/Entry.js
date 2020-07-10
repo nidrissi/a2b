@@ -75,8 +75,13 @@ function buildPairing({ entry, settings }) {
     title: entry.title,
     [goodMode ? 'journaltitle' : 'journal']: journal,
     series: goodMode ? entry.series : null,
+    maintitle: entry.mainTitle,
     volume: entry.volume,
     number: entry.number,
+    publisher: entry.publisher,
+    location: entry.location,
+    isbn: entry.ISBN,
+    pagetotal: entry.pageTotal,
   };
 
   if (entry.id) {
