@@ -138,7 +138,7 @@ export default function DIY() {
                 <InputGroup.Append>
                   <InputGroup.Text>
                     <HelpTooltip>
-                      The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys newseries or oldseries (e.g. “Selecta Math. New Series”).
+                      The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).
                     </HelpTooltip>
                   </InputGroup.Text>
                 </InputGroup.Append>
