@@ -3,6 +3,7 @@ import React from 'react';
 import { Formik, Form, Field, useFormikContext } from 'formik';
 
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import BForm from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -350,6 +351,17 @@ export default function DIY() {
                 className='form-control'
               />
             </StandardInput>
+
+            <BForm.Group>
+              <Button
+                type="reset"
+                variant="secondary"
+                block
+              >
+                <FontAwesomeIcon icon="trash-alt" /> Clear
+              </Button>
+            </BForm.Group>
+
             <FormattedEntry />
           </Form>
         }
