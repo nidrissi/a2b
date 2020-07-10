@@ -67,7 +67,7 @@ function App() {
     <Container>
       <Router history={history}>
         <MyNavbar />
-        <Suspense fallback={<div className="text-center h1"><Spinner animation="grow" /> Loading...</div>}>
+        <Suspense fallback={<div className="text-center h1"><Spinner animation="grow" /> Loading…</div>}>
           <Switch>
             <Route path="/" exact>
               <Search />
