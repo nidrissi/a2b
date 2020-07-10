@@ -26,6 +26,22 @@ function HelpTooltip({ children }) {
   );
 }
 
+function StandardInput({ id, label, children }) {
+  return (
+    <Form.Group as={Row}>
+      <Form.Label
+        column sm={2}
+        htmlFor={id}
+      >
+        {label}
+      </Form.Label>
+      <Col>
+        {children}
+      </Col>
+    </Form.Group>
+  );
+}
+
 export default function DIY() {
   const [type, setType] = useState('Article');
   const [authors, setAuthors] = useState([]);
@@ -56,59 +72,35 @@ export default function DIY() {
       <h1>Do It Yourself</h1>
       <Alert variant="warning">Not feature complete yet!</Alert>
       <Form>
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='type'
+        <StandardInput id='type' label='Type'>
+          <Form.Control
+            id='type'
+            as='select'
+            value={type}
+            onChange={e => setType(e.target.value)}
           >
-            Type
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='type'
-              as='select'
-              value={type}
-              onChange={e => setType(e.target.value)}
-            >
-              <option value='Article'>Journal article</option>
-              <option value='Book'>Book</option>
-              <option value='InProceedings'>Conference/Talk proceedings</option>
-              <option value='Misc'>Other</option>
-            </Form.Control>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='authors'
-          >
-            Authors
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='authors'
-              value={authors.join('&')}
-              onChange={e => setAuthors(e.target.value.split(/&/))}
-              placeholder='Author names separated by &'
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='year'
-          >
-            Year
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='year'
-              type='number'
-              value={year}
-              onChange={e => setYear(e.target.value)}
-            />
-          </Col>
-        </Form.Group>
+            <option value='Article'>Journal article</option>
+            <option value='Book'>Book</option>
+            <option value='InProceedings'>Conference/Talk proceedings</option>
+            <option value='Misc'>Other</option>
+          </Form.Control>
+        </StandardInput>
+        <StandardInput id='authors' label='Authors'>
+          <Form.Control
+            id='authors'
+            value={authors.join('&')}
+            onChange={e => setAuthors(e.target.value.split(/&/))}
+            placeholder='Author names separated by &'
+          />
+        </StandardInput>
+        <StandardInput id='year' label='Year'>
+          <Form.Control
+            id='year'
+            type='number'
+            value={year}
+            onChange={e => setYear(e.target.value)}
+          />
+        </StandardInput>
 
         {/* @article-specific */}
         <div className={type !== 'Article' ? 'd-none' : ''}>
@@ -186,60 +178,36 @@ export default function DIY() {
           </Form.Group>
         </div>
 
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='pubstate'
+        <StandardInput id='pubstate' label='Publication state'>
+          <Form.Control
+            id='pubstate'
+            as='select'
+            value={pubstate}
+            onChange={e => setPubstate(e.target.value)}
           >
-            Publication state
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='pubstate'
-              as='select'
-              value={pubstate}
-              onChange={e => setPubstate(e.target.value)}
-            >
-              <option value=''>(leave blank)</option>
-              <option value='inpreparation'>In preparation</option>
-              <option value='prepublished'>Preprint</option>
-              <option value='submitted'>Submitted</option>
-              <option value='forthcoming'>Forthcoming (accepted by editor)</option>
-              <option value='inpress'>In press (final stages, out of author's hands)</option>
-            </Form.Control>
-          </Col>
-        </Form.Group>
+            <option value=''>(leave blank)</option>
+            <option value='inpreparation'>In preparation</option>
+            <option value='prepublished'>Preprint</option>
+            <option value='submitted'>Submitted</option>
+            <option value='forthcoming'>Forthcoming (accepted by editor)</option>
+            <option value='inpress'>In press (final stages, out of author's hands)</option>
+          </Form.Control>
+        </StandardInput>
 
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='id'
-          >
-            ArXiv ID
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='id'
-              value={id}
-              onChange={e => setId(e.target.value)}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label
-            column sm={2}
-            htmlFor='doi'
-          >
-            DOI
-          </Form.Label>
-          <Col>
-            <Form.Control
-              id='doi'
-              value={doi}
-              onChange={e => setDoi(e.target.value)}
-            />
-          </Col>
-        </Form.Group>
+        <StandardInput id='id' label='ArXiv ID'>
+          <Form.Control
+            id='id'
+            value={id}
+            onChange={e => setId(e.target.value)}
+          />
+        </StandardInput>
+        <StandardInput id='doi' label='DOI'>
+          <Form.Control
+            id='doi'
+            value={doi}
+            onChange={e => setDoi(e.target.value)}
+          />
+        </StandardInput>
       </Form>
 
       <Entry entry={entry} />
