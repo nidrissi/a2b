@@ -19,7 +19,7 @@ function splitter(current) {
 }
 
 function InputField({ label, ...props }) {
-  const [field] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <BForm.Group as={Row}>
       <BForm.Label
@@ -34,7 +34,11 @@ function InputField({ label, ...props }) {
           id={props.name}
           {...field}
           {...props}
+          isInvalid={meta.error}
         />
+        <BForm.Control.Feedback type="invalid">
+          {meta.error}
+        </BForm.Control.Feedback>
       </Col>
     </BForm.Group>
   );
@@ -78,7 +82,7 @@ export default function SearchBForm() {
         authors: '',
         titles: ''
       }}
-      onSubmit={(values) => {
+      onSubmit={(values, { setSubmitting }) => {
         if (!isLoading) {
           const query = {
             ids: splitter(values.ids),
@@ -86,8 +90,18 @@ export default function SearchBForm() {
             titles: splitter(values.titles)
           };
           dispatch(setQuery(query));
+          setSubmitting(false);
         }
       }}
+      validate={(values) =>{
+        const errors = {};
+        if (!values.ids && !values.authors && !values.titles) {
+          ['ids', 'authors', 'titles'].forEach(s => errors[s] = 'At least one value is required.');
+        }
+        return errors;
+      }}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       <Form>
         <InputField
