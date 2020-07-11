@@ -15,32 +15,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Entry from './Entry';
 
-function HelpTooltip({ children }) {
-  return (
-    <OverlayTrigger
-      placement='top'
-      overlay={
-        <Tooltip>
-          {children}
-        </Tooltip>
-      }
-    >
-      <FontAwesomeIcon icon="question-circle" />
-    </OverlayTrigger>
-  );
-}
-
 function TooltipedInput({ children, help }) {
   return (
     <InputGroup>
       {children}
-      <InputGroup.Append>
-        <InputGroup.Text>
-          <HelpTooltip>
+      <OverlayTrigger
+        placement='top'
+        overlay={
+          <Tooltip>
             {help}
-          </HelpTooltip>
-        </InputGroup.Text>
-      </InputGroup.Append>
+          </Tooltip>
+        }
+      >
+        <InputGroup.Append>
+          <InputGroup.Text>
+            <FontAwesomeIcon icon="question-circle" />
+          </InputGroup.Text>
+        </InputGroup.Append>
+      </OverlayTrigger>
     </InputGroup>
   );
 }
