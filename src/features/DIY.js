@@ -47,14 +47,14 @@ function TooltipedInput({ children, help }) {
 
 /** Standard inputs
  */
-function StandardInput({totalColumns, id, label, help, ...props}) {
+function StandardInput({totalColumns, label, help, ...props}) {
   const labelColumns = 2;
   const inputColumns = totalColumns - labelColumns;
 
   const field = (
     <Field
       {...props}
-      id={id}
+      id={props.name}
       className='form-control'
     />
   );
@@ -66,7 +66,7 @@ function StandardInput({totalColumns, id, label, help, ...props}) {
     <>
       <BForm.Label
         column sm={labelColumns}
-        htmlFor={id}
+        htmlFor={props.name}
       >
         {label}
       </BForm.Label>
@@ -127,23 +127,23 @@ export default function DIY() {
         {({values}) =>
           <Form>
             {/* common important fields */}
-            <StandardGroup as='select' id='type' name='type' label='Type'>
+            <StandardGroup as='select' name='type' label='Type'>
               <option value='Article'>Journal article</option>
               <option value='Book'>Book</option>
               <option value='InProceedings'>Conference/Talk proceedings</option>
               <option value='Misc'>Other</option>
             </StandardGroup>
             <StandardGroup
-              id='authors' name='authors'
+              name='authors'
               label='Authors'
               placeholder='Author names separated by &'
             />
             <StandardGroup
-              id='title' name='title'
+              name='title'
               label='Title'
             />
             <StandardGroup
-              id='year' name='year'
+              name='year'
               label='Year'
             />
 
@@ -152,12 +152,12 @@ export default function DIY() {
                 <>
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='journal' name='journal'
+                      name='journal'
                       label='Journal'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='jseries' name='series'
+                      name='series'
                       label='Series'
                       totalColumns={6}
                       help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
@@ -165,14 +165,14 @@ export default function DIY() {
                   </BForm.Group>
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='jvolume' name='volume'
+                      name='volume'
                       label='Volume'
                       type='number'
                       help='The volume of the journal in which the article was published.'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='jnumber' name='number'
+                      name='number'
                       label='Number'
                       type='number'
                       totalColumns={6}
@@ -187,13 +187,13 @@ export default function DIY() {
                 <>
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='maintitle' name='maintitle'
+                      name='maintitle'
                       label='Main title'
                       help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='bvolume' name='volume'
+                      name='volume'
                       label='Volume'
                       type='number'
                       help='When you want to quote a specific volume of a book.'
@@ -203,13 +203,13 @@ export default function DIY() {
 
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='bseries' name='series'
+                      name='series'
                       label='Book series'
                       help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='bnumber' name='number'
+                      name='number'
                       label='Number'
                       type='number'
                       help='The number of the book in the given series.'
@@ -219,12 +219,12 @@ export default function DIY() {
 
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='publisher' name='publisher'
+                      name='publisher'
                       label='Publisher'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='location' name='location'
+                      name='location'
                       label='Location (of publisher)'
                       totalColumns={6}
                     />
@@ -232,12 +232,12 @@ export default function DIY() {
 
                   <BForm.Group as={Row}>
                     <StandardInput
-                      id='isbn' name='ISBN'
+                      name='ISBN'
                       label='ISBN'
                       totalColumns={6}
                     />
                     <StandardInput
-                      id='pagetotal' name='pagetotal'
+                      name='pageTotal'
                       label='Number of pages'
                       type='number'
                       totalColumns={6}
@@ -249,7 +249,7 @@ export default function DIY() {
             {/* general publication information */}
             <StandardGroup
               as='select'
-              id='pubstate' name='pubstate'
+              name='pubstate'
               label='Publication state'
             >
               <option value=''>(leave blank)</option>
@@ -261,11 +261,11 @@ export default function DIY() {
             </StandardGroup>
 
             <StandardGroup
-              id='id' name='id'
+              name='id'
               label='ArXiv ID'
             />
             <StandardGroup
-              id='doi' name='doi'
+              name='doi'
               label='DOI'
             />
 
