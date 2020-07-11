@@ -147,100 +147,104 @@ export default function DIY() {
               label='Year'
             />
 
-            {/* @article-specific */}
-            <div className={values.type !== 'Article' ? 'd-none' : null}>
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='journal' name='journal'
-                  label='Journal'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='jseries' name='series'
-                  label='Series'
-                  totalColumns={6}
-                  help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
-                />
-              </BForm.Group>
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='jvolume' name='volume'
-                  label='Volume'
-                  type='number'
-                  help='The volume of the journal in which the article was published.'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='jnumber' name='number'
-                  label='Number'
-                  type='number'
-                  totalColumns={6}
-                  help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
-                />
-              </BForm.Group>
-            </div>
+            { /* @article-specific */
+              values.type === 'Article' &&
+                <>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='journal' name='journal'
+                      label='Journal'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='jseries' name='series'
+                      label='Series'
+                      totalColumns={6}
+                      help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
+                    />
+                  </BForm.Group>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='jvolume' name='volume'
+                      label='Volume'
+                      type='number'
+                      help='The volume of the journal in which the article was published.'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='jnumber' name='number'
+                      label='Number'
+                      type='number'
+                      totalColumns={6}
+                      help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
+                    />
+                  </BForm.Group>
+                </>
+            }
 
-            {/* @book specific */}
-            <div className={values.type !== 'Book' ? 'd-none' : null}>
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='maintitle' name='maintitle'
-                  label='Main title'
-                  help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='bvolume' name='volume'
-                  label='Volume'
-                  type='number'
-                  help='When you want to quote a specific volume of a book.'
-                  totalColumns={6}
-                />
-              </BForm.Group>
+            { /* @book specific */
+              values.type === 'Book' &&
+                <>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='maintitle' name='maintitle'
+                      label='Main title'
+                      help='If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any).'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='bvolume' name='volume'
+                      label='Volume'
+                      type='number'
+                      help='When you want to quote a specific volume of a book.'
+                      totalColumns={6}
+                    />
+                  </BForm.Group>
 
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='bseries' name='series'
-                  label='Book series'
-                  help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='bnumber' name='number'
-                  label='Number'
-                  type='number'
-                  help='The number of the book in the given series.'
-                  totalColumns={6}
-                />
-              </BForm.Group>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='bseries' name='series'
+                      label='Book series'
+                      help='The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”).'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='bnumber' name='number'
+                      label='Number'
+                      type='number'
+                      help='The number of the book in the given series.'
+                      totalColumns={6}
+                    />
+                  </BForm.Group>
 
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='publisher' name='publisher'
-                  label='Publisher'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='location' name='location'
-                  label='Location (of publisher)'
-                  totalColumns={6}
-                />
-              </BForm.Group>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='publisher' name='publisher'
+                      label='Publisher'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='location' name='location'
+                      label='Location (of publisher)'
+                      totalColumns={6}
+                    />
+                  </BForm.Group>
 
-              <BForm.Group as={Row}>
-                <StandardInput
-                  id='isbn' name='ISBN'
-                  label='ISBN'
-                  totalColumns={6}
-                />
-                <StandardInput
-                  id='pagetotal' name='pagetotal'
-                  label='Number of pages'
-                  type='number'
-                  totalColumns={6}
-                />
-              </BForm.Group>
-            </div>
+                  <BForm.Group as={Row}>
+                    <StandardInput
+                      id='isbn' name='ISBN'
+                      label='ISBN'
+                      totalColumns={6}
+                    />
+                    <StandardInput
+                      id='pagetotal' name='pagetotal'
+                      label='Number of pages'
+                      type='number'
+                      totalColumns={6}
+                    />
+                  </BForm.Group>
+                </>
+            }
 
             {/* general publication information */}
             <StandardGroup
