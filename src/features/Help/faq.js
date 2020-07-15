@@ -3,6 +3,7 @@ import React from 'react';
 const faq = [
   {
     title: 'This program',
+    key: 'program',
     entries: [
       {
         key: 'what',
@@ -34,7 +35,7 @@ const faq = [
            </>
       },
       {
-        key: 'work?',
+        key: 'work',
         q: 'Does it work?',
         a: <>
              I guess it does, however it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the AGPLv3:
@@ -51,6 +52,7 @@ const faq = [
   },
   {
     title: 'Search',
+    key: 'search',
     entries: [
       {
         key: 'api',
@@ -71,12 +73,13 @@ const faq = [
   },
   {
     title: 'Output',
+    key: 'output',
     entries: [
       {
         key: 'format',
         q: 'What format is the output?',
         a: <>
-             The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support and has many advantages over it. In particular, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot.
+          The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support and has many advantages over it. In particular, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot.
            </>
       },
       {
@@ -97,29 +100,30 @@ const faq = [
         key: 'compile-arxiv',
         q: 'How do I submit an article using BibLaTeX to arXiv? I always get errors…',
         a: <>
-             There are two issues that make it more difficult than it should be:
-             <ul className="mb-0">
-               <li>ArXiv is not very diligent when it comes to updating their TeX distribution. As of July 2020, they are nominally using TeX Live 2016, but <a href="https://arxiv.org/new/#feb-2017">they installed it in February 2017</a> and as such their distribution contains BibLaTeX v3.7, which is found in the historic archives of TeX Live 2017. The current version of BibLaTeX is v3.14.</li>
-               <li>ArXiv <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a> to compile <code>.bib</code> files with Biber or BibTeX. They require authors to send their compiled <code>.bbl</code> file. Unfortunately, files compiled for a newer version of BibLaTeX are not compatible with old versions. BibTeX has not been updated for decades so this is not an issue, but BibLaTeX is under active development.</li>
-             </ul>
-             There are several ways to solve this, <a href="https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv">as explained in the BibLaTeX development wiki</a>. The simplest one, in my opinion, is to install TeX Live 2017 from the <a href="https://tug.org/historic/">historic archives</a> and compile your article with the old binaries before sending the <code>.bbl</code> to arXiv.
-           </>
+          There are two issues that make it more difficult than it should be:
+          <ul className="mb-0">
+          <li>ArXiv is not very diligent when it comes to updating their TeX distribution. As of July 2020, they are nominally using TeX Live 2016, but <a href="https://arxiv.org/new/#feb-2017">they installed it in February 2017</a> and as such their distribution contains BibLaTeX v3.7, which is found in the historic archives of TeX Live 2017. The current version of BibLaTeX is v3.14.</li>
+          <li>ArXiv <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a> to compile <code>.bib</code> files with Biber or BibTeX. They require authors to send their compiled <code>.bbl</code> file. Unfortunately, files compiled for a newer version of BibLaTeX are not compatible with old versions. BibTeX has not been updated for decades so this is not an issue, but BibLaTeX is under active development.</li>
+          </ul>
+          There are several ways to solve this, <a href="https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv">as explained in the BibLaTeX development wiki</a>. The simplest one, in my opinion, is to install TeX Live 2017 from the <a href="https://tug.org/historic/">historic archives</a> and compile your article with the old binaries before sending the <code>.bbl</code> to arXiv.
+          </>
       },
     ],
   },
   {
     title: 'Common problems & manual interventions',
+    key: 'problems',
     entries: [
       {
         key: 'surnames',
         q: 'How does the program handle surnames?',
         a: <>
-             ArXiv stores author names as e.g. “Jane H. Doe.” However, BibLaTeX expects surnames to be separated from given names, e.g. “Doe, Jane H.” This allows it to make special formatting of names, for example by automatically abbreviating given names (“J. H. Doe”) or capitalizing surnames in some styles (e.g. in French: “Jane H. Dᴏᴇ”).
-             <br />
-             To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails in a few cases, for example:
-             <ul className="mb-0">
-               <li>when people have two or more surname, e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names;</li>
-               <li>when there is an addendum such as “John Doe, <em>Jr.</em>", “Jean <em>de la</em> Fontaine” or “Vincent <em>van</em> Gogh.”</li>
+          ArXiv stores author names as e.g. “Jane H. Doe.” However, BibLaTeX expects surnames to be separated from given names, e.g. “Doe, Jane H.” This allows it to make special formatting of names, for example by automatically abbreviating given names (“J. H. Doe”) or capitalizing surnames in some styles (e.g. in French: “Jane H. Dᴏᴇ”).
+          <br />
+          To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails in a few cases, for example:
+          <ul className="mb-0">
+          <li>when people have two or more surname, e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names;</li>
+          <li>when there is an addendum such as “John Doe, <em>Jr.</em>", “Jean <em>de la</em> Fontaine” or “Vincent <em>van</em> Gogh.”</li>
              </ul>
              Due to the large number of possible variations, it is not possible to automatically deal with this issue and it must be fixed by hand every time. If you feel strongly enough about this, you can try to contact arXiv so that they start storing author names in a more adequate fashion; there is nothing I can do on my end.
            </>
@@ -160,24 +164,4 @@ const faq = [
   }
 ];
 
-export default function Help() {
-  return (
-    <div>
-      <h1>Help</h1>
-      {faq.map(({ title, entries }) => (
-        <React.Fragment key={title}>
-          <h2>{title}</h2>
-          <dl>
-            {entries.map(({ key, q, a }) => (
-              <React.Fragment key={key}>
-                <dt>{q}</dt>
-                <dd>{a}</dd>
-              </React.Fragment>
-            ))}
-          </dl>
-        </React.Fragment>
-      ))}
-      <p className="text-muted"><i>(More help is coming...)</i></p>
-    </div>
-  )
-}
+export default faq;
