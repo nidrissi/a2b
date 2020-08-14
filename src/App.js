@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Router, Switch, Route } from 'react-router-dom';
+import { Switch, Redirect, Route, Router } from 'react-router-dom';
 
 import ReactGA from 'react-ga';
 import { createBrowserHistory } from 'history';
@@ -77,6 +77,9 @@ function App() {
             </Route>
             <Route path="/help">
               <Help />
+            </Route>
+            <Route path="/about">
+              <Redirect to="/help" />
             </Route>
             <Route path="/diy">
               <DIY />
