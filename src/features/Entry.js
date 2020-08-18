@@ -5,14 +5,17 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { removeAccents } from '../utils';
+
 function splitAuthors({authors, year}) {
   // deal with authors
   // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
   // and key = "DoeDew"
   const splitAuthors = authors.map(a => a.split(' '));
   const key = splitAuthors.map(l => l[l.length - 1]).join('') + year.toString();
+  const formattedKey = removeAccents(key);
   const authorList = splitAuthors.map(l => l[l.length - 1] + ', ' + l.slice(0, -1).join(' ')).join(' and ');
-  return { key, authorList };
+  return { key: formattedKey, authorList };
 }
 
 function formatEntry({ type, pairing, key }) {
