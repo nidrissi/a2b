@@ -1,4 +1,5 @@
 // see https://arxiv.org/help/api/user-manual
+import { removeAccents } from '../utils';
 
 function getUniqueNamedTag(xmlEntry, tag) {
   return xmlEntry.getElementsByTagName(tag).item(0).textContent.trim();
@@ -81,18 +82,10 @@ function checkEntryForErrors(xmlEntry) {
   }
 }
 
-/** Converts accented characters into unaccented ones.
-    arXiv does not allow searching for accents...
- */
-function sanitizeAccents(str) {
-  // https://stackoverflow.com/a/37511463
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-}
-
 function buildSearchQueryPart(list, label) {
   let result = '';
   if (list.length > 0) {
-    result = list.map(sanitizeAccents).map(encodeURIComponent).map(a => `${label}:"${a}"`).join('+AND+');
+    result = list.map(removeAccents).map(encodeURIComponent).map(a => `${label}:"${a}"`).join('+AND+');
   }
   return result;
 }
