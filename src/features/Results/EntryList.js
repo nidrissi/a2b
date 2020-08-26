@@ -34,19 +34,15 @@ export default function EntryList() {
 
   const totalEntriesFound = useSelector(selectTotalEntriesFound);
   const totalText =
-        totalEntriesFound !== null
-        ? <>
-            Showing {entryIds.length} entries out of {totalEntriesFound} in total.
-            {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
-          </>
-        : null;
+        <>
+          Showing {entryIds.length} entries out of {totalEntriesFound} in total.
+          {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
+        </>;
 
-  return (
+  // null means that entries haven't been fetched yet
+  return (totalEntriesFound === null) ? null : (
     <div ref={outerRef}>
-      <Alert
-        show={totalEntriesFound !== null}
-        variant="success"
-      >
+      <Alert variant="success">
         <Alert.Link
           onClick={onClickCopyAll}
           className="float-right"
