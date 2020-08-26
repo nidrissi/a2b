@@ -9,14 +9,13 @@ export default function ErrorAlert() {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
 
-  return (
+  return (error === null) ? null : (
     <Alert
       variant="danger"
-      show={error !== null}
       dismissible
       onClose={() => dispatch(clearError())}
     >
-      {error !== null ? error.toString() : null}
+      {error.toString()}
     </Alert>
   );
 }
