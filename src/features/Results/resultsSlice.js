@@ -28,7 +28,7 @@ export const resultsSlice = createSlice({
     error: null,
   }),
   reducers: {
-    closeError(state) {
+    clearError(state) {
       state.error = null
     }
   },
@@ -58,7 +58,7 @@ export const resultsSlice = createSlice({
   }
 });
 
-export const { closeError } = resultsSlice.actions;
+export const { clearError } = resultsSlice.actions;
 
 const entriesSelectors = entriesAdapter.getSelectors(state => state.results);
 
