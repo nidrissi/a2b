@@ -26,6 +26,11 @@ const faq = [
         a: <>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.</>
       },
       {
+        key: 'where',
+        q: 'Where (is it hosted)?',
+        a: 'This website is currently hosted on Amazon Web Services (S3 + CloudFront). It costs me a few cents per month.'
+      },
+      {
         key: 'license',
         q: "What license is this program?",
         a: <>
