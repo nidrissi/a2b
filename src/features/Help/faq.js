@@ -18,7 +18,7 @@ const faq = [
       {
         key: 'why',
         q: 'Why (did you write this)?',
-        a: 'There are several programs around for making a bib(la)tex entry out of an arXiv preprint. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no biblatex support, “arXiv” in the journal field where it doesn\'t belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.'
+        a: 'There are several programs around for making a bib(la)tex entry out of an arXiv preprint. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no BibLaTeX support, “arXiv” in the journal field where it doesn\'t belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.'
       },
       {
         key: 'how',
@@ -84,7 +84,7 @@ const faq = [
         key: 'format',
         q: 'What format is the output?',
         a: <>
-          The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support and has many advantages over it. In particular, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot.
+          The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support – which has not been developed much since the end of the 20th century – and has many advantages. Among other things, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot. It also support well languages other than English.
            </>
       },
       {
@@ -158,7 +158,11 @@ const faq = [
       {
         key: 'capitals',
         q: 'Do you deal with capital letters?',
-        a: <>No. If a title contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that letter. This should not be done for <em>every</em> capital letter in the title. Indeed, in some styles/languages, titles must follow “title case” (titles look like “A Theory of Everything and Beyond”), but in other styles/languages they must <em>not</em> follow it (e.g. in French titles must look like “Théorie du tout et du reste”). BibLaTeX already handles this automatically; don't force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must be dealt with manually.</>
+        a: <>
+             No. If a title contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that letter. This should not be done for <em>every</em> capital letter in the title. Indeed, in some styles/languages, titles must follow “title case” (titles look like “A Theory of Everything and Beyond”), but in other styles/languages they must <em>not</em> follow it (e.g. in French titles must look like “Théorie du tout et du reste”). BibLaTeX already handles this automatically; don't force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must be dealt with manually.
+             <br/>
+             <em>Remark</em>: if you want a word to keep its capitalization, you should enclose the whole words in curly brackets, not just the first letter. Enclosing the first letter only breaks the automatic <a href="https://en.wikipedia.org/wiki/Kerning">kerning</a>. See BibLaTeX's documentation for more details.
+           </>
       },
       {
         key: 'math',
