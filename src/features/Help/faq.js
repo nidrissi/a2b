@@ -28,7 +28,7 @@ const faq = [
       {
         key: 'where',
         q: 'Where (is it hosted)?',
-        a: 'This website is currently hosted on Amazon Web Services (S3 + CloudFront). It costs me a few cents per month.'
+        a: 'This website is currently hosted on Amazon Web Services (S3 + CloudFront), which costs me a few cents per month. The source is hosted on GitHub and the website is automatically built and uploaded to S3 using GitHub actions, which is free.'
       },
       {
         key: 'license',
