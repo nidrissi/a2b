@@ -23,7 +23,7 @@ export default [
       {
         key: 'how',
         q: 'How (does it work)?',
-        a: <>It's mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.</>
+        a: <>It is mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.</>
       },
       {
         key: 'where',
@@ -72,7 +72,7 @@ export default [
       {
         key: 'accents',
         q: 'I cannot find entries with special characters',
-        a: <>It appears that the API does not allow searching for entries with non-ASCII characters: for example, to find Poincaré's paper, you would have to search for "Henri Poincare". I use a <a href="https://stackoverflow.com/a/37511463">trick</a> to remove accents from all characters, but there are probably many edge cases that I did not deal with.</>
+        a: <>It appears that the API does not allow searching for entries with non-ASCII characters: for example, to find a paper by Poincaré paper, you would have to search for "Henri Poincare". I use a <a href="https://stackoverflow.com/a/37511463">trick</a> to remove accents from all characters, but there are probably many edge cases that I did not deal with.</>
       },
     ],
   },
@@ -84,7 +84,7 @@ export default [
         key: 'format',
         q: 'What format is the output?',
         a: <>
-          The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support – which has not been developed much since the end of the 20th century – and has many advantages. Among other things, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot. It also support well languages other than English.
+             The output is formatted to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>. BibLaTeX is a more modern approach to bibliography than LaTeX's default bibliography support – which has not been developed much since the end of the 20th century – and has many advantages. Among other things, its database format is well-defined, as opposed to the default format, where a field can have different meanings depending on the chosen style (the <code>.bst</code> file that you choose with <code>\bibliographystyle</code>). It is able to accurately represent an arXiv entry, while the default styles cannot. It also support well languages other than English.
            </>
       },
       {
@@ -105,13 +105,13 @@ export default [
         key: 'compile-arxiv',
         q: 'How do I submit an article using BibLaTeX to arXiv? I always get errors…',
         a: <>
-          There are two issues that make it more difficult than it should be:
-          <ul className="mb-0">
-          <li>ArXiv is not very diligent when it comes to updating their TeX distribution. As of July 2020, they are nominally using TeX Live 2016, but <a href="https://arxiv.org/new/#feb-2017">they installed it in February 2017</a> and as such their distribution contains BibLaTeX v3.7, which is found in the historic archives of TeX Live 2017. The current version of BibLaTeX is v3.14.</li>
-          <li>ArXiv <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a> to compile <code>.bib</code> files with Biber or BibTeX. They require authors to send their compiled <code>.bbl</code> file. Unfortunately, files compiled for a newer version of BibLaTeX are not compatible with old versions. BibTeX has not been updated for decades so this is not an issue, but BibLaTeX is under active development.</li>
-          </ul>
-          There are several ways to solve this, <a href="https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv">as explained in the BibLaTeX development wiki</a>. The simplest one, in my opinion, is to install TeX Live 2017 from the <a href="https://tug.org/historic/">historic archives</a> and compile your article with the old binaries before sending the <code>.bbl</code> to arXiv.
-          </>
+             There are two issues that make it more difficult than it should be:
+             <ul className="mb-0">
+               <li>ArXiv is not very diligent when it comes to updating their TeX distribution. As of July 2020, they are nominally using TeX Live 2016, but <a href="https://arxiv.org/new/#feb-2017">they installed it in February 2017</a> and as such their distribution contains BibLaTeX v3.7, which is found in the historic archives of TeX Live 2017. The current version of BibLaTeX is v3.14.</li>
+               <li>ArXiv <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a> to compile <code>.bib</code> files with Biber or BibTeX. They require authors to send their compiled <code>.bbl</code> file. Unfortunately, files compiled for a newer version of BibLaTeX are not compatible with old versions. BibTeX has not been updated for decades so this is not an issue, but BibLaTeX is under active development.</li>
+             </ul>
+             There are several ways to solve this, <a href="https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv">as explained in the BibLaTeX development wiki</a>. The simplest one, in my opinion, is to install TeX Live 2017 from the <a href="https://tug.org/historic/">historic archives</a> and compile your article with the old binaries before sending the <code>.bbl</code> to arXiv.
+           </>
       },
     ],
   },
@@ -123,12 +123,12 @@ export default [
         key: 'surnames',
         q: 'How does the program handle surnames?',
         a: <>
-          ArXiv stores author names as e.g. “Jane H. Doe.” However, BibLaTeX expects surnames to be separated from given names, e.g. “Doe, Jane H.” This allows it to make special formatting of names, for example by automatically abbreviating given names (“J. H. Doe”) or capitalizing surnames in some styles (e.g. in French: “Jane H. Dᴏᴇ”).
-          <br />
-          To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails in a few cases, for example:
-          <ul className="mb-0">
-          <li>when people have two or more surname, e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names;</li>
-          <li>when there is an addendum such as “John Doe, <em>Jr.</em>", “Jean <em>de la</em> Fontaine” or “Vincent <em>van</em> Gogh.”</li>
+             ArXiv stores author names as e.g. “Jane H. Doe.” However, BibLaTeX expects surnames to be separated from given names, e.g. “Doe, Jane H.” This allows it to make special formatting of names, for example by automatically abbreviating given names (“J. H. Doe”) or capitalizing surnames in some styles (e.g. in French: “Jane H. Dᴏᴇ”).
+             <br />
+             To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails in a few cases, for example:
+             <ul className="mb-0">
+               <li>when people have two or more surname, e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names;</li>
+               <li>when there is an addendum such as “John Doe, <em>Jr.</em>", “Jean <em>de la</em> Fontaine” or “Vincent <em>van</em> Gogh.”</li>
              </ul>
              Due to the large number of possible variations, it is not possible to automatically deal with this issue and it must be fixed by hand every time. If you feel strongly enough about this, you can try to contact arXiv so that they start storing author names in a more adequate fashion; there is nothing I can do on my end.
            </>
@@ -164,7 +164,7 @@ export default [
         a: <>
              No. If a title contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that letter. This should not be done for <em>every</em> capital letter in the title. Indeed, in some styles/languages, titles must follow “title case” (titles look like “A Theory of Everything and Beyond”), but in other styles/languages they must <em>not</em> follow it (e.g. in French titles must look like “Théorie du tout et du reste”). BibLaTeX already handles this automatically; don't force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must be dealt with manually.
              <br/>
-             <em>Remark</em>: if you want a word to keep its capitalization, you should enclose the whole words in curly brackets, not just the first letter. Enclosing the first letter only breaks the automatic <a href="https://en.wikipedia.org/wiki/Kerning">kerning</a>. See BibLaTeX's documentation for more details.
+             <em>Remark</em>: if you want a word to keep its capitalization, you should enclose the whole words in curly brackets, not just the first letter. Enclosing the first letter only breaks the automatic <a href="https://en.wikipedia.org/wiki/Kerning">kerning</a>. See BibLaTeX’s documentation for more details.
            </>
       },
       {
