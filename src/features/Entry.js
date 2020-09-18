@@ -10,8 +10,7 @@ import { removeAccents } from '../utils';
 /** Converts a JS author list and a date into a BibLaTeX author list and a key.
   * @param authors The list of authors.
   * @param date The date of the entry.
-  * @return key The key made from last names and the date.
-  * @return authorList The formatted author list.
+  * @returns The key made from last names and the date and the formatted author list.
   * @example
   * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
   * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
@@ -31,7 +30,7 @@ function splitAuthors({ authors, date }) {
  * @param key The key returned by `splitAuthors`
  */
 function formatEntry({ type, pairing, key }) {
-  // the longest key
+  // the length of the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
 
   // pad the abstract
@@ -47,7 +46,7 @@ function formatEntry({ type, pairing, key }) {
         <React.Fragment key={key}>
           {'  ' /* indent by 2 */}
           {key}
-          {' '.repeat(maxKeyLength - key.length)}
+          {' '.repeat(maxKeyLength - key.length) /* pad to align all equal signs */}
           {' = {'}
           {pairing[key]}
           {"},\n"}
