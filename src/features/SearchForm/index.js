@@ -71,7 +71,7 @@ function SubmitClearButtons({ isLoading }) {
   );
 }
 
-export default function SearchBForm() {
+export default function SearchForm() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
