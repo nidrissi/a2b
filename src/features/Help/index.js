@@ -32,22 +32,21 @@ function Section({ title, entries }) {
   return (
     <>
       <h2>{title}</h2>
-      <Accordion>
         {entries.map(({ key, q, a }) =>
           <Entry key={key} eventKey={key} q={q} a={a} />
         )}
-      </Accordion>
-    </>)
+    </>
+  )
 }
 
 /** The FAQ entries, taken from `faq`. */
 function Body() {
   return (
-    <>
+    <Accordion>
       {faq.map((props) =>
         <Section {...props} />
       )}
-    </>
+    </Accordion>
   );
 }
 
