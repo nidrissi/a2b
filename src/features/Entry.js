@@ -87,6 +87,7 @@ function buildPairing({ entry, settings }) {
   }
 
   // the end result will be this variable
+  // all keys are lowercase
   let pairing = {
     author: authorList,
     date: entry.year,
@@ -94,6 +95,7 @@ function buildPairing({ entry, settings }) {
     [goodMode ? 'journaltitle' : 'journal']: journal,
     series: goodMode ? entry.series : null,
     maintitle: entry.mainTitle,
+    subtitle: entry.subTitle,
     volume: entry.volume,
     number: entry.number,
     publisher: entry.publisher,

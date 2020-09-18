@@ -28,6 +28,10 @@ export function GenericPreFields() {
         name='year'
         label='Year'
       />
+      <StandardGroup
+        name='subTitle'
+        label='Subtitle'
+      />
     </>
   );
 }
@@ -75,7 +79,7 @@ function ArticleFields() {
           name='series'
           label='Series'
           totalColumns={6}
-          help={<>The series of the <em>journal</em>, if any. Can be a number (e.g. “Ann. of Math. 2nd series”) or the keys <code>newseries</code> or <code>oldseries</code> (e.g. “Selecta Math. New Series”).</>}
+          help={<>The series of the <em>journal</em>, if any. It can be a number (to get e.g. “Ann. of Math. 2nd series”) or one of the keys <code>newseries</code> or <code>oldseries</code> (to get e.g. “Selecta Math. New Series”).</>}
         />
       </BForm.Group>
       <BForm.Group as={Row}>
@@ -91,7 +95,7 @@ function ArticleFields() {
           label='Number'
           type='number'
           totalColumns={6}
-          help='Volumes are sometimes further subdivided in “issues” or something else: the number field refers to this subdivision.'
+          help='Volumes are sometimes further subdivided in “issues” or something else. This number field refers to this subdivision.'
         />
       </BForm.Group>
     </>
