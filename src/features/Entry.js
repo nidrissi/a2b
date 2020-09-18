@@ -77,8 +77,14 @@ function buildPairing({ entry, settings }) {
         : fileName;
 
   // deal with journal ref & doi
-  const journalRefLink = <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>;
-  const doiLink = entry.doi ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a> : null;
+  const journalRefLink =
+        entry.journalRef
+        ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
+        : null;
+  const doiLink =
+        entry.doi
+        ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a>
+        : null;
 
   // journal name & series in bad mode
   // if in badmode, add the series in parenthesis
@@ -130,7 +136,7 @@ function buildPairing({ entry, settings }) {
     pairing = {
       ...pairing,
       pubstate: entry.pubstate,
-      howpublished: entry.journalRef ? journalRefLink : null,
+      howpublished: journalRefLink,
     }
   } else {
     pairing = {
