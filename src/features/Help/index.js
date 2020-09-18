@@ -6,27 +6,47 @@ import Card from 'react-bootstrap/Card';
 
 import faq from './faq';
 
-/** The FAQ entries, taken from `faq`. */
-function FAQBody() {
+/** One entry of the FAQ.
+ * @param eventKey The key, should be unique and valid as an HTML id.
+ * @param q The question asked.
+ * @param a The answer to the question.
+ */
+function Entry({ eventKey, q, a }) {
+  return (
+    <Card>
+      <Accordion.Toggle as={Card.Header} className="p-2" eventKey={eventKey}>
+        <Button variant="link" className="p-0">{q}</Button>
+      </Accordion.Toggle>
+      <Accordion.Collapse eventKey={eventKey}>
+        <Card.Body>{a}</Card.Body>
+      </Accordion.Collapse>
+    </Card>
+  );
+}
+
+/** One section of the FAQ.
+ * @param title The title of the section.
+ * @param entries The list of entries in the section.
+ */
+function Section({ title, entries }) {
   return (
     <>
-      {faq.map(({ title, key, entries }) => (
-        <React.Fragment key={key}>
-          <h2>{title}</h2>
-          <Accordion>
-            {entries.map(({ key, q, a }) => (
-              <Card key={key}>
-                <Accordion.Toggle as={Card.Header} className="p-2" eventKey={key}>
-                  <Button variant="link" className="p-0">{q}</Button>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey={key}>
-                  <Card.Body>{a}</Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            ))}
-          </Accordion>
-        </React.Fragment>
-      ))}
+      <h2>{title}</h2>
+      <Accordion>
+        {entries.map(({ key, q, a }) =>
+          <Entry key={key} eventKey={key} q={q} a={a} />
+        )}
+      </Accordion>
+    </>)
+}
+
+/** The FAQ entries, taken from `faq`. */
+function Body() {
+  return (
+    <>
+      {faq.map((props) =>
+        <Section {...props} />
+      )}
     </>
   );
 }
@@ -36,7 +56,7 @@ export default function Help() {
   return (
     <>
       <h1>Help</h1>
-      <FAQBody />
+      <Body />
     </>
   )
 }
