@@ -8,7 +8,7 @@ export default [
       {
         key: 'what',
         q: 'What (is this)?',
-        a: <>This program fetches entries from the <a href="https://arxiv.org">arXiv</a> and formats them to be used with BibLaTeX.</>
+        a: <>This program fetches entries from the <a href="https://arxiv.org">arXiv</a> and formats them to be used with <a href="https://www.ctan.org/pkg/biblatex">BibLaTeX</a>.</>
       },
       {
         key: 'who',
@@ -18,7 +18,7 @@ export default [
       {
         key: 'why',
         q: 'Why (did you write this)?',
-        a: 'There are several programs around for making a bib(la)tex entry out of an arXiv preprint. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no BibLaTeX support, “arXiv” in the journal field where it doesn\'t belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.'
+        a: <>There are several programs around for making a Bib(La)Tex entry out of an arXiv entry. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no BibLaTeX support, “arXiv” in the journal field where it doesn’t belong, etc. I had been using a <a href="https://github.com/nidrissi/dotfiles/blob/master/local/bin/arxiv.pl">homemade Perl script</a> for a long time, but it lacked some features and not as easily usable. So, I wrote this.</>
       },
       {
         key: 'how',
@@ -91,7 +91,7 @@ export default [
         key: 'difference',
         q: 'What is the difference between BibLaTeX, natbib, Biber, BibTeX...?',
         a: <>
-             BibLaTeX is a LaTeX package used to format bibliography. Its “original” counterpart was the <code>\bibliography</code> / <code>\printbibliography</code> in standard LaTeX, the <code>thebibliography</code> environment, or packages such as <code>natbib</code>.
+             BibLaTeX is a LaTeX package used to format bibliography. Its “original” counterpart was the <code>\bibliography</code> / <code>\printbibliography</code> in standard LaTeX, the <code>thebibliography</code> environment, or packages such as <code>natbib</code>. BibLaTeX is much more powerful than the original LaTeX bibliography system, see <a href="https://www.ctan.org/pkg/biblatex">its website</a> for more information.
              <br />
              BibTeX and Biber are two external programs that convert a <code>.bib</code> file into a <code>.bbl</code> file readable by LaTeX. One of the main advantages of Biber over BibTeX is its support of Unicode characters. <a href="https://tex.stackexchange.com/q/25701/14965">Read more about this on TeX.SE.</a>
            </>
@@ -99,7 +99,7 @@ export default [
       {
         key: 'usual',
         q: 'But I want to use the old bibliography packages!',
-        a: <>This program has a legacy BibTeX mode. However, the required format for the entry heavily depends on the chosen <code>.bst</code> style. Default styles do not support URLs, DOIs, eprints, etc. Those that do, not necessarily support all of them. Please make sure that the entry produced is compatible with your style. <a href="https://arxiv.org/help/hypertex/bibstyles">Check also arXiv's official help.</a></>
+        a: <>This program has a legacy BibTeX mode. However, the required format for the entry heavily depends on the chosen <code>.bst</code> style. Default styles do not support URLs, DOIs, eprints, etc. Out of those that do, most do not support all of them. Please make sure that the entry produced is compatible with your style. <a href="https://arxiv.org/help/hypertex/bibstyles">Check also arXiv's official help</a>, but from its content it is clear that it was at least one or two decades ago.</>
       },
       {
         key: 'compile-arxiv',
