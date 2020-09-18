@@ -2,6 +2,7 @@ import React from 'react';
 
 import faq from './faq';
 
+/** Table of contents based on the keys in `faq`. */
 function TOC() {
   return (
     <ul className="list-unstyled">
@@ -27,6 +28,7 @@ function TOC() {
   );
 }
 
+/** The FAQ entries, taken from `faq`. */
 function FAQBody() {
   return faq.map(({ title, key, entries }) => (
     <React.Fragment key={key}>
@@ -43,6 +45,7 @@ function FAQBody() {
   ));
 }
 
+/** The full `Help` component. Contains a table of contents and the entries from `faq`. */
 export default function Help() {
   return (
     <>

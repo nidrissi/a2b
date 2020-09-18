@@ -12,6 +12,10 @@ import { selectMode } from '../Settings/settingsSlice';
 
 import EntryById from './EntryById';
 
+/** The list of all entries. Entry ids are taken from the redux state
+ * and then rendered using `EntryById`. Then adds buttons to copy entries 
+ * to the clipboards and counts how many are displayed out of the total.
+ */
 export default function EntryList() {
   const entryIds = useSelector(selectEntryIds);
   const mode = useSelector(selectMode);

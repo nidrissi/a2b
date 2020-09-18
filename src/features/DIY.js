@@ -15,6 +15,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Entry from './Entry';
 
+/** Adds a tooltip to an input.
+    @param children The input to be tooltip.
+    @param help The help text.
+ */
 function TooltipedInput({ children, help }) {
   return (
     <InputGroup>
@@ -37,7 +41,11 @@ function TooltipedInput({ children, help }) {
   );
 }
 
-/** Standard inputs
+/** Standard inputs.
+    @param totalColumns The total number of columns for the input. Two columns will be reserved for the label.
+    @param label The text of the label
+    @param help The help text, if any.
+    @param ...props The rest of the props, passed to the input.
  */
 function StandardInput({totalColumns, label, help, ...props}) {
   const labelColumns = 2;
@@ -69,7 +77,8 @@ function StandardInput({totalColumns, label, help, ...props}) {
   )
 }
 
-/** Standard input group fields
+/** Standard input group fields. 
+    @param props All parameters are passed to a `StandardInput`.
  */
 function StandardGroup(props) {
   return (
@@ -79,6 +88,8 @@ function StandardGroup(props) {
   );
 }
 
+/** Takes values from the Formik context, creates an entry and formats it with `Entry`.
+ */
 function FormattedEntry() {
   const { values } = useFormikContext();
   // split on &, delete empty values, and trim
@@ -91,6 +102,8 @@ function FormattedEntry() {
   return <Entry entry={entry} />
 }
 
+/** The DIY component: turns values inputted in a form into a formatted entry.
+ */
 export default function DIY() {
   return (
     <>

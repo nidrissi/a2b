@@ -7,10 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { removeAccents } from '../utils';
 
+/** Converts a JS author list and a year into a BibLaTeX author list and a key.
+  * @param authors The list of authors
+  * @param year The year
+  * @return key The key made from last names and the year
+  * @return authorList The formatted author list
+  * @example
+  * // returns { key: 'DoeDew1234', authorList: "Doe, Jane and Dew, John"}
+  * splitAuthors({ authors: ['Jane Doe', 'John Dew'], year: 1234 })
+ */
 function splitAuthors({authors, year}) {
-  // deal with authors
-  // transforms something like ['Jane Doe', 'John Dew'] into "Doe, Jane and Dew, John"
-  // and key = "DoeDew"
   const splitAuthors = authors.map(a => a.split(' '));
   const key = splitAuthors.map(l => l[l.length - 1]).join('') + year.toString();
   const formattedKey = removeAccents(key);
@@ -18,6 +24,11 @@ function splitAuthors({authors, year}) {
   return { key: formattedKey, authorList };
 }
 
+/** Formats an entry into a BibLaTeX entry.
+ * @param type The type of the entry, e.g. 'article' or 'book'
+ * @param pairing The pairing returned by `buildPairing`
+ * @param key The key returned by `splitAuthors`
+ */
 function formatEntry({ type, pairing, key }) {
   // the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
@@ -46,6 +57,10 @@ function formatEntry({ type, pairing, key }) {
   );
 }
 
+/** Build a "pairing" from an entry based on settings
+ * @param entry A key-value entry
+ * @param settings Settings including the mode (bibtex or biblatex), the file prefix etc, see `Settings/index.js`
+ */
 function buildPairing({ entry, settings }) {
   // good = biblatex, bad = bibtex
   const goodMode = settings.mode === 'biblatex';
@@ -132,6 +147,9 @@ function buildPairing({ entry, settings }) {
   return { type: entry.type, pairing, key };
 }
 
+/** The full Entry component. Settings are taken from the redux state.
+ * @param entry The key-value entry
+ */
 export default function Entry({ entry }) {
   // for the clipboard
   const preRef = useRef();

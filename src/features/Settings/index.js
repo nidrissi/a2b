@@ -16,6 +16,7 @@ import {
   selectSortOrder, setSortOrder,
 } from './settingsSlice';
 
+/** The settings form, controls the related redux state. */
 export default function Settings() {
   const dispatch = useDispatch();
   const mode = useSelector(selectMode);
