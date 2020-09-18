@@ -7,17 +7,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { removeAccents } from '../utils';
 
-/** Converts a JS author list and a year into a BibLaTeX author list and a key.
-  * @param authors The list of authors
-  * @param year The year
-  * @return key The key made from last names and the year
-  * @return authorList The formatted author list
+/** Converts a JS author list and a date into a BibLaTeX author list and a key.
+  * @param authors The list of authors.
+  * @param date The date of the entry.
+  * @return key The key made from last names and the date.
+  * @return authorList The formatted author list.
   * @example
-  * // returns { key: 'DoeDew1234', authorList: "Doe, Jane and Dew, John"}
-  * splitAuthors({ authors: ['Jane Doe', 'John Dew'], year: 1234 })
+  * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
+  * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
  */
-function splitAuthors({authors, year}) {
+function splitAuthors({ authors, date }) {
   const splitAuthors = authors.map(a => a.split(' '));
+  const year = date.slice(0,4); // dates have the format YYYY-MM-DD
   const key = splitAuthors.map(l => l[l.length - 1]).join('') + year.toString();
   const formattedKey = removeAccents(key);
   const authorList = splitAuthors.map(l => l[l.length - 1] + ', ' + l.slice(0, -1).join(' ')).join(' and ');
@@ -66,7 +67,7 @@ function buildPairing({ entry, settings }) {
   const goodMode = settings.mode === 'biblatex';
 
   // get the key and the list of authors, separated by 'and'
-  const { key, authorList } = splitAuthors({ authors: entry.authors, year: entry.year });
+  const { key, authorList } = splitAuthors({ authors: entry.authors, date: entry.date });
 
   // generate a filename and link to the PDF, if any
   const fileName = (settings.filePrefix ? `${key[0]}/` : '') + `${key}.pdf`;
@@ -86,11 +87,17 @@ function buildPairing({ entry, settings }) {
     journal = entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : '');
   }
 
+  // BibTeX only supports a year, not a full date
+  const dateOrYear =
+        goodMode
+        ? entry.date
+        : entry.date.slice(0,4);
+
   // the end result will be this variable
   // all keys are lowercase
   let pairing = {
     author: authorList,
-    date: entry.year,
+    [goodMode ? 'date' : 'year']: dateOrYear,
     title: entry.title,
     [goodMode ? 'journaltitle' : 'journal']: journal,
     series: goodMode ? entry.series : null,

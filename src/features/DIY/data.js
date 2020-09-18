@@ -25,8 +25,10 @@ export function GenericPreFields() {
         label='Title'
       />
       <StandardGroup
-        name='year'
-        label='Year'
+        name='date'
+        label='Date'
+        placeholder='YYYY-MM-DD'
+        help={<>The date in <code>YYYY-MM-DD</code> format. Day and month are optional. Ranges can be specified by with <code>/</code>, e.g. <code>2019-09/2020-08</code> to get Sept. 2019–Aug. 2020.</>}
       />
       <StandardGroup
         name='subTitle'
