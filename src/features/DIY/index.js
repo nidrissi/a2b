@@ -30,6 +30,7 @@ const initialValues = {
   title: '',
   mainTitle: '',
   year: '',
+  subTitle: '',
   journal: '',
   series: '',
   number: '',
