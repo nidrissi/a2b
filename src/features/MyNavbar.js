@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+/** A react-router powered navigation bar. */
 export default function MyNavbar() {
   return (
     <Navbar bg="light" expand="lg" className="mb-3">

@@ -1,6 +1,7 @@
 import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
+/** A generic 404 error */
 export default function Err404() {
   return (
     <Jumbotron>

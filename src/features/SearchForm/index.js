@@ -13,13 +13,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setQuery } from './searchFormSlice';
 import { selectIsLoading } from '../Results/resultsSlice';
 
-/** Splits a string `str` along a regexp `rx` and removes empty entries.
+/** Splits a string and removes empty entries.
+    @param str The string to be split.
+    @param rx The regexp along which the string will be split.
  */
 function splitter(str, rx) {
   return str.split(rx).filter(s => s !== '');
 }
 
 /** Generic input fields for SearchForm.
+    @param label The label of the input field.
+    @param ...props The rest of the parameters, will be passed to a controlled input.
  */
 function InputField({ label, ...props }) {
   const [field, meta] = useField(props);
@@ -48,6 +52,7 @@ function InputField({ label, ...props }) {
 }
 
 /** The submit and clear buttons used in SearchForm.
+    @param isLoading Whether the form is currently loading or not.
  */
 function SubmitClearButtons({ isLoading }) {
   return (
@@ -76,9 +81,14 @@ function SubmitClearButtons({ isLoading }) {
   );
 }
 
-/** The search form. 
-
-    It has three fields: the ID list, the author list, and the title (words) list; and two buttons: submit and clear.
+/** The full search form. It has
+    - three fields:
+      - the ID list;
+      - the author list; 
+      - the title (words) list;
+    - two buttons: 
+      - submit;
+      - clear.
  */
 export default function SearchForm() {
   const dispatch = useDispatch();

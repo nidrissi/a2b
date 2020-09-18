@@ -2,6 +2,8 @@ import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/too
 
 import { arxivSearch } from '../../api/arxiv';
 
+/** An asynchronous "thunk" that fetches entries based on the request.
+ */
 export const fetchEntries = createAsyncThunk(
   'results/fetchEntries',
   async (_, { getState, requestId }) => {
