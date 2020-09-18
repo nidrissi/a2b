@@ -13,11 +13,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setQuery } from './searchFormSlice';
 import { selectIsLoading } from '../Results/resultsSlice';
 
-function splitter(current) {
-  const rx = /\s*&\s*/;
-  return current.split(rx).filter(s => s !== '');
+/** Splits a string `str` along a regexp `rx` and removes empty entries.
+ */
+function splitter(str, rx) {
+  return str.split(rx).filter(s => s !== '');
 }
 
+/** Generic input fields for SearchForm.
+ */
 function InputField({ label, ...props }) {
   const [field, meta] = useField(props);
   return (
@@ -44,6 +47,8 @@ function InputField({ label, ...props }) {
   );
 }
 
+/** The submit and clear buttons used in SearchForm.
+ */
 function SubmitClearButtons({ isLoading }) {
   return (
     <BForm.Group as={BForm.Row}>
@@ -71,6 +76,10 @@ function SubmitClearButtons({ isLoading }) {
   );
 }
 
+/** The search form. 
+
+    It has three fields: the ID list, the author list, and the title (words) list; and two buttons: submit and clear.
+ */
 export default function SearchForm() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
@@ -85,9 +94,9 @@ export default function SearchForm() {
       onSubmit={(values, { setSubmitting }) => {
         if (!isLoading) {
           const query = {
-            ids: splitter(values.ids),
-            authors: splitter(values.authors),
-            titles: splitter(values.titles)
+            ids: splitter(values.ids, /\s+/), // split on spaces
+            authors: splitter(values.authors, /\s*&\s*/), // split on ampersands
+            titles: splitter(values.titles, /\s*&\s*/)    // idem
           };
           dispatch(setQuery(query));
           setSubmitting(false);
@@ -107,8 +116,8 @@ export default function SearchForm() {
         <InputField
           label="ID list"
           name="ids"
-          placeholder="ID1 & ID2 & ..."
-          title="List of IDs, separated by '&'. Version will be stripped, e.g. 1911.12281v1 ⇒ 1911.12281."
+          placeholder="ID1 ID2 ..."
+          title="List of IDs, separated by spaces. Version will be stripped, e.g. 1911.12281v1 ⇒ 1911.12281."
         />
         <InputField
           name="authors"
