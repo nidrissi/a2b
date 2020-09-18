@@ -29,7 +29,7 @@ function parseEntry(xmlEntry) {
   }
 
   // date
-  entry.year = getUniqueNamedTag(xmlEntry, 'published').substr(0, 4);
+  entry.date = getUniqueNamedTag(xmlEntry, 'published').substr(0, 4); // only take the year
 
   // abstract
   entry.abstract = getUniqueNamedTag(xmlEntry, 'summary')

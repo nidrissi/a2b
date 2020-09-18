@@ -19,7 +19,7 @@ function FormattedEntry() {
   const entry = {
     ...values,
     authors,
-    year: values.year || 0,
+    date: values.date || '0',     // date must not be empty
   }
   return <Entry entry={entry} />
 }
@@ -29,7 +29,7 @@ const initialValues = {
   authors: '',
   title: '',
   mainTitle: '',
-  year: '',
+  date: '',
   subTitle: '',
   journal: '',
   series: '',
