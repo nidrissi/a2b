@@ -51,6 +51,8 @@ const initialValues = {
 function diyBody({ values }) {
   return (
     <>
+      <FormattedEntry />
+      <br />
       <Form>
         <GenericPreFields />
         <SpecificFields type={values.type} />
@@ -65,7 +67,6 @@ function diyBody({ values }) {
           </Button>
         </BForm.Group>
       </Form>
-      <FormattedEntry />
     </>
   )
 }
