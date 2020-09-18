@@ -1,6 +1,6 @@
 import React from 'react';
 
-const faq = [
+export default [
   {
     title: 'This program',
     key: 'program',
@@ -147,12 +147,15 @@ const faq = [
         key: 'comment',
         q: <>What is <code>comment</code>?</>,
         a: <>
-             This field is populated from the comment left by the author(s) on arXiv. It is meaningless to BibLaTeX and will not be rendered in the bibliographical entry. It sometimes contains information that should go in other fields:
+             This field is populated from the comment left by the author(s) on arXiv. It is meaningless to BibLaTeX and will not be rendered in the bibliographical entry. Do not confuse it with <code>note</code>, which displays a free-form note at the end of the bibliographical entry.
+             <br/>
+             It sometimes contains information that should go in other fields:
              <ul>
                <li>“XX pages”: should go in the <code>pagetotal</code> field (used by default for <code>@book</code> entries only, other types requires special configuration);</li>
                <li>“to appear in J. XYZ”: convert the entry to <code>@article</code>, put the journal in <code>journaltitle</code>, and set <code>pubstate</code> to <code>forthcoming</code>;</li>
                <li>other: consider adding them to the <code>note</code> field – which will be rendered into the bibliographical entry – if relevant.</li>
              </ul>
+             
            </>
       },
       {
@@ -172,5 +175,3 @@ const faq = [
     ],
   }
 ];
-
-export default faq;
