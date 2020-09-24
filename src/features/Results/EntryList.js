@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -28,12 +29,25 @@ export default function EntryList() {
   );
 
   const outerRef = useRef();
-  const onClickCopyAll = _e => {
+  const getResult = () => {
     const result = [];
     for (const pre of outerRef.current.getElementsByTagName('pre')) {
       result.push(pre.innerText);
     }
-    navigator.clipboard.writeText(result.join("\n\n"))
+    return result.join("\n\n");
+  };
+  const onClickCopyAll = _e => {
+    navigator.clipboard.writeText(getResult())
+  };
+  const onClickDownloadAll = _e => {
+    const result = getResult();
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result));
+    element.setAttribute('download', "references.bib");
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
 
   const totalEntriesFound = useSelector(selectTotalEntriesFound);
@@ -47,14 +61,24 @@ export default function EntryList() {
   return (totalEntriesFound === null) ? null : (
     <div ref={outerRef}>
       <Alert variant="success">
-        <Alert.Link
-          onClick={onClickCopyAll}
-          className="float-right"
-        >
-          <FontAwesomeIcon icon="clipboard" /> Copy all
-        </Alert.Link>
         <FontAwesomeIcon icon="check" className="mr-1" />
         {totalText}
+        <Button
+          size='sm'
+          variant='success'
+          className='float-right mx-1'
+          onClick={onClickCopyAll}
+        >
+          <FontAwesomeIcon icon="clipboard" /> Copy all
+        </Button>
+        <Button
+          size='sm'
+          variant='success'
+          className='float-right mx-1'
+          onClick={onClickDownloadAll}
+        >
+          <FontAwesomeIcon icon="save" /> Download all
+        </Button>
       </Alert>
       {renderedEntries}
     </div>
