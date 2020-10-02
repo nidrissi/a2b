@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 import {
   saveSettings,
@@ -9,6 +11,8 @@ import {
   selectIncludeAbstract, setIncludeAbstract,
   selectIncludeFile, setIncludeFile,
   selectFilePrefix, setFilePrefix,
+  selectIncludeWget, setIncludeWget,
+  selectFileFolder, setFileFolder,
   selectIncludePrimaryCategory, setIncludePrimaryCategory,
   selectIncludeVersion, setIncludeVersion,
   selectMaxResults, setMaxResults,
@@ -23,6 +27,8 @@ export default function Settings() {
   const includeAbstract = useSelector(selectIncludeAbstract);
   const includeFile = useSelector(selectIncludeFile);
   const filePrefix = useSelector(selectFilePrefix);
+  const includeWget = useSelector(selectIncludeWget);
+  const fileFolder = useSelector(selectFileFolder);
   const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
   const includeVersion = useSelector(selectIncludeVersion);
 
@@ -61,6 +67,32 @@ export default function Settings() {
             disabled={!includeFile}
             label={<span>Add a prefix to the file field (<code>Doe2020.pdf</code> ⇒ <code>D/Doe2020.pdf</code>)</span>}
           />
+        </Form.Group>
+        <Form.Group className="ml-3">
+          <Form.Check
+            checked={includeWget}
+            onChange={e => dispatch(setIncludeWget(e.target.checked))}
+            id='includeWget'
+            disabled={!includeFile}
+            label={<span>Include a <code>wget</code> command for the entries.</span>}
+          />
+        </Form.Group>
+        <Form.Group className="ml-3" as={Row}>
+          <Form.Label
+            htmlFor='fileFolder'
+            column
+            sm={4}
+          >
+            The folder for the <code>wget</code> command, if any.
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              value={fileFolder}
+              onChange={e => dispatch(setFileFolder(e.target.value))}
+              id='fileFolder'
+              disabled={!includeFile || !includeWget}
+            />
+          </Col>
         </Form.Group>
         <Form.Group>
           <Form.Check

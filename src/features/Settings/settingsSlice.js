@@ -5,6 +5,8 @@ const defaultInitialState = {
   includeAbstract: false,
   includeFile: true,
   filePrefix: true,
+  includeWget: false,
+  fileFolder: '~',
   includePrimaryCategory: false,
   includeVersion: false,
   sortBy: 'submittedDate',
@@ -26,6 +28,8 @@ export const settingsSlice = createSlice({
     setIncludeAbstract(state, action) { state.includeAbstract = action.payload },
     setIncludeFile(state, action) { state.includeFile = action.payload },
     setFilePrefix(state, action) { state.filePrefix = action.payload },
+    setIncludeWget(state, action) { state.includeWget = action.payload },
+    setFileFolder(state, action) { state.fileFolder = action.payload },
     setIncludePrimaryCategory(state, action) { state.includePrimaryCategory = action.payload },
     setIncludeVersion(state, action) { state.includeVersion = action.payload },
     setSortBy(state, action) { state.sortBy = action.payload },
@@ -39,6 +43,8 @@ export const selectMode = state => state.settings.mode;
 export const selectIncludeAbstract = state => state.settings.includeAbstract;
 export const selectIncludeFile = state => state.settings.includeFile;
 export const selectFilePrefix = state => state.settings.filePrefix;
+export const selectIncludeWget = state => state.settings.includeWget;
+export const selectFileFolder = state => state.settings.fileFolder;
 export const selectIncludePrimaryCategory = state => state.settings.includePrimaryCategory;
 export const selectIncludeVersion = state => state.settings.includeVersion;
 
@@ -51,6 +57,8 @@ export const {
   setIncludeAbstract,
   setIncludeFile,
   setFilePrefix,
+  setIncludeWget,
+  setFileFolder,
   setIncludePrimaryCategory,
   setIncludeVersion,
   setMaxResults,
