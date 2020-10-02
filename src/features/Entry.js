@@ -29,7 +29,7 @@ function splitAuthors({ authors, date }) {
  * @param pairing The pairing returned by `buildPairing`
  * @param key The key returned by `splitAuthors`
  */
-function formatEntry({ type, pairing, key }) {
+function formatEntry({ type, pairing, key, wget }) {
   // the length of the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
 
@@ -117,12 +117,11 @@ function buildPairing({ entry, settings }) {
   };
 
   if (entry.id) {
-    const fullId = entry.id + (settings.includeVersion ? `v${entry.version}` : '')
-    const absURL = `https://arxiv.org/abs/${fullId}`;
+    const absURL = `https://arxiv.org/abs/${entry.id}`
 
     pairing = {
       ...pairing,
-      eprint: <a href={absURL}>{fullId}</a>,
+      eprint: <a href={absURL}>{entry.id}</a>,
       [goodMode ? 'eprinttype' : 'archiveprefix']: 'arXiv',
       [goodMode ? 'eprintclass' : 'primaryclass']: settings.includePrimaryCategory ? entry.primaryCategory : null,
       version: (goodMode && settings.includeVersion) ? entry.version : null,
@@ -158,7 +157,13 @@ function buildPairing({ entry, settings }) {
   // delete all empty values
   Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
 
-  return { type: entry.type, pairing, key };
+  // the wget command, if any
+  const wget =
+        (settings.includeFile && entry.pdfLink)
+        ? `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`
+        : null;
+
+  return { type: entry.type, pairing, key, wget };
 }
 
 /** The full Entry component. Settings are taken from the redux state.
@@ -175,7 +180,8 @@ export default function Entry({ entry }) {
 
   const settings = useSelector(state => state.settings);
 
-  const formattedEntry = formatEntry(buildPairing({ entry, settings }));
+  const { type, pairing, key, wget } = buildPairing({ entry, settings });
+  const  formattedEntry  = formatEntry({ type, pairing, key});
 
   return (
     <Card body bg="light" text="dark">
@@ -190,6 +196,7 @@ export default function Entry({ entry }) {
       >
         {formattedEntry}
       </pre>
+      { settings.includeWget && wget ? <p className="mt-2"><kbd>{wget}</kbd></p> : null }
     </Card>
   )
 }
