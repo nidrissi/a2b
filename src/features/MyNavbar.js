@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function MyNavbar() {
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
-      <NavLink to="/" className="navbar-brand">arXiv2bib</NavLink>
+      <NavLink to="/" className="navbar-brand">arXiv2BibLaTeX</NavLink>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

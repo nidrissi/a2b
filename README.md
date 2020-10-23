@@ -1,3 +1,3 @@
-# arXiv2bib
+# arXiv2BibLaTeX
 
-A tool to produce bib(la)tex entries from [arXiv](https://arxiv.org/) preprints.
+A tool to produce BibLaTeX (and BibTeX) entries from [arXiv](https://arxiv.org/) preprints.

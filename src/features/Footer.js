@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="text-center">
       <hr />
       <p>
-        arXiv2bib <span title={sha ? `Commit: ${sha}` : null}>v{version}</span> • licensed under AGPLv3 • <a href="https://github.com/nidrissi/arxiv2bib">source</a>
+        arXiv2BibLaTeX <span title={sha ? `Commit: ${sha}` : null}>v{version}</span> • licensed under AGPLv3 • <a href="https://github.com/nidrissi/arxiv2bib">source</a>
       </p>
     </footer>
 

@@ -36,7 +36,7 @@ export default [
         a: <>
              This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
              <br />
-             The source code is <a href="https://github.com/nidrissi/arxiv2bib">available on GitHub</a>.
+             The source code is <a href="https://github.com/nidrissi/a2b">available on GitHub</a>.
            </>
       },
       {
@@ -51,7 +51,7 @@ export default [
       {
         key: 'bug',
         q: 'I found a bug!',
-        a: <>Please <a href="https://github.com/nidrissi/arxiv2bib/issues">report an issue on Github</a> (or contact me by email). I cannot really promise anything, though.</>
+        a: <>Please <a href="https://github.com/nidrissi/a2b/issues">report an issue on Github</a> (or contact me by email). I cannot really promise anything, though.</>
       },
     ],
   },
@@ -67,7 +67,7 @@ export default [
       {
         key: 'andor',
         q: 'What are the conditions for an entry to be displayed?',
-        a: <>An entry will appear in the search results if it matches <em>all</em> the conditions inputted in the search form. It is theoretically possible to build more complex search queries using the API, but this would require revamping the form. Feel free to <a href="https://github.com/nidrissi/arxiv2bib/issues">suggest changes</a> if you have an idea on how to do that nicely, and/or <a href="https://github.com/nidrissi/arxiv2bib/pulls">contribute to the code</a> ☺.</>
+        a: <>An entry will appear in the search results if it matches <em>all</em> the conditions inputted in the search form. It is theoretically possible to build more complex search queries using the API, but this would require revamping the form. Feel free to <a href="https://github.com/nidrissi/a2b/issues">suggest changes</a> if you have an idea on how to do that nicely, and/or <a href="https://github.com/nidrissi/a2b/pulls">contribute to the code</a> ☺.</>
       },
       {
         key: 'accents',
