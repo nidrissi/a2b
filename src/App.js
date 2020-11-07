@@ -34,13 +34,13 @@ const Search = React.lazy(() => import('./features/Search'));
 const Settings = React.lazy(() => import('./features/Settings'));
 
 // GA
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 history.listen(location => {
   ReactGA.set({ page: location.pathname })
   ReactGA.pageview(location.pathname)
 });
 
-function App() {
+export default function App() {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname)
   }, []);
@@ -94,5 +94,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;
