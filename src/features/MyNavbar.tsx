@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /** A react-router powered navigation bar. */
-export default function MyNavbar() {
+const MyNavbar: React.FC<{}> = () => {
   return (
     <Navbar bg="light" expand="lg" className="mb-3">
       <NavLink to="/" className="navbar-brand">arXiv2BibLaTeX</NavLink>
@@ -20,4 +20,6 @@ export default function MyNavbar() {
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
+
+export default MyNavbar;
