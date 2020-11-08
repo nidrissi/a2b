@@ -73,7 +73,7 @@ export const { clearError } = resultsSlice.actions;
 const entriesSelectors = entriesAdapter.getSelectors((state: RootState) => state.results);
 
 export const selectEntryIds = (state: RootState) => entriesSelectors.selectIds(state);
-export const selectEntryById = (id: string | number) => (state: RootState) => entriesSelectors.selectById(state, id);
+export const selectEntryById = (id: string) => (state: RootState) => entriesSelectors.selectById(state, id);
 export const selectTotalEntriesFound = (state: RootState) => state.results.totalEntriesFound;
 export const selectIsLoading = (state: RootState) => state.results.isLoading;
 export const selectError = (state: RootState) => state.results.error;

@@ -17,29 +17,30 @@ import EntryById from './EntryById';
  * and then rendered using `EntryById`. Then adds buttons to copy entries 
  * to the clipboards and counts how many are displayed out of the total.
  */
-export default function EntryList() {
+const EntryList: React.FC<{}> = () => {
   const entryIds = useSelector(selectEntryIds);
   const mode = useSelector(selectMode);
 
   const renderedEntries = entryIds.map(id =>
     <EntryById
       key={id}
-      entryId={id}
+      entryId={String(id)}
     />
   );
 
-  const outerRef = useRef();
-  const getResult = () => {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const getResult = (): string => {
+    if (!outerRef.current) { return '' }
     const result = [];
-    for (const pre of outerRef.current.getElementsByTagName('pre')) {
+    for (const pre of Array.from(outerRef.current.getElementsByTagName('pre'))) {
       result.push(pre.innerText);
     }
     return result.join("\n\n");
   };
-  const onClickCopyAll = _e => {
+  const onClickCopyAll = (_e: any) => {
     navigator.clipboard.writeText(getResult())
   };
-  const onClickDownloadAll = _e => {
+  const onClickDownloadAll = (_e: any) => {
     const result = getResult();
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result));
@@ -52,10 +53,10 @@ export default function EntryList() {
 
   const totalEntriesFound = useSelector(selectTotalEntriesFound);
   const totalText =
-        <>
-          Showing {entryIds.length} entries out of {totalEntriesFound} in total.
-          {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
-        </>;
+    <>
+      Showing {entryIds.length} entries out of {totalEntriesFound} in total.
+      {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
+    </>;
 
   // null means that entries haven't been fetched yet
   return (totalEntriesFound === null) ? null : (
@@ -83,4 +84,5 @@ export default function EntryList() {
       {renderedEntries}
     </div>
   );
-}
+};
+export default EntryList;

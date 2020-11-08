@@ -8,7 +8,7 @@ import { selectError, clearError } from './resultsSlice';
 /** A generic error alert. The error is taken from the redux state and
  * displayed, if any.
  */
-export default function ErrorAlert() {
+const ErrorAlert: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
 
@@ -18,8 +18,8 @@ export default function ErrorAlert() {
       dismissible
       onClose={() => dispatch(clearError())}
     >
-      {error.toString()}
+      {String(error)}
     </Alert>
   );
-}
-
+};
+export default ErrorAlert;
