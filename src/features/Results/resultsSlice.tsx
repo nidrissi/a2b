@@ -1,11 +1,20 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { arxivSearch } from '../../api/arxiv';
+import { ArxivResult, arxivSearch } from '../../api/arxiv';
+import { RootState } from '../../store';
 
-/** An asynchronous "thunk" that fetches entries based on the request.
- */
-export const fetchEntries = createAsyncThunk(
-  'results/fetchEntries',
+/** An asynchronous "thunk" that fetches entries based on the request. */
+export const fetchEntries = createAsyncThunk<
+  ArxivResult | undefined,
+  void,
+  {
+    state: {
+      searchForm: SearchInput,
+      settings: Settings,
+      results: { isLoading: boolean, currentRequestId: string }
+    }
+  }
+>('results/fetchEntries',
   async (_, { getState, requestId }) => {
     const state = getState();
     const query = state.searchForm;
@@ -14,12 +23,11 @@ export const fetchEntries = createAsyncThunk(
     if (!isLoading || requestId !== currentRequestId) {
       return
     } else {
-      return await arxivSearch(query, settings)
+      return (await arxivSearch(query, settings)) as ArxivResult
     }
-  }
-);
+  });
 
-const entriesAdapter = createEntityAdapter()
+const entriesAdapter = createEntityAdapter<Entry>()
 
 export const resultsSlice = createSlice({
   name: 'results',
@@ -35,14 +43,14 @@ export const resultsSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchEntries.pending]: (state, action) => {
+    [String(fetchEntries.pending)]: (state, action) => {
       if (!state.isLoading) {
         state.isLoading = true;
         state.error = null;
         state.currentRequestId = action.meta.requestId;
       }
     },
-    [fetchEntries.fulfilled]: (state, action) => {
+    [String(fetchEntries.fulfilled)]: (state, action) => {
       const { requestId } = action.meta
       if (state.isLoading && state.currentRequestId === requestId) {
         state.isLoading = false;
@@ -52,7 +60,7 @@ export const resultsSlice = createSlice({
         state.currentRequestId = null;
       }
     },
-    [fetchEntries.rejected]: (state, action) => {
+    [String(fetchEntries.rejected)]: (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
       state.currentRequestId = null;
@@ -62,12 +70,12 @@ export const resultsSlice = createSlice({
 
 export const { clearError } = resultsSlice.actions;
 
-const entriesSelectors = entriesAdapter.getSelectors(state => state.results);
+const entriesSelectors = entriesAdapter.getSelectors((state: RootState) => state.results);
 
-export const selectEntryIds = state => entriesSelectors.selectIds(state);
-export const selectEntryById = id => state => entriesSelectors.selectById(state, id);
-export const selectTotalEntriesFound = state => state.results.totalEntriesFound;
-export const selectIsLoading = state => state.results.isLoading;
-export const selectError = state => state.results.error;
+export const selectEntryIds = (state: RootState) => entriesSelectors.selectIds(state);
+export const selectEntryById = (id: string | number) => (state: RootState) => entriesSelectors.selectById(state, id);
+export const selectTotalEntriesFound = (state: RootState) => state.results.totalEntriesFound;
+export const selectIsLoading = (state: RootState) => state.results.isLoading;
+export const selectError = (state: RootState) => state.results.error;
 
 export default resultsSlice.reducer;
