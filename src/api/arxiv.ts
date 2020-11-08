@@ -1,19 +1,37 @@
 // see https://arxiv.org/help/api/user-manual
 import { removeAccents } from '../utils';
 
-function getUniqueNamedTag(xmlEntry, tag) {
-  return xmlEntry.getElementsByTagName(tag).item(0).textContent.trim();
+function getUniqueNamedTag(xmlEntry: Element | Document, tag: string): string {
+  const collection = xmlEntry.getElementsByTagName(tag);
+  const item = collection.item(0);
+  if (item === null) {
+    throw Error('no such named tag');
+  }
+  return item.textContent!.trim();
 }
 
-function parseEntry(xmlEntry) {
+function parseEntry(xmlEntry: Element): Entry | null {
   // the end result
-  const entry = {};
+  const entry: Entry = {
+    abstract: '',
+    authors: [],
+    comment: '',
+    date: '',
+    doi: '',
+    id: '',
+    journalRef: '',
+    pdfLink: '',
+    primaryCategory: '',
+    pubstate: '',
+    title: '',
+    version: ''
+  };
 
   // authors are of the form <author> <name>John Doe</name> (<arxiv:affiliation>University </arxiv.affiliation>)? </author>
-  entry.authors = [];
-  for (let a of xmlEntry.getElementsByTagName('author')) {
+  for (let a of Array.from(xmlEntry.getElementsByTagName('author'))) {
     entry.authors.push(getUniqueNamedTag(a, 'name'));
-  }
+  };
+
 
   // title
   try {
@@ -37,17 +55,21 @@ function parseEntry(xmlEntry) {
   // id
   const idURL = getUniqueNamedTag(xmlEntry, 'id');
   // the URL has the form http://arxiv.org/abs/{id}v{version}
-  const regex = /arxiv\.org\/abs\/(?<id>.+)v(?<version>\d+)/;
-  const { id, version } = idURL.match(regex).groups;
+  const regex = /arxiv\.org\/abs\/(.+)v(\d+)/;
+  const match = idURL.match(regex);
+  if (match === null) {
+    throw Error('malformed arXiv URL');
+  }
+  const [id, version] = match;
   entry.id = id;
   entry.version = version;
 
   // link to PDF
-  for (let l of xmlEntry.getElementsByTagName('link')) {
+  for (let l of Array.from(xmlEntry.getElementsByTagName('link'))) {
     if (l.getAttribute('title') === 'pdf') {
       entry.pdfLink = l.getAttribute('href');
     } else if (l.getAttribute('title') === 'doi') {
-      entry.doi = l.getAttribute('href').replace('http://dx.doi.org/', '')
+      entry.doi = l.getAttribute('href')!.replace('http://dx.doi.org/', '')
     }
   }
 
@@ -59,7 +81,7 @@ function parseEntry(xmlEntry) {
     entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s+/g, ' ');
   } catch (_err) { }
   try {
-    entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0).getAttribute('term');
+    entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0)!.getAttribute('term');
   } catch (_err) { }
 
   // publication state
@@ -73,16 +95,16 @@ function parseEntry(xmlEntry) {
 /** If there is an error, arXiv returns a single error entry.
     In this case we just throw the error for fetchEntries to deal with.
  */
-function checkEntryForErrors(xmlEntry) {
-  for (let l of xmlEntry.getElementsByTagName('link')) {
-    if (l.getAttribute('href').match('api/errors')) {
+function checkEntryForErrors(xmlEntry: Element): void {
+  for (let l of Array.from(xmlEntry.getElementsByTagName('link'))) {
+    if (l.getAttribute('href')!.match('api/errors')) {
       const error = getUniqueNamedTag(xmlEntry, 'summary');
       throw (Error(`ArXiv reported: “${error}”.`));
     }
   }
 }
 
-function buildSearchQueryPart(list, label) {
+function buildSearchQueryPart(list: Array<string>, label: string): string {
   let result = '';
   if (list.length > 0) {
     result = list.map(removeAccents).map(encodeURIComponent).map(a => `${label}:"${a}"`).join('+AND+');
@@ -90,8 +112,11 @@ function buildSearchQueryPart(list, label) {
   return result;
 }
 
-function buildURLQuery({ authors, ids, titles }, { maxResults, sortBy, sortOrder }) {
-  const base = 'https://export.arxiv.org/api/query?';
+function buildURLQuery(
+  { authors, ids, titles }: Query,
+  { maxResults, sortBy, sortOrder }: QuerySettings
+): string {
+  const base: string = 'https://export.arxiv.org/api/query?';
 
   let idQuery = '';
   if (ids.length > 0) {
@@ -108,7 +133,10 @@ function buildURLQuery({ authors, ids, titles }, { maxResults, sortBy, sortOrder
   return base + fullSearchQuery + idQuery;
 }
 
-export async function arxivSearch(query, settings) {
+export async function arxivSearch(
+  query: Query,
+  settings: QuerySettings
+): Promise<{ entries: Array<Entry>, totalEntriesFound: number }> {
   const urlQuery = buildURLQuery(query, settings);
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
@@ -118,7 +146,7 @@ export async function arxivSearch(query, settings) {
 
   const xmlEntries = xmlDoc.getElementsByTagName("entry");
   const entries = [];
-  for (let w of xmlEntries) {
+  for (let w of Array.from(xmlEntries)) {
     checkEntryForErrors(w);
     const parsedEntry = parseEntry(w);
     if (parsedEntry !== null) {
@@ -126,7 +154,7 @@ export async function arxivSearch(query, settings) {
     }
   }
 
-  const totalEntriesFound = getUniqueNamedTag(xmlDoc, 'opensearch:totalResults');
+  const totalEntriesFound = parseInt(getUniqueNamedTag(xmlDoc, 'opensearch:totalResults'));
 
   return { entries, totalEntriesFound };
 }
