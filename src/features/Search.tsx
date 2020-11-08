@@ -4,7 +4,7 @@ import Results from './Results';
 import SearchForm from './SearchForm';
 
 /** The full search component. Contains a `SearchForm` and a `Results` components. */
-export default function Search() {
+const Search: React.FC<{}> = () => {
   return (
     <div>
       <h1>Search arXiv</h1>
@@ -12,4 +12,5 @@ export default function Search() {
       <Results />
     </div>
   )
-}
+};
+export default Search;
