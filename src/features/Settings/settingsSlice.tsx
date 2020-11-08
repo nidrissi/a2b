@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AppDispatch, RootState } from '../../store';
 
-const defaultInitialState = {
+const defaultInitialState: Settings = {
   mode: 'biblatex',
   includeAbstract: false,
   includeFile: true,
@@ -39,18 +40,18 @@ export const settingsSlice = createSlice({
 });
 export default settingsSlice.reducer;
 
-export const selectMode = state => state.settings.mode;
-export const selectIncludeAbstract = state => state.settings.includeAbstract;
-export const selectIncludeFile = state => state.settings.includeFile;
-export const selectFilePrefix = state => state.settings.filePrefix;
-export const selectIncludeWget = state => state.settings.includeWget;
-export const selectFileFolder = state => state.settings.fileFolder;
-export const selectIncludePrimaryCategory = state => state.settings.includePrimaryCategory;
-export const selectIncludeVersion = state => state.settings.includeVersion;
+export const selectMode = (state: RootState) => state.settings.mode;
+export const selectIncludeAbstract = (state: RootState) => state.settings.includeAbstract;
+export const selectIncludeFile = (state: RootState) => state.settings.includeFile;
+export const selectFilePrefix = (state: RootState) => state.settings.filePrefix;
+export const selectIncludeWget = (state: RootState) => state.settings.includeWget;
+export const selectFileFolder = (state: RootState) => state.settings.fileFolder;
+export const selectIncludePrimaryCategory = (state: RootState) => state.settings.includePrimaryCategory;
+export const selectIncludeVersion = (state: RootState) => state.settings.includeVersion;
 
-export const selectSortBy = state => state.settings.sortBy;
-export const selectSortOrder = state => state.settings.sortOrder;
-export const selectMaxResults = state => state.settings.maxResults;
+export const selectSortBy = (state: RootState) => state.settings.sortBy;
+export const selectSortOrder = (state: RootState) => state.settings.sortOrder;
+export const selectMaxResults = (state: RootState) => state.settings.maxResults;
 
 export const {
   setMode,
@@ -67,7 +68,7 @@ export const {
 } = settingsSlice.actions;
 
 export function saveSettings() {
-  return (_dispatch, getState) => {
+  return (_dispatch: AppDispatch, getState: () => RootState) => {
     const { settings } = getState();
     const json = JSON.stringify(settings);
     localStorage.setItem('settings', json);

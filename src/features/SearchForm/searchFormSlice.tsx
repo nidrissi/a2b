@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
+
+const initialState: SearchInput = {
+  ids: [],
+  authors: [],
+  titles: []
+};
 
 export const searchFormSlice = createSlice({
   name: 'searchForm',
-  initialState: {
-    ids: [],
-    authors: [],
-    titles: []
-  },
+  initialState,
   reducers: {
     setQuery(state, action) {
       const query = action.payload;
@@ -19,8 +22,8 @@ export const searchFormSlice = createSlice({
 
 export const { setQuery } = searchFormSlice.actions;
 
-export const selectIds = state => state.searchForm.ids;
-export const selectAuthors = state => state.searchForm.authors;
-export const selectTitles = state => state.searchForm.titles;
+export const selectIds = (state: RootState) => state.searchForm.ids;
+export const selectAuthors = (state: RootState) => state.searchForm.authors;
+export const selectTitles = (state: RootState) => state.searchForm.titles;
 
 export default searchFormSlice.reducer;

@@ -46,3 +46,9 @@ type Settings = {
     sortOrder: string,
     maxResults: number
 };
+
+type SearchInput = {
+    ids: string[],
+    authors: string[],
+    titles: string[]
+  }

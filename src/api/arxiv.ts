@@ -134,10 +134,11 @@ function buildURLQuery(
   return base + fullSearchQuery + idQuery;
 }
 
+export type ArxivResult = { entries: Entry[], totalEntriesFound: number };
 export async function arxivSearch(
   query: Query,
   settings: Settings
-): Promise<{ entries: Array<Entry>, totalEntriesFound: number }> {
+): Promise<ArxivResult> {
   const urlQuery = buildURLQuery(query, settings);
   const response = await fetch(urlQuery);
   const xmlData = await response.text();
