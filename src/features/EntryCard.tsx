@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { removeAccents } from '../utils';
+import { RootState } from '../store';
+
+type Pairing = { abstract?: string | null, [index: string]: string | JSX.Element | null | undefined };
 
 /** Converts a JS author list and a date into a BibLaTeX author list and a key.
   * @param authors The list of authors.
@@ -15,9 +18,11 @@ import { removeAccents } from '../utils';
   * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
   * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
  */
-function splitAuthors({ authors, date }) {
+function splitAuthors(
+  { authors, date }: { authors: Array<string>, date: string }
+): { key: string, authorList: string } {
   const splitAuthors = authors.map(a => a.split(' '));
-  const year = date.slice(0,4); // dates have the format YYYY-MM-DD
+  const year = date.slice(0, 4); // dates have the format YYYY-MM-DD
   const key = splitAuthors.map(l => l[l.length - 1]).join('') + year.toString();
   const formattedKey = removeAccents(key);
   const authorList = splitAuthors.map(l => l[l.length - 1] + ', ' + l.slice(0, -1).join(' ')).join(' and ');
@@ -29,7 +34,9 @@ function splitAuthors({ authors, date }) {
  * @param pairing The pairing returned by `buildPairing`
  * @param key The key returned by `splitAuthors`
  */
-function formatEntry({ type, pairing, key, wget }) {
+function formatEntry(
+  { type, pairing, key }: { type: string, pairing: Pairing, key: string }
+) {
   // the length of the longest key
   const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
 
@@ -61,7 +68,7 @@ function formatEntry({ type, pairing, key, wget }) {
  * @param entry A key-value entry
  * @param settings Settings including the mode (bibtex or biblatex), the file prefix etc, see `Settings/index.js`
  */
-function buildPairing({ entry, settings }) {
+function buildPairing({ entry, settings }: { entry: Entry, settings: Settings }) {
   // good = biblatex, bad = bibtex
   const goodMode = settings.mode === 'biblatex';
 
@@ -71,19 +78,19 @@ function buildPairing({ entry, settings }) {
   // generate a filename and link to the PDF, if any
   const fileName = (settings.filePrefix ? `${key[0]}/` : '') + `${key}.pdf`;
   const fileLink =
-        entry.pdfLink
-        ? <a href={entry.pdfLink}>{fileName}</a>
-        : fileName;
+    entry.pdfLink
+      ? <a href={entry.pdfLink}>{fileName}</a>
+      : fileName;
 
   // deal with journal ref & doi
   const journalRefLink =
-        entry.journalRef
-        ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
-        : null;
+    entry.journalRef
+      ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
+      : null;
   const doiLink =
-        entry.doi
-        ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a>
-        : null;
+    entry.doi
+      ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a>
+      : null;
 
   // journal name & series in bad mode
   // if in badmode, add the series in parenthesis
@@ -94,13 +101,13 @@ function buildPairing({ entry, settings }) {
 
   // BibTeX only supports a year, not a full date
   const dateOrYear =
-        goodMode
-        ? entry.date
-        : entry.date.slice(0,4);
+    goodMode
+      ? entry.date
+      : entry.date.slice(0, 4);
 
   // the end result will be this variable
   // all keys are lowercase
-  let pairing = {
+  let pairing: Pairing = {
     author: authorList,
     [goodMode ? 'date' : 'year']: dateOrYear,
     title: entry.title,
@@ -159,9 +166,9 @@ function buildPairing({ entry, settings }) {
 
   // the wget command, if any
   const wget =
-        (settings.includeFile && entry.pdfLink)
-        ? `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`
-        : null;
+    (settings.includeFile && entry.pdfLink)
+      ? `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`
+      : null;
 
   return { type: entry.type, pairing, key, wget };
 }
@@ -169,22 +176,24 @@ function buildPairing({ entry, settings }) {
 /** The full Entry component. Settings are taken from the redux state.
  * @param entry The key-value entry
  */
-export default function Entry({ entry }) {
+const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
   // for the clipboard
-  const preRef = useRef();
+  const preRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
-  const onClickCopy = _e => {
-    navigator.clipboard.writeText(preRef.current.innerText);
-    setCopied(true);
+  const onClickCopy = (_e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (preRef && preRef.current) {
+      navigator.clipboard.writeText(preRef.current.innerText);
+      setCopied(true);
+    }
   };
 
-  const settings = useSelector(state => state.settings);
+  const settings = useSelector((state: RootState) => state.settings);
 
   const { type, pairing, key, wget } = buildPairing({ entry, settings });
-  const  formattedEntry  = formatEntry({ type, pairing, key});
+  const formattedEntry = formatEntry({ type, pairing, key });
 
-  return (
-    <Card body bg="light" text="dark">
+  return(
+    <Card body bg = "light" text = "dark" >
       <Button onClick={onClickCopy} className="float-right">
         <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />
         {' '}
@@ -196,7 +205,9 @@ export default function Entry({ entry }) {
       >
         {formattedEntry}
       </pre>
-      { settings.includeWget && wget ? <p className="mt-2"><kbd>{wget}</kbd></p> : null }
-    </Card>
-  )
+      { settings.includeWget && wget ? <p className="mt-2"><kbd>{wget}</kbd></p> : null
 }
+    </Card >
+  )
+};
+export default EntryCard;

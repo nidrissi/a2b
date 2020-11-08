@@ -24,6 +24,7 @@ function parseEntry(xmlEntry: Element): Entry | null {
     primaryCategory: '',
     pubstate: '',
     title: '',
+    type: '',
     version: ''
   };
 
@@ -114,7 +115,7 @@ function buildSearchQueryPart(list: Array<string>, label: string): string {
 
 function buildURLQuery(
   { authors, ids, titles }: Query,
-  { maxResults, sortBy, sortOrder }: QuerySettings
+  { maxResults, sortBy, sortOrder }: Settings
 ): string {
   const base: string = 'https://export.arxiv.org/api/query?';
 
@@ -135,7 +136,7 @@ function buildURLQuery(
 
 export async function arxivSearch(
   query: Query,
-  settings: QuerySettings
+  settings: Settings
 ): Promise<{ entries: Array<Entry>, totalEntriesFound: number }> {
   const urlQuery = buildURLQuery(query, settings);
   const response = await fetch(urlQuery);
