@@ -9,7 +9,7 @@ export const fetchEntries = createAsyncThunk<
   void,
   {
     state: {
-      searchForm: SearchInput,
+      searchForm: Query,
       settings: Settings,
       results: { isLoading: boolean, currentRequestId: string }
     }
@@ -29,6 +29,12 @@ export const fetchEntries = createAsyncThunk<
 
 const entriesAdapter = createEntityAdapter<Entry>()
 
+type ResultsExtraState = {
+  totalEntriesFound: number | null,
+  isLoading: boolean,
+  currentRequestId: string | number | null,
+  error: string | null,
+}
 export const resultsSlice = createSlice({
   name: 'results',
   initialState: entriesAdapter.getInitialState({
@@ -36,7 +42,7 @@ export const resultsSlice = createSlice({
     isLoading: false,
     currentRequestId: null,
     error: null,
-  }),
+  } as ResultsExtraState),
   reducers: {
     clearError(state) {
       state.error = null
@@ -73,7 +79,7 @@ export const { clearError } = resultsSlice.actions;
 const entriesSelectors = entriesAdapter.getSelectors((state: RootState) => state.results);
 
 export const selectEntryIds = (state: RootState) => entriesSelectors.selectIds(state);
-export const selectEntryById = (id: string) => (state: RootState) => entriesSelectors.selectById(state, id);
+export const selectEntryById = (id: string | number) => (state: RootState) => entriesSelectors.selectById(state, id);
 export const selectTotalEntriesFound = (state: RootState) => state.results.totalEntriesFound;
 export const selectIsLoading = (state: RootState) => state.results.isLoading;
 export const selectError = (state: RootState) => state.results.error;

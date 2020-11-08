@@ -20,7 +20,7 @@ type Pairing = { abstract?: string | null, [index: string]: string | JSX.Element
   * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
  */
 function splitAuthors(
-  { authors, date }: { authors: Array<string>, date: string }
+  { authors, date }: { authors: string[], date: string }
 ): { key: string, authorList: string } {
   const splitAuthors = authors.map(a => a.split(' '));
   const year = date.slice(0, 4); // dates have the format YYYY-MM-DD
