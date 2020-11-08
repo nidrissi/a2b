@@ -5,8 +5,28 @@ import Row from 'react-bootstrap/Row';
 
 import { StandardInput, StandardGroup } from './standard';
 
+export type FormValues = {
+  authors: string,
+  date: string,
+  doi: string,
+  id: string,
+  ISBN: string,
+  issue: string,
+  journal: string,
+  location: string,
+  mainTitle: string,
+  pageTotal: string,
+  publisher: string,
+  pubstate: string,
+  series: string,
+  subTitle: string,
+  title: string,
+  type: string,
+  volume: string,
+};
+
 /** Generic fields, to be displayed _before_ type-specific fields. */
-export function GenericPreFields() {
+export const GenericPreFields: React.FC<{}> = () => {
   return (
     <>
       <StandardGroup as='select' name='type' label='Type'>
@@ -36,10 +56,10 @@ export function GenericPreFields() {
       />
     </>
   );
-}
+};
 
 /** Generic fields, to be displayed _after_ type-specific fields. */
-export function GenericPostFields() {
+export const GenericPostFields: React.FC<{}> = () => {
   return (
     <>
       <StandardGroup
@@ -65,10 +85,10 @@ export function GenericPostFields() {
       />
     </>
   );
-}
+};
 
 /** Article-specific fields */
-function ArticleFields() {
+const ArticleFields: React.FC<{}> = () => {
   return (
     <>
       <BForm.Group as={Row}>
@@ -102,10 +122,10 @@ function ArticleFields() {
       </BForm.Group>
     </>
   )
-}
+};
 
 /** Book-specific fields. */
-function BookFields() {
+const BookFields: React.FC<{}> = () => {
   return (
     <>
       <BForm.Group as={Row}>
@@ -168,12 +188,12 @@ function BookFields() {
       </BForm.Group>
     </>
   );
-}
+};
 
 /** Type-specific fields, e.g. article fields, book fields...
  * @param type The type such as 'Article' or 'Book'
  */
-export function SpecificFields({ type }) {
+export const SpecificFields: React.FC<{type: string}> = ({ type }) => {
   if (type === 'Article') {
     return <ArticleFields />;
   } else if (type === 'Book') {
@@ -181,4 +201,4 @@ export function SpecificFields({ type }) {
   } else {
     return null;
   }
-}
+};

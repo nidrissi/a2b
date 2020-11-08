@@ -14,14 +14,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     @param children The input to be tooltip.
     @param help The help text.
  */
-function TooltipedInput({ children, help }) {
+const TooltipedInput: React.FC<{ help: string | JSX.Element, id: string }> = ({ children, help, id }) => {
   return (
     <InputGroup>
       {children}
       <OverlayTrigger
         placement='top'
         overlay={
-          <Tooltip>
+          <Tooltip id={'tooltip-' + id}>
             {help}
           </Tooltip>
         }
@@ -34,7 +34,7 @@ function TooltipedInput({ children, help }) {
       </OverlayTrigger>
     </InputGroup>
   );
-}
+};
 
 /** Standard inputs.
     @param totalColumns The total number of columns for the input. Two columns will be reserved for the label.
@@ -42,7 +42,16 @@ function TooltipedInput({ children, help }) {
     @param help The help text, if any.
     @param ...props The rest of the props, passed to the input.
  */
-export function StandardInput({totalColumns, label, help, ...props}) {
+export type StandardInputProps = {
+  as?: string,
+  help?: string | JSX.Element,
+  label: string,
+  name: string,
+  placeholder?: string
+  totalColumns?: number,
+  type?: string,
+}
+export const StandardInput: React.FC<StandardInputProps> = ({ totalColumns = 12, label, help, ...props }) => {
   const labelColumns = 2;
   const inputColumns = totalColumns - labelColumns;
 
@@ -55,7 +64,7 @@ export function StandardInput({totalColumns, label, help, ...props}) {
   );
 
   // if there is a help text we put it in a tooltip, otherwise we keep the field
-  const input = help ? <TooltipedInput help={help} children={field} /> : field;
+  const input = help ? <TooltipedInput id={props.name} help={help} children={field} /> : field;
 
   return (
     <>
@@ -70,15 +79,15 @@ export function StandardInput({totalColumns, label, help, ...props}) {
       </Col>
     </>
   )
-}
+};
 
 /** Standard input group fields. 
     @param props All parameters are passed to a `StandardInput`.
  */
-export function StandardGroup(props) {
+export const StandardGroup: React.FC<StandardInputProps> = (props) => {
   return (
     <BForm.Group as={Row}>
       <StandardInput totalColumns={12} {...props} />
     </BForm.Group>
   );
-}
+};
