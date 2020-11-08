@@ -15,7 +15,7 @@ export const fetchEntries = createAsyncThunk<
     }
   }
 >('results/fetchEntries',
-  async (_, { getState, requestId }) => {
+  async (_: void, { getState, requestId }) => {
     const state = getState();
     const query = state.searchForm;
     const settings = state.settings;
