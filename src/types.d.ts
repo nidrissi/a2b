@@ -2,7 +2,6 @@
 type Entry = {
     authors: string[],
     date: string,
-    title: string,
     type: string,
     abstract?: string,
     comment?: string,
@@ -22,6 +21,7 @@ type Entry = {
     pubstate?: string,
     series?: string,
     subTitle?: string,
+    title?: string,
     version?: number,
     volume?: number,
 };
