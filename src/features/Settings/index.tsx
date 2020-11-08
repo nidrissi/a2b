@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
+import { AppDispatch } from '../../store';
 import {
   saveSettings,
   selectMode, setMode,
@@ -22,7 +23,7 @@ import {
 
 /** The settings form, controls the related redux state. */
 export default function Settings() {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const mode = useSelector(selectMode);
   const includeAbstract = useSelector(selectIncludeAbstract);
   const includeFile = useSelector(selectIncludeFile);
@@ -54,7 +55,7 @@ export default function Settings() {
         <Form.Group>
           <Form.Check
             checked={includeFile}
-            onChange={e => dispatch(setIncludeFile(e.target.checked))}
+            onChange={e => dispatch(setIncludeFile((e.target as HTMLInputElement).checked))}
             id='includeFile'
             label='Include file field in entries'
           />
@@ -62,7 +63,7 @@ export default function Settings() {
         <Form.Group className="ml-3">
           <Form.Check
             checked={filePrefix}
-            onChange={e => dispatch(setFilePrefix(e.target.checked))}
+            onChange={e => dispatch(setFilePrefix((e.target as HTMLInputElement).checked))}
             id='filePrefix'
             disabled={!includeFile}
             label={<span>Add a prefix to the file field (<code>Doe2020.pdf</code> ⇒ <code>D/Doe2020.pdf</code>)</span>}
@@ -71,7 +72,7 @@ export default function Settings() {
         <Form.Group className="ml-3">
           <Form.Check
             checked={includeWget}
-            onChange={e => dispatch(setIncludeWget(e.target.checked))}
+            onChange={e => dispatch(setIncludeWget((e.target as HTMLInputElement).checked))}
             id='includeWget'
             disabled={!includeFile}
             label={<span>Include a <code>wget</code> command for the entries.</span>}
@@ -97,7 +98,7 @@ export default function Settings() {
         <Form.Group>
           <Form.Check
             checked={includeAbstract}
-            onChange={e => dispatch(setIncludeAbstract(e.target.checked))}
+            onChange={e => dispatch(setIncludeAbstract((e.target as HTMLInputElement).checked))}
             id='includeAbstract'
             label='Include the abstract'
           />
@@ -105,7 +106,7 @@ export default function Settings() {
         <Form.Group>
           <Form.Check
             checked={includePrimaryCategory}
-            onChange={e => dispatch(setIncludePrimaryCategory(e.target.checked))}
+            onChange={e => dispatch(setIncludePrimaryCategory((e.target as HTMLInputElement).checked))}
             id='includePrimaryCategory'
             label={<span>Include the primary category (e.g. <code>math.AT</code>), if any</span>}
           />
@@ -113,7 +114,7 @@ export default function Settings() {
         <Form.Group>
           <Form.Check
             checked={includeVersion}
-            onChange={e => dispatch(setIncludeVersion(e.target.checked))}
+            onChange={e => dispatch(setIncludeVersion((e.target as HTMLInputElement).checked))}
             id='includeVersion'
             label='Include version information'
           />

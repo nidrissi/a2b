@@ -17,7 +17,7 @@ import { selectIsLoading } from '../Results/resultsSlice';
     @param str The string to be split.
     @param rx The regexp along which the string will be split.
  */
-function splitter(str, rx) {
+function splitter(str: string, rx: RegExp) {
   return str.split(rx).filter(s => s !== '');
 }
 
@@ -25,7 +25,13 @@ function splitter(str, rx) {
     @param label The label of the input field.
     @param ...props The rest of the parameters, will be passed to a controlled input.
  */
-function InputField({ label, ...props }) {
+type InputFieldProps = {
+  label: string,
+  name: string,
+  placeholder?: string,
+  title?: string,
+};
+const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <BForm.Group as={Row}>
@@ -41,7 +47,7 @@ function InputField({ label, ...props }) {
           id={props.name}
           {...field}
           {...props}
-          isInvalid={meta.error}
+          isInvalid={Boolean(meta.error)}
         />
         <BForm.Control.Feedback type="invalid">
           {meta.error}
@@ -49,12 +55,12 @@ function InputField({ label, ...props }) {
       </Col>
     </BForm.Group>
   );
-}
+};
 
 /** The submit and clear buttons used in SearchForm.
     @param isLoading Whether the form is currently loading or not.
  */
-function SubmitClearButtons({ isLoading }) {
+const SubmitClearButtons: React.FC<{isLoading: boolean}> = ({ isLoading }) => {
   return (
     <BForm.Group as={BForm.Row}>
       <Col sm={10}>
@@ -79,7 +85,7 @@ function SubmitClearButtons({ isLoading }) {
       </Col>
     </BForm.Group>
   );
-}
+};
 
 /** The full search form. It has
     - three fields:
@@ -90,7 +96,7 @@ function SubmitClearButtons({ isLoading }) {
       - submit;
       - clear.
  */
-export default function SearchForm() {
+const SearchForm: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
@@ -112,8 +118,8 @@ export default function SearchForm() {
           setSubmitting(false);
         }
       }}
-      validate={(values) =>{
-        const errors = {};
+      validate={(values) => {
+        const errors: { [index: string]: string } = {};
         if (!values.ids && !values.authors && !values.titles) {
           ['ids', 'authors', 'titles'].forEach(s => errors[s] = 'At least one value is required.');
         }
@@ -145,4 +151,5 @@ export default function SearchForm() {
       </Form>
     </Formik>
   );
-}
+};
+export default SearchForm;
