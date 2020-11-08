@@ -25,7 +25,6 @@ function parseEntry(xmlEntry: Element): Entry | null {
     pubstate: '',
     title: '',
     type: '',
-    version: ''
   };
 
   // authors are of the form <author> <name>John Doe</name> (<arxiv:affiliation>University </arxiv.affiliation>)? </author>
@@ -63,12 +62,12 @@ function parseEntry(xmlEntry: Element): Entry | null {
   }
   const [id, version] = match;
   entry.id = id;
-  entry.version = version;
+  entry.version = Number(version);
 
   // link to PDF
   for (let l of Array.from(xmlEntry.getElementsByTagName('link'))) {
     if (l.getAttribute('title') === 'pdf') {
-      entry.pdfLink = l.getAttribute('href');
+      entry.pdfLink = l.getAttribute('href') || undefined;
     } else if (l.getAttribute('title') === 'doi') {
       entry.doi = l.getAttribute('href')!.replace('http://dx.doi.org/', '')
     }
@@ -82,7 +81,9 @@ function parseEntry(xmlEntry: Element): Entry | null {
     entry.journalRef = getUniqueNamedTag(xmlEntry, 'arxiv:journal_ref').replace(/\s+/g, ' ');
   } catch (_err) { }
   try {
-    entry.primaryCategory = xmlEntry.getElementsByTagName('arxiv:primary_category').item(0)!.getAttribute('term');
+    entry.primaryCategory =
+     xmlEntry.getElementsByTagName('arxiv:primary_category').item(0)!.getAttribute('term')
+     || undefined;
   } catch (_err) { }
 
   // publication state

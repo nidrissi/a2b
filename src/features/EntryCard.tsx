@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { removeAccents } from '../utils';
 import { RootState } from '../store';
 
-type Pairing = { abstract?: string | null, [index: string]: string | JSX.Element | null | undefined };
+// TODO Better pairing type
+type Pairing = { abstract?: string | null, [index: string]: string | JSX.Element | number | null | undefined };
 
 /** Converts a JS author list and a date into a BibLaTeX author list and a key.
   * @param authors The list of authors.
