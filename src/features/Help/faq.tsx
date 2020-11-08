@@ -1,8 +1,8 @@
 import React from 'react';
 
 export type FAQEntryProps = { myKey: string, q: string | JSX.Element, a: string | JSX.Element };
-export type FAQSectionProps = { title: string, key: string, entries: Array<FAQEntryProps> };
-const faq: Array<FAQSectionProps> = [
+export type FAQSectionProps = { title: string, key: string, entries: FAQEntryProps[] };
+const faq: FAQSectionProps[] = [
   {
     title: 'This program',
     key: 'program',

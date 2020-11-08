@@ -8,14 +8,10 @@ import EntryCard from '../EntryCard';
  * @param entryId The id of the entry.
  */
 const EntryById: React.FC<{ entryId: string }> = ({ entryId }) => {
-  const selectedEntry = useSelector(selectEntryById(entryId));
-  if (!selectedEntry) {
+  const entry = useSelector(selectEntryById(entryId));
+  if (!entry) {
     return <>No such entry: {entryId}</>
   } else {
-    const entry = {
-      ...selectedEntry,
-      type: 'Misc'
-    };
     return <EntryCard entry={entry} />
   }
 };

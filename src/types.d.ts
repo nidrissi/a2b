@@ -1,11 +1,13 @@
 /** The main entry type. */
 type Entry = {
-    abstract?: string,
-    authors: Array<string>,
-    comment?: string,
+    authors: string[],
     date: string,
-    doi: string,
-    id: string,
+    title: string,
+    type: string,
+    abstract?: string,
+    comment?: string,
+    doi?: string,
+    id?: string,
     issue?: number,
     ISBN?: string,
     journal?: string,
@@ -17,20 +19,18 @@ type Entry = {
     pdfLink?: string,
     primaryCategory?: string,
     publisher?: string,
-    pubstate: string,
+    pubstate?: string,
     series?: string,
     subTitle?: string,
-    title: string,
-    type: string,
     version?: number,
     volume?: number,
 };
 
 /** An arXiv query as built by SearchForm */
 type Query = {
-    authors: Array<string>,
-    ids: Array<string>,
-    titles: Array<string>
+    authors: string[],
+    ids: string[],
+    titles: string[],
 };
 
 /** The settings */
@@ -45,11 +45,5 @@ type Settings = {
     includeVersion: boolean,
     sortBy: string,
     sortOrder: string,
-    maxResults: number
+    maxResults: number,
 };
-
-type SearchInput = {
-    ids: string[],
-    authors: string[],
-    titles: string[]
-  }

@@ -19,7 +19,10 @@ const persistentState = localStorage.getItem('settings');
 
 // in case I have introduced new settings since the last time the user
 // has used the app, I still want to use defaultInitialState as fallback
-const initialState = persistentState ? { ...defaultInitialState, ...JSON.parse(persistentState) } : defaultInitialState;
+const initialState: Settings =
+  persistentState
+    ? { ...defaultInitialState, ...JSON.parse(persistentState) }
+    : defaultInitialState;
 
 export const settingsSlice = createSlice({
   name: 'settings',

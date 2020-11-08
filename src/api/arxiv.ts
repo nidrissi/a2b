@@ -13,18 +13,10 @@ function getUniqueNamedTag(xmlEntry: Element | Document, tag: string): string {
 function parseEntry(xmlEntry: Element): Entry | null {
   // the end result
   const entry: Entry = {
-    abstract: '',
     authors: [],
-    comment: '',
     date: '',
-    doi: '',
-    id: '',
-    journalRef: '',
-    pdfLink: '',
-    primaryCategory: '',
-    pubstate: '',
     title: '',
-    type: '',
+    type: 'Misc',
   };
 
   // authors are of the form <author> <name>John Doe</name> (<arxiv:affiliation>University </arxiv.affiliation>)? </author>

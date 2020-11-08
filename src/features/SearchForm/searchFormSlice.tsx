@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
-const initialState: SearchInput = {
+const initialState: Query = {
   ids: [],
   authors: [],
   titles: []
