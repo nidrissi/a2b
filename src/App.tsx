@@ -40,7 +40,7 @@ history.listen(location => {
   ReactGA.pageview(location.pathname)
 });
 
-export default function App() {
+const App: React.FC<{}> = () => {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname)
   }, []);
@@ -58,10 +58,9 @@ export default function App() {
 
   useEffect(() => {
     if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
-      dispatch(fetchEntries({ authors, ids, titles }, { maxResults, sortBy, sortOrder }));
+      dispatch(fetchEntries());
     }
   }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder])
-
 
   return (
     <Container>
@@ -93,4 +92,5 @@ export default function App() {
       <Footer />
     </Container>
   );
-}
+};
+export default App;
