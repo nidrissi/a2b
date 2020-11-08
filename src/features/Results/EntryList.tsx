@@ -5,26 +5,23 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  selectEntryIds,
-  selectTotalEntriesFound,
-} from './resultsSlice';
+import { selectAllEntries, selectTotalEntriesFound } from './resultsSlice';
 import { selectMode } from '../Settings/settingsSlice';
 
-import EntryById from './EntryById';
+import EntryCard from '../EntryCard';
 
 /** The list of all entries. Entry ids are taken from the redux state
  * and then rendered using `EntryById`. Then adds buttons to copy entries 
  * to the clipboards and counts how many are displayed out of the total.
  */
 const EntryList: React.FC<{}> = () => {
-  const entryIds = useSelector(selectEntryIds);
+  const entries = useSelector(selectAllEntries);
   const mode = useSelector(selectMode);
 
-  const renderedEntries = entryIds.map(id =>
-    <EntryById
-      key={id}
-      entryId={String(id)}
+  const renderedEntries = entries.map(entry =>
+    <EntryCard
+      key={entry.id}
+      entry={entry}
     />
   );
 
@@ -54,7 +51,7 @@ const EntryList: React.FC<{}> = () => {
   const totalEntriesFound = useSelector(selectTotalEntriesFound);
   const totalText =
     <>
-      Showing {entryIds.length} entries out of {totalEntriesFound} in total.
+      Showing {entries.length} entries out of {totalEntriesFound} in total.
       {mode === 'bibtex' ? <span className="text-danger"> Running in legacy BibTeX mode. Check entries for issues.</span> : null}
     </>;
 
