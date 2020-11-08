@@ -1,7 +1,7 @@
 import React from 'react';
 
 /** A basic footer that contains version information, licence, and a link to the source. */
-const Footer: React.FunctionComponent<{}> = () => {
+const Footer: React.FC<{}> = () => {
   const version: string = process.env.REACT_APP_VERSION!.replace('-alpha', 'ɑ').replace('-beta', 'β');
   const sha: string = process.env.REACT_APP_GITHUB_SHA || 'undefined';
 

@@ -28,7 +28,7 @@ import { fetchEntries } from './features/Results/resultsSlice';
 
 // lazy loaded components
 const DIY = React.lazy(() => import('./features/DIY'));
-const Err404 = React.lazy(() => import('./features/Err404'));
+const Error404 = React.lazy(() => import('./features/Error404'));
 const Help = React.lazy(() => import('./features/Help'));
 const Search = React.lazy(() => import('./features/Search'));
 const Settings = React.lazy(() => import('./features/Settings'));
@@ -85,7 +85,7 @@ export default function App() {
               <DIY />
             </Route>
             <Route path="*">
-              <Err404 />
+              <Error404 />
             </Route>
           </Switch>
         </Suspense>
