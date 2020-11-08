@@ -3,10 +3,13 @@ import resultsReducer from './features/Results/resultsSlice';
 import searchFormReducer from './features/SearchForm/searchFormSlice';
 import settingsReducer from './features/Settings/settingsSlice';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     results: resultsReducer,
     searchForm: searchFormReducer,
     settings: settingsReducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch
+export default store;
