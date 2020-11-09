@@ -4,10 +4,9 @@ import { removeAccents } from '../utils';
 function getUniqueNamedTag(xmlEntry: Element | Document, tag: string): string | undefined {
   const collection = xmlEntry.getElementsByTagName(tag);
   const item = collection.item(0);
-  if (item === null) {
-    return
-  }
-  return item.textContent?.trim();
+  return item
+    ? item.textContent?.trim()
+    : undefined;
 }
 
 function parseEntry(xmlEntry: Element): Entry | null {
@@ -61,7 +60,7 @@ function parseEntry(xmlEntry: Element): Entry | null {
     return null;
   }
   // the URL has the form http://arxiv.org/abs/{id}v{version}
-  const regex = /arxiv\.org\/abs\/(.+)v(\d+)/;
+  const regex = /https?:\/\/arxiv\.org\/abs\/(.+)v(\d+)/;
   const match = idURL.match(regex);
   if (match === null) {
     throw Error('bad entry: malformed arXiv URL!');
@@ -99,31 +98,31 @@ function parseEntry(xmlEntry: Element): Entry | null {
  */
 function checkEntryForErrors(xmlEntry: Element): void {
   for (let l of Array.from(xmlEntry.getElementsByTagName('link'))) {
-    if (l.getAttribute('href')!.match('api/errors')) {
+    if (l.getAttribute('href')?.match('api/errors')) {
       const error = getUniqueNamedTag(xmlEntry, 'summary');
-      throw (Error(`ArXiv reported: “${error}”.`));
+      throw Error(`ArXiv reported: “${error}”.`);
     }
   }
 }
 
-function buildSearchQueryPart(list: Array<string>, label: string): string {
-  let result = '';
-  if (list.length > 0) {
-    result = list.map(removeAccents).map(encodeURIComponent).map(a => `${label}:"${a}"`).join('+AND+');
-  }
-  return result;
+function buildSearchQueryPart(list: string[], label: string): string {
+  return list
+    .map(removeAccents)
+    .map(encodeURIComponent)
+    .map(a => `${label}:"${a}"`)
+    .join('+AND+');
 }
 
 function buildURLQuery(
   { authors, ids, titles }: Query,
   { maxResults, sortBy, sortOrder }: Settings
 ): string {
-  const base: string = 'https://export.arxiv.org/api/query?';
+  const base = 'https://export.arxiv.org/api/query?';
 
-  let idQuery = '';
-  if (ids.length > 0) {
-    idQuery = ';id_list=' + encodeURIComponent(ids.join(',').replace(/v\d+$/, ''))
-  }
+  const idQuery =
+    ids.length === 0
+      ? ''
+      : ';id_list=' + encodeURIComponent(ids.join(',').replace(/v\d+$/, ''));
 
   const searchQuery = [
     buildSearchQueryPart(authors, 'au'),
@@ -154,7 +153,7 @@ export async function arxivSearch(
   const xmlDoc = parser.parseFromString(xmlData, "text/xml");
 
   const xmlEntries = xmlDoc.getElementsByTagName("entry");
-  const entries = [];
+  const entries: Entry[] = [];
   for (let w of Array.from(xmlEntries)) {
     checkEntryForErrors(w);
     const parsedEntry = parseEntry(w);
