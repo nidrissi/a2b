@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { selectAllEntries, selectTotalEntriesFound } from './resultsSlice';
-import { selectMode } from '../Settings/settingsSlice';
+import { selectSettings } from '../Settings/settingsSlice';
 
 import EntryCard from '../EntryCard';
 
@@ -16,7 +16,7 @@ import EntryCard from '../EntryCard';
  */
 const EntryList: React.FC<{}> = () => {
   const entries = useSelector(selectAllEntries);
-  const mode = useSelector(selectMode);
+  const { mode } = useSelector(selectSettings);
 
   const renderedEntries = entries.map(entry =>
     <EntryCard

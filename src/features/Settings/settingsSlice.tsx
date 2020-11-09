@@ -43,18 +43,7 @@ export const settingsSlice = createSlice({
 });
 export default settingsSlice.reducer;
 
-export const selectMode = (state: RootState) => state.settings.mode;
-export const selectIncludeAbstract = (state: RootState) => state.settings.includeAbstract;
-export const selectIncludeFile = (state: RootState) => state.settings.includeFile;
-export const selectFilePrefix = (state: RootState) => state.settings.filePrefix;
-export const selectIncludeWget = (state: RootState) => state.settings.includeWget;
-export const selectFileFolder = (state: RootState) => state.settings.fileFolder;
-export const selectIncludePrimaryCategory = (state: RootState) => state.settings.includePrimaryCategory;
-export const selectIncludeVersion = (state: RootState) => state.settings.includeVersion;
-
-export const selectSortBy = (state: RootState) => state.settings.sortBy;
-export const selectSortOrder = (state: RootState) => state.settings.sortOrder;
-export const selectMaxResults = (state: RootState) => state.settings.maxResults;
+export const selectSettings = (state: RootState) => state.settings;
 
 export const {
   setMode,

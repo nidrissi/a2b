@@ -8,34 +8,36 @@ import Row from 'react-bootstrap/Row';
 import { AppDispatch } from '../../store';
 import {
   saveSettings,
-  selectMode, setMode,
-  selectIncludeAbstract, setIncludeAbstract,
-  selectIncludeFile, setIncludeFile,
-  selectFilePrefix, setFilePrefix,
-  selectIncludeWget, setIncludeWget,
-  selectFileFolder, setFileFolder,
-  selectIncludePrimaryCategory, setIncludePrimaryCategory,
-  selectIncludeVersion, setIncludeVersion,
-  selectMaxResults, setMaxResults,
-  selectSortBy, setSortBy,
-  selectSortOrder, setSortOrder,
+  selectSettings,
+  setMode,
+  setIncludeAbstract,
+  setIncludeFile,
+  setFilePrefix,
+  setIncludeWget,
+  setFileFolder,
+  setIncludePrimaryCategory,
+  setIncludeVersion,
+  setMaxResults,
+  setSortBy,
+  setSortOrder,
 } from './settingsSlice';
 
 /** The settings form, controls the related redux state. */
 export default function Settings() {
   const dispatch: AppDispatch = useDispatch();
-  const mode = useSelector(selectMode);
-  const includeAbstract = useSelector(selectIncludeAbstract);
-  const includeFile = useSelector(selectIncludeFile);
-  const filePrefix = useSelector(selectFilePrefix);
-  const includeWget = useSelector(selectIncludeWget);
-  const fileFolder = useSelector(selectFileFolder);
-  const includePrimaryCategory = useSelector(selectIncludePrimaryCategory);
-  const includeVersion = useSelector(selectIncludeVersion);
-
-  const maxResults = useSelector(selectMaxResults);
-  const sortBy = useSelector(selectSortBy);
-  const sortOrder = useSelector(selectSortOrder);
+  const {
+    fileFolder,
+    filePrefix,
+    includeAbstract,
+    includeFile,
+    includePrimaryCategory,
+    includeVersion,
+    includeWget,
+    maxResults,
+    mode,
+    sortBy,
+    sortOrder,
+  } = useSelector(selectSettings)
 
   return (
     <div>
