@@ -13,7 +13,7 @@ import { GenericPreFields, GenericPostFields, SpecificFields, FormValues } from 
 /** Takes values from the Formik context, creates an entry and formats it with `Entry`.
  */
 const FormattedEntry: React.FC<{}> = () => {
-  const { values }: { values: FormValues} = useFormikContext();
+  const { values } = useFormikContext<FormValues>();
   // split on &, delete empty values, and trim
   const authors = values.authors.split('&').filter(s => s).map(s => s.trim());
   const entry = {
@@ -21,7 +21,7 @@ const FormattedEntry: React.FC<{}> = () => {
     volume: Number(values.volume),
     issue: Number(values.issue),
     authors,
-    date: values.date || '0',     // date must not be empty
+    date: values.date || '0000',     // date must not be empty
   }
   return <EntryCard entry={entry} />
 }
@@ -47,11 +47,10 @@ const initialValues = {
   issue: '',
 };
 
-/** The body of the `DIY` component. This is _not_ a component, it is
- * a function to be used as the children of `Formik`.
+/** The body of the `DIY` component.
  * @param values The values provided by Formik.
  */
-function diyBody({ values }: { values: FormValues}): JSX.Element {
+const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
   return (
     <>
       <FormattedEntry />
@@ -72,7 +71,7 @@ function diyBody({ values }: { values: FormValues}): JSX.Element {
       </Form>
     </>
   )
-}
+};
 
 /** The DIY component: turns values inputted in a form into a formatted entry.
  */
@@ -84,9 +83,8 @@ const DIY: React.FC<{}> = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => { return }}
-      >
-        {diyBody}
-      </Formik>
+        component={DIYBody}
+      />
     </>
   );
 };
