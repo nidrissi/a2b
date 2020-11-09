@@ -14,11 +14,7 @@ import Footer from './features/Footer';
 import MyNavbar from './features/MyNavbar';
 
 // state
-import {
-  selectMaxResults,
-  selectSortBy,
-  selectSortOrder,
-} from './features/Settings/settingsSlice';
+import { selectSettings } from './features/Settings/settingsSlice';
 import {
   selectIds,
   selectAuthors,
@@ -52,9 +48,7 @@ const App: React.FC<{}> = () => {
   const authors = useSelector(selectAuthors);
   const titles = useSelector(selectTitles);
   // settings
-  const maxResults = useSelector(selectMaxResults);
-  const sortBy = useSelector(selectSortBy);
-  const sortOrder = useSelector(selectSortOrder);
+  const { maxResults, sortBy, sortOrder } = useSelector(selectSettings);
 
   useEffect(() => {
     if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
