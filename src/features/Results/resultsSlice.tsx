@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, createAsyncThunk, EntityId } from '@reduxjs/toolkit';
 
 import { ArxivResult, arxivSearch } from '../../api/arxiv';
 import { RootState } from '../../store';
@@ -23,7 +23,7 @@ export const fetchEntries = createAsyncThunk<
     if (!isLoading || requestId !== currentRequestId) {
       return
     } else {
-      return (await arxivSearch(query, settings)) as ArxivResult
+      return await arxivSearch(query, settings)
     }
   });
 
@@ -32,7 +32,7 @@ const entriesAdapter = createEntityAdapter<Entry>()
 type ResultsExtraState = {
   totalEntriesFound: number | null,
   isLoading: boolean,
-  currentRequestId: string | number | null,
+  currentRequestId: EntityId | null,
   error: string | null,
 }
 export const resultsSlice = createSlice({

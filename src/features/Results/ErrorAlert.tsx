@@ -11,8 +11,9 @@ import { selectError, clearError } from './resultsSlice';
 const ErrorAlert: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
-
-  return (error === null) ? null : (
+  
+  if (!error) { return null }
+  return (
     <Alert
       variant="danger"
       dismissible
