@@ -1,167 +1,154 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import BForm from 'react-bootstrap/Form';
 
-import { AppDispatch } from '../../store';
+import { Formik, Form, Field } from 'formik';
+
 import {
   saveSettings,
   selectSettings,
-  setMode,
-  setIncludeAbstract,
-  setIncludeFile,
-  setFilePrefix,
-  setIncludeWget,
-  setFileFolder,
-  setIncludePrimaryCategory,
-  setIncludeVersion,
-  setMaxResults,
-  setSortBy,
-  setSortOrder,
 } from './settingsSlice';
 
+const SettingsForm: React.FC<{ values: Settings }> = ({ values }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(saveSettings(values))
+  }, [dispatch, values]);
+  return (
+    <Form>
+      <h3>Entry display</h3>
+      <BForm.Group>
+        <Field
+          as="select"
+          className="form-control"
+          name="mode"
+        >
+          <option value="biblatex">BibLaTeX (recommended)</option>
+          <option value="bibtex">Legacy BibTeX (⚠ see help)</option>
+        </Field>
+      </BForm.Group>
+      <BForm.Group>
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          id="includeFile" name="includeFile"
+          label="Include file field in entries"
+        />
+      </BForm.Group>
+      <BForm.Group className="ml-3">
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          id="filePrefix" name="filePrefix"
+          disabled={!values.includeFile}
+          label={<>Add a prefix to the file field (<code>Doe2020.pdf</code> ⇒ <code>D/Doe2020.pdf</code>)</>}
+        />
+      </BForm.Group>
+      <BForm.Group className="ml-3">
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          name="includeWget" id="includeWget"
+          disabled={!values.includeFile}
+          label={<>Include a <code>wget</code> command for the entries.</>}
+        />
+      </BForm.Group>
+      <BForm.Group className="ml-3">
+        <BForm.Label htmlFor="fileFolder">
+          The folder for the <code>wget</code> command, if any.
+        </BForm.Label>
+        <Field
+          className="form-control"
+          name="fileFolder" id="fileFolder"
+          disabled={!values.includeFile || !values.includeWget}
+        />
+      </BForm.Group>
+      <BForm.Group>
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          name="includeAbstract" id="includeAbstract"
+          label="Include the abstract"
+        />
+      </BForm.Group>
+      <BForm.Group>
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          name="includePrimaryCategory" id="includePrimaryCategory"
+          label={<>Include the primary category (e.g. <code>math.AT</code>), if any</>}
+        />
+      </BForm.Group>
+      <BForm.Group>
+        <Field
+          as={BForm.Check}
+          type="checkbox"
+          name="includeVersion" id="includeVersion"
+          label="Include version information"
+        />
+      </BForm.Group>
+      <h3>Search settings</h3>
+      <BForm.Group>
+        <BForm.Label htmlFor="sortBy">
+          Sort by
+        </BForm.Label>
+        <Field
+          className="form-control"
+          as="select"
+          name="sortBy" id="sortBy"
+        >
+          <option value="submittedDate">Initial submission date</option>
+          <option value="lastUpdatedDate">Last update</option>
+          <option value="relevance">Relevance</option>
+        </Field>
+      </BForm.Group>
+      <BForm.Group>
+        <BForm.Label htmlFor="sortOrder">
+          Sort order
+        </BForm.Label>
+        <Field
+          className="form-control"
+          as="select"
+          name="sortOrder" id="sortOrder"
+        >
+          <option value="descending">Descending</option>
+          <option value="ascending">Ascending</option>
+        </Field>
+      </BForm.Group>
+      <BForm.Group>
+        <BForm.Label htmlFor="maxResults">
+          Max results
+        </BForm.Label>
+        <Field
+          className="form-control"
+          as="select"
+          name="maxResults" id="maxResults"
+        >
+          {[10, 20, 50, 100, 200, 500, 1000].map(i => <option key={i} value={i}>{i}</option>)}
+        </Field>
+      </BForm.Group>
+    </Form>
+  );
+};
+
 /** The settings form, controls the related redux state. */
-export default function Settings() {
-  const dispatch: AppDispatch = useDispatch();
-  const {
-    fileFolder,
-    filePrefix,
-    includeAbstract,
-    includeFile,
-    includePrimaryCategory,
-    includeVersion,
-    includeWget,
-    maxResults,
-    mode,
-    sortBy,
-    sortOrder,
-  } = useSelector(selectSettings)
+const Settings: React.FC<{}> = () => {
+  const settings = useSelector(selectSettings);
 
   return (
     <div>
       <h1>Settings</h1>
-      <Form onChange={() => dispatch(saveSettings())}>
-        <h3>Entry display</h3>
-        <Form.Group>
-          <Form.Control
-            as="select"
-            value={mode}
-            onChange={e => dispatch(setMode(e.target.value))}
-          >
-            <option value="biblatex">BibLaTeX (recommended)</option>
-            <option value="bibtex">Legacy BibTeX (⚠ see help)</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Check
-            checked={includeFile}
-            onChange={e => dispatch(setIncludeFile((e.target as HTMLInputElement).checked))}
-            id='includeFile'
-            label='Include file field in entries'
-          />
-        </Form.Group>
-        <Form.Group className="ml-3">
-          <Form.Check
-            checked={filePrefix}
-            onChange={e => dispatch(setFilePrefix((e.target as HTMLInputElement).checked))}
-            id='filePrefix'
-            disabled={!includeFile}
-            label={<span>Add a prefix to the file field (<code>Doe2020.pdf</code> ⇒ <code>D/Doe2020.pdf</code>)</span>}
-          />
-        </Form.Group>
-        <Form.Group className="ml-3">
-          <Form.Check
-            checked={includeWget}
-            onChange={e => dispatch(setIncludeWget((e.target as HTMLInputElement).checked))}
-            id='includeWget'
-            disabled={!includeFile}
-            label={<span>Include a <code>wget</code> command for the entries.</span>}
-          />
-        </Form.Group>
-        <Form.Group className="ml-3" as={Row}>
-          <Form.Label
-            htmlFor='fileFolder'
-            column
-            sm={4}
-          >
-            The folder for the <code>wget</code> command, if any.
-          </Form.Label>
-          <Col sm={8}>
-            <Form.Control
-              value={fileFolder}
-              onChange={e => dispatch(setFileFolder(e.target.value))}
-              id='fileFolder'
-              disabled={!includeFile || !includeWget}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group>
-          <Form.Check
-            checked={includeAbstract}
-            onChange={e => dispatch(setIncludeAbstract((e.target as HTMLInputElement).checked))}
-            id='includeAbstract'
-            label='Include the abstract'
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Check
-            checked={includePrimaryCategory}
-            onChange={e => dispatch(setIncludePrimaryCategory((e.target as HTMLInputElement).checked))}
-            id='includePrimaryCategory'
-            label={<span>Include the primary category (e.g. <code>math.AT</code>), if any</span>}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Check
-            checked={includeVersion}
-            onChange={e => dispatch(setIncludeVersion((e.target as HTMLInputElement).checked))}
-            id='includeVersion'
-            label='Include version information'
-          />
-        </Form.Group>
-        <h3>Search settings</h3>
-        <Form.Group>
-          <Form.Label>Sort by</Form.Label>
-          <Form.Control
-            as="select"
-            id="sortBy"
-            value={sortBy}
-            onChange={e => dispatch(setSortBy(e.target.value))}
-          >
-            <option value="submittedDate">Initial submission date</option>
-            <option value="lastUpdatedDate">Last update</option>
-            <option value="relevance">Relevance</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Sort order</Form.Label>
-          <Form.Control
-            as="select"
-            id="sortOrder"
-            value={sortOrder}
-            onChange={e => dispatch(setSortOrder(e.target.value))}
-          >
-            <option value="descending">Descending</option>
-            <option value="ascending">Ascending</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Max results</Form.Label>
-          <Form.Control
-            as="select"
-            id="maxResults"
-            value={maxResults}
-            onChange={e => dispatch(setMaxResults(e.target.value))}
-          >
-            {[10, 20, 50, 100, 200, 500, 1000].map(i => <option key={i} value={i}>{i}</option>)}
-          </Form.Control>
-        </Form.Group>
-      </Form>
+      <Formik<Settings>
+        component={SettingsForm}
+        enableReinitialize={true}
+        initialValues={settings}
+        onSubmit={() => { return }}
+      />
       <p className="text-muted">
-        Settings are automatically saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
+        Settings are saved in your browser's <a href="https://en.wikipedia.org/wiki/Web_storage">local storage</a> (you may need to enable some permissions).
       </p>
     </div>
   );
-}
+};
+export default Settings;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Formik, Form, useFormikContext } from 'formik';
+import { Formik, Form } from 'formik';
 
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -12,8 +12,7 @@ import { GenericPreFields, GenericPostFields, SpecificFields, FormValues } from 
 
 /** Takes values from the Formik context, creates an entry and formats it with `Entry`.
  */
-const FormattedEntry: React.FC<{}> = () => {
-  const { values } = useFormikContext<FormValues>();
+const FormattedEntry: React.FC<{ values: FormValues}> = ({values}) => {
   // split on &, delete empty values, and trim
   const authors = values.authors.split('&').filter(s => s).map(s => s.trim());
   const entry = {
@@ -53,7 +52,7 @@ const initialValues = {
 const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
   return (
     <>
-      <FormattedEntry />
+      <FormattedEntry values={values} />
       <br />
       <Form>
         <GenericPreFields />
