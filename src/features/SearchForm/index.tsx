@@ -1,17 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form } from 'formik';
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import BForm from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { setQuery } from './searchFormSlice';
 import { selectIsLoading } from '../Results/resultsSlice';
+import { InputField } from './InputField';
 
 /** Splits a string and removes empty entries.
     @param str The string to be split.
@@ -20,42 +20,6 @@ import { selectIsLoading } from '../Results/resultsSlice';
 function splitter(str: string, rx: RegExp) {
   return str.split(rx).filter(s => s !== '');
 }
-
-/** Generic input fields for SearchForm.
-    @param label The label of the input field.
-    @param ...props The rest of the parameters, will be passed to a controlled input.
- */
-type InputFieldProps = {
-  label: string,
-  name: string,
-  placeholder?: string,
-  title?: string,
-};
-const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <BForm.Group as={Row}>
-      <BForm.Label
-        htmlFor={props.name}
-        column
-        sm={2}
-      >
-        {label}
-      </BForm.Label>
-      <Col sm={10}>
-        <BForm.Control
-          id={props.name}
-          {...field}
-          {...props}
-          isInvalid={Boolean(meta.error)}
-        />
-        <BForm.Control.Feedback type="invalid">
-          {meta.error}
-        </BForm.Control.Feedback>
-      </Col>
-    </BForm.Group>
-  );
-};
 
 /** The submit and clear buttons used in SearchForm.
     @param isLoading Whether the form is currently loading or not.
