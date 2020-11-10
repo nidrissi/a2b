@@ -1,7 +1,12 @@
-import { createEntityAdapter, createSlice, createAsyncThunk, EntityId } from '@reduxjs/toolkit';
+import {
+  createEntityAdapter,
+  createSlice,
+  createAsyncThunk,
+  EntityId,
+} from "@reduxjs/toolkit";
 
-import { ArxivResult, arxivSearch } from '../../api/arxiv';
-import { RootState } from '../../store';
+import { ArxivResult, arxivSearch } from "../../api/arxiv";
+import { RootState } from "../../store";
 
 /** An asynchronous "thunk" that fetches entries based on the request. */
 export const fetchEntries = createAsyncThunk<
@@ -9,34 +14,33 @@ export const fetchEntries = createAsyncThunk<
   void,
   {
     state: {
-      searchForm: Query,
-      settings: Settings,
-      results: { isLoading: boolean, currentRequestId: string }
-    }
+      searchForm: Query;
+      settings: Settings;
+      results: { isLoading: boolean; currentRequestId: string };
+    };
   }
->('results/fetchEntries',
-  async (_: void, { getState, requestId }) => {
-    const state = getState();
-    const query = state.searchForm;
-    const settings = state.settings;
-    const { isLoading, currentRequestId } = state.results;
-    if (!isLoading || requestId !== currentRequestId) {
-      return
-    } else {
-      return await arxivSearch(query, settings)
-    }
-  });
+>("results/fetchEntries", async (_: void, { getState, requestId }) => {
+  const state = getState();
+  const query = state.searchForm;
+  const settings = state.settings;
+  const { isLoading, currentRequestId } = state.results;
+  if (!isLoading || requestId !== currentRequestId) {
+    return;
+  } else {
+    return await arxivSearch(query, settings);
+  }
+});
 
-const entriesAdapter = createEntityAdapter<Entry>()
+const entriesAdapter = createEntityAdapter<Entry>();
 
 type ResultsExtraState = {
-  totalEntriesFound: number | null,
-  isLoading: boolean,
-  currentRequestId: EntityId | null,
-  error: string | null,
-}
+  totalEntriesFound: number | null;
+  isLoading: boolean;
+  currentRequestId: EntityId | null;
+  error: string | null;
+};
 export const resultsSlice = createSlice({
-  name: 'results',
+  name: "results",
   initialState: entriesAdapter.getInitialState({
     totalEntriesFound: null,
     isLoading: false,
@@ -45,8 +49,8 @@ export const resultsSlice = createSlice({
   } as ResultsExtraState),
   reducers: {
     clearError(state) {
-      state.error = null
-    }
+      state.error = null;
+    },
   },
   extraReducers: {
     [String(fetchEntries.pending)]: (state, action) => {
@@ -57,7 +61,7 @@ export const resultsSlice = createSlice({
       }
     },
     [String(fetchEntries.fulfilled)]: (state, action) => {
-      const { requestId } = action.meta
+      const { requestId } = action.meta;
       if (state.isLoading && state.currentRequestId === requestId) {
         state.isLoading = false;
         const { entries, totalEntriesFound } = action.payload;
@@ -70,16 +74,20 @@ export const resultsSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
       state.currentRequestId = null;
-    }
-  }
+    },
+  },
 });
 
 export const { clearError } = resultsSlice.actions;
 
-const entriesSelectors = entriesAdapter.getSelectors((state: RootState) => state.results);
+const entriesSelectors = entriesAdapter.getSelectors(
+  (state: RootState) => state.results
+);
 
-export const selectAllEntries = (state: RootState) => entriesSelectors.selectAll(state);
-export const selectTotalEntriesFound = (state: RootState) => state.results.totalEntriesFound;
+export const selectAllEntries = (state: RootState) =>
+  entriesSelectors.selectAll(state);
+export const selectTotalEntriesFound = (state: RootState) =>
+  state.results.totalEntriesFound;
 export const selectIsLoading = (state: RootState) => state.results.isLoading;
 export const selectError = (state: RootState) => state.results.error;
 

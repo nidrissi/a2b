@@ -1,44 +1,44 @@
-import React, { Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Switch, Redirect, Route, Router } from 'react-router-dom';
+import { Switch, Redirect, Route, Router } from "react-router-dom";
 
-import ReactGA from 'react-ga';
-import { createBrowserHistory } from 'history';
+import ReactGA from "react-ga";
+import { createBrowserHistory } from "history";
 
-import Container from 'react-bootstrap/Container';
-import Spinner from 'react-bootstrap/Spinner';
+import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
 
 // these components are always loaded
-import Footer from './features/Footer';
-import MyNavbar from './features/MyNavbar';
+import Footer from "./features/Footer";
+import MyNavbar from "./features/MyNavbar";
 
 // state
-import { selectSettings } from './features/Settings/settingsSlice';
+import { selectSettings } from "./features/Settings/settingsSlice";
 import {
   selectIds,
   selectAuthors,
   selectTitles,
-} from './features/SearchForm/searchFormSlice';
-import { fetchEntries } from './features/Results/resultsSlice';
+} from "./features/SearchForm/searchFormSlice";
+import { fetchEntries } from "./features/Results/resultsSlice";
 
 // lazy loaded components
-const DIY = React.lazy(() => import('./features/DIY'));
-const Error404 = React.lazy(() => import('./features/Error404'));
-const Help = React.lazy(() => import('./features/Help'));
-const Search = React.lazy(() => import('./features/Search'));
-const Settings = React.lazy(() => import('./features/Settings'));
+const DIY = React.lazy(() => import("./features/DIY"));
+const Error404 = React.lazy(() => import("./features/Error404"));
+const Help = React.lazy(() => import("./features/Help"));
+const Search = React.lazy(() => import("./features/Search"));
+const Settings = React.lazy(() => import("./features/Settings"));
 
 // GA
 const history = createBrowserHistory();
-history.listen(location => {
-  ReactGA.set({ page: location.pathname })
-  ReactGA.pageview(location.pathname)
+history.listen((location) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
 });
 
 const App: React.FC<{}> = () => {
   useEffect(() => {
-    ReactGA.pageview(window.location.pathname)
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   // keep here to avoid re-fetching on route change
@@ -54,13 +54,19 @@ const App: React.FC<{}> = () => {
     if (authors.length > 0 || ids.length > 0 || titles.length > 0) {
       dispatch(fetchEntries());
     }
-  }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder])
+  }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder]);
 
   return (
     <Container>
       <Router history={history}>
         <MyNavbar />
-        <Suspense fallback={<div className="text-center h1"><Spinner animation="grow" /> Loading…</div>}>
+        <Suspense
+          fallback={
+            <div className="text-center h1">
+              <Spinner animation="grow" /> Loading…
+            </div>
+          }
+        >
           <Switch>
             <Route path="/" exact>
               <Search />

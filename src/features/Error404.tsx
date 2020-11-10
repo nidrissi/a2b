@@ -1,5 +1,5 @@
-import React from 'react';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import React from "react";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 /** A generic 404 error */
 const Error404: React.FC<{}> = () => {

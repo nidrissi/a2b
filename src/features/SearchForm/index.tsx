@@ -1,18 +1,18 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form } from 'formik';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form } from "formik";
 
-import { setQuery } from './searchFormSlice';
-import { selectIsLoading } from '../Results/resultsSlice';
-import { InputField } from './InputField';
-import { SubmitAndClearButtons } from './SubmitAndClearButtons';
+import { setQuery } from "./searchFormSlice";
+import { selectIsLoading } from "../Results/resultsSlice";
+import { InputField } from "./InputField";
+import { SubmitAndClearButtons } from "./SubmitAndClearButtons";
 
 /** Splits a string and removes empty entries.
     @param str The string to be split.
     @param rx The regexp along which the string will be split.
  */
 function splitter(str: string, rx: RegExp) {
-  return str.split(rx).filter(s => s !== '');
+  return str.split(rx).filter((s) => s !== "");
 }
 
 /** The full search form. It has
@@ -31,25 +31,27 @@ const SearchForm: React.FC<{}> = () => {
   return (
     <Formik
       initialValues={{
-        ids: '',
-        authors: '',
-        titles: ''
+        ids: "",
+        authors: "",
+        titles: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
         if (!isLoading) {
           const query = {
             ids: splitter(values.ids, /\s+/), // split on spaces
             authors: splitter(values.authors, /\s*&\s*/), // split on ampersands
-            titles: splitter(values.titles, /\s*&\s*/)    // idem
+            titles: splitter(values.titles, /\s*&\s*/), // idem
           };
           dispatch(setQuery(query));
-          setSubmitting(false);
         }
+        setSubmitting(false);
       }}
       validate={(values) => {
         const errors: { [index: string]: string } = {};
         if (!values.ids && !values.authors && !values.titles) {
-          ['ids', 'authors', 'titles'].forEach(s => errors[s] = 'At least one value is required.');
+          ["ids", "authors", "titles"].forEach(
+            (s) => (errors[s] = "At least one value is required.")
+          );
         }
         return errors;
       }}

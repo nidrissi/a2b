@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
 
 const initialState: Query = {
   ids: [],
   authors: [],
-  titles: []
+  titles: [],
 };
 
 export const searchFormSlice = createSlice({
-  name: 'searchForm',
+  name: "searchForm",
   initialState,
   reducers: {
     setQuery(state, action) {
@@ -16,8 +16,8 @@ export const searchFormSlice = createSlice({
       state.ids = query.ids;
       state.authors = query.authors;
       state.titles = query.titles;
-    }
-  }
+    },
+  },
 });
 
 export const { setQuery } = searchFormSlice.actions;
