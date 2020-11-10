@@ -35,15 +35,15 @@ type Query = {
 
 /** The settings */
 type Settings = {
-    mode: string,
-    includeAbstract: boolean,
-    includeFile: boolen,
-    filePrefix: boolean,
-    includeWget: boolean,
     fileFolder: string,
+    filePrefix: boolean,
+    includeAbstract: boolean,
+    includeFile: boolean,
     includePrimaryCategory: boolean,
     includeVersion: boolean,
+    includeWget: boolean,
+    maxResults: number,
+    mode: string,
     sortBy: string,
     sortOrder: string,
-    maxResults: number,
 };

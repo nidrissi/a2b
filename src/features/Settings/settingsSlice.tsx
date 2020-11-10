@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AppDispatch, RootState } from '../../store';
+import { RootState } from '../../store';
 
-const defaultInitialState: Settings = {
+export const defaultInitialState: Settings = {
   mode: 'biblatex',
   includeAbstract: false,
   includeFile: true,
-  filePrefix: true,
+  filePrefix: false,
   includeWget: false,
   fileFolder: '~',
   includePrimaryCategory: false,
@@ -26,43 +26,18 @@ const initialState: Settings =
 
 export const settingsSlice = createSlice({
   name: 'settings',
-  initialState: initialState,
+  initialState,
   reducers: {
-    setMode(state, action) { state.mode = action.payload },
-    setIncludeAbstract(state, action) { state.includeAbstract = action.payload },
-    setIncludeFile(state, action) { state.includeFile = action.payload },
-    setFilePrefix(state, action) { state.filePrefix = action.payload },
-    setIncludeWget(state, action) { state.includeWget = action.payload },
-    setFileFolder(state, action) { state.fileFolder = action.payload },
-    setIncludePrimaryCategory(state, action) { state.includePrimaryCategory = action.payload },
-    setIncludeVersion(state, action) { state.includeVersion = action.payload },
-    setSortBy(state, action) { state.sortBy = action.payload },
-    setSortOrder(state, action) { state.sortOrder = action.payload },
-    setMaxResults(state, action) { state.maxResults = action.payload }
+    saveSettings(state, action) {
+      const settings: Settings = action.payload;
+      const json = JSON.stringify(settings);
+      localStorage.setItem('settings', json);
+      return settings;
+    },
   }
 });
 export default settingsSlice.reducer;
 
 export const selectSettings = (state: RootState) => state.settings;
 
-export const {
-  setMode,
-  setIncludeAbstract,
-  setIncludeFile,
-  setFilePrefix,
-  setIncludeWget,
-  setFileFolder,
-  setIncludePrimaryCategory,
-  setIncludeVersion,
-  setMaxResults,
-  setSortBy,
-  setSortOrder
-} = settingsSlice.actions;
-
-export function saveSettings() {
-  return (_dispatch: AppDispatch, getState: () => RootState) => {
-    const { settings } = getState();
-    const json = JSON.stringify(settings);
-    localStorage.setItem('settings', json);
-  }
-}
+export const { saveSettings } = settingsSlice.actions;
