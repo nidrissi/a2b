@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Accordion from "react-bootstrap/Accordion";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
-import faq, { FAQEntryProps, FAQSectionProps } from './faq';
+import faq, { FAQEntryProps, FAQSectionProps } from "./faq";
 
 /** One entry of the FAQ.
  * @param myKey The key, should be unique and valid as an HTML id.
@@ -15,7 +15,9 @@ const FAQEntry: React.FC<FAQEntryProps> = ({ myKey, q, a }) => {
   return (
     <Card>
       <Accordion.Toggle as={Card.Header} className="p-2" eventKey={myKey}>
-        <Button variant="link" className="p-0">{q}</Button>
+        <Button variant="link" className="p-0">
+          {q}
+        </Button>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={myKey}>
         <Card.Body>{a}</Card.Body>
@@ -32,20 +34,20 @@ const FAQSection: React.FC<FAQSectionProps> = ({ title, entries }) => {
   return (
     <>
       <h2>{title}</h2>
-      {entries.map(({ myKey, q, a }) =>
+      {entries.map(({ myKey, q, a }) => (
         <FAQEntry key={myKey} myKey={myKey} q={q} a={a} />
-      )}
+      ))}
     </>
-  )
+  );
 };
 
 /** The FAQ entries, taken from `faq`. */
 const Body: React.FC<{}> = () => {
   return (
     <Accordion>
-      {faq.map((props) =>
+      {faq.map((props) => (
         <FAQSection {...props} />
-      )}
+      ))}
     </Accordion>
   );
 };
@@ -57,6 +59,6 @@ const Help: React.FC<{}> = () => {
       <h1>Help</h1>
       <Body />
     </>
-  )
+  );
 };
 export default Help;

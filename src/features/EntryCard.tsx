@@ -1,32 +1,42 @@
-import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { removeAccents } from '../utils';
-import { RootState } from '../store';
+import { removeAccents } from "../utils";
+import { RootState } from "../store";
 
 // TODO Better pairing type
-type Pairing = { abstract?: string | null, [index: string]: string | JSX.Element | number | null | undefined };
+type Pairing = {
+  abstract?: string | null;
+  [index: string]: string | JSX.Element | number | null | undefined;
+};
 
 /** Converts a JS author list and a date into a BibLaTeX author list and a key.
-  * @param authors The list of authors.
-  * @param date The date of the entry.
-  * @returns The key made from last names and the date and the formatted author list.
-  * @example
-  * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
-  * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
+ * @param authors The list of authors.
+ * @param date The date of the entry.
+ * @returns The key made from last names and the date and the formatted author list.
+ * @example
+ * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
+ * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
  */
-function splitAuthors(
-  { authors, date }: { authors: string[], date: string }
-): { key: string, authorList: string } {
-  const splitAuthors = authors.map(a => a.split(' '));
+function splitAuthors({
+  authors,
+  date,
+}: {
+  authors: string[];
+  date: string;
+}): { key: string; authorList: string } {
+  const splitAuthors = authors.map((a) => a.split(" "));
   const year = date.slice(0, 4); // dates have the format YYYY-MM-DD
-  const key = splitAuthors.map(l => l[l.length - 1]).join('') + year.toString();
+  const key =
+    splitAuthors.map((l) => l[l.length - 1]).join("") + year.toString();
   const formattedKey = removeAccents(key);
-  const authorList = splitAuthors.map(l => l[l.length - 1] + ', ' + l.slice(0, -1).join(' ')).join(' and ');
+  const authorList = splitAuthors
+    .map((l) => l[l.length - 1] + ", " + l.slice(0, -1).join(" "))
+    .join(" and ");
   return { key: formattedKey, authorList };
 }
 
@@ -35,32 +45,45 @@ function splitAuthors(
  * @param pairing The pairing returned by `buildPairing`
  * @param key The key returned by `splitAuthors`
  */
-function formatEntry(
-  { type, pairing, key }: { type: string, pairing: Pairing, key: string }
-) {
+function formatEntry({
+  type,
+  pairing,
+  key,
+}: {
+  type: string;
+  pairing: Pairing;
+  key: string;
+}) {
   // the length of the longest key
-  const maxKeyLength = Math.max(...Object.keys(pairing).map(s => s.length));
+  const maxKeyLength = Math.max(...Object.keys(pairing).map((s) => s.length));
 
   // pad the abstract
   if (pairing.abstract) {
-    pairing.abstract = pairing.abstract.replace(/\n/g, "\n" + ' '.repeat(maxKeyLength + 6));
+    pairing.abstract = pairing.abstract.replace(
+      /\n/g,
+      "\n" + " ".repeat(maxKeyLength + 6)
+    );
   }
 
   // not great but better than before...
   return (
     <>
       {`@${type}{${key},\n`}
-      {Object.keys(pairing).map(key => (
+      {Object.keys(pairing).map((key) => (
         <React.Fragment key={key}>
-          {'  ' /* indent by 2 */}
+          {"  " /* indent by 2 */}
           {key}
-          {' '.repeat(maxKeyLength - key.length) /* pad to align all equal signs */}
-          {' = {'}
+          {
+            " ".repeat(
+              maxKeyLength - key.length
+            ) /* pad to align all equal signs */
+          }
+          {" = {"}
           {pairing[key]}
           {"},\n"}
         </React.Fragment>
       ))}
-      {'}'}
+      {"}"}
     </>
   );
 }
@@ -69,50 +92,58 @@ function formatEntry(
  * @param entry A key-value entry
  * @param settings Settings including the mode (bibtex or biblatex), the file prefix etc, see `Settings/index.js`
  */
-function buildPairing({ entry, settings }: { entry: Entry, settings: Settings }) {
+function buildPairing({
+  entry,
+  settings,
+}: {
+  entry: Entry;
+  settings: Settings;
+}) {
   // good = biblatex, bad = bibtex
-  const goodMode = settings.mode === 'biblatex';
+  const goodMode = settings.mode === "biblatex";
 
   // get the key and the list of authors, separated by 'and'
-  const { key, authorList } = splitAuthors({ authors: entry.authors, date: entry.date });
+  const { key, authorList } = splitAuthors({
+    authors: entry.authors,
+    date: entry.date,
+  });
 
   // generate a filename and link to the PDF, if any
-  const fileName = (settings.filePrefix ? `${key[0]}/` : '') + `${key}.pdf`;
-  const fileLink =
-    entry.pdfLink
-      ? <a href={entry.pdfLink}>{fileName}</a>
-      : fileName;
+  const fileName = (settings.filePrefix ? `${key[0]}/` : "") + `${key}.pdf`;
+  const fileLink = entry.pdfLink ? (
+    <a href={entry.pdfLink}>{fileName}</a>
+  ) : (
+    fileName
+  );
 
   // deal with journal ref & doi
-  const journalRefLink =
-    entry.journalRef
-      ? <abbr title="Consider converting this entry to @article or something more appropriate.">{entry.journalRef}</abbr>
-      : null;
-  const doiLink =
-    entry.doi
-      ? <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a>
-      : null;
+  const journalRefLink = entry.journalRef ? (
+    <abbr title="Consider converting this entry to @article or something more appropriate.">
+      {entry.journalRef}
+    </abbr>
+  ) : null;
+  const doiLink = entry.doi ? (
+    <a href={`https://dx.doi.org/${entry.doi}`}>{entry.doi}</a>
+  ) : null;
 
   // journal name & series in bad mode
   // if in badmode, add the series in parenthesis
   let journal = null;
   if (entry.journal) {
-    journal = entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : '');
+    journal =
+      entry.journal + (!goodMode && entry.series ? ` (${entry.series})` : "");
   }
 
   // BibTeX only supports a year, not a full date
-  const dateOrYear =
-    goodMode
-      ? entry.date
-      : entry.date.slice(0, 4);
+  const dateOrYear = goodMode ? entry.date : entry.date.slice(0, 4);
 
   // the end result will be this variable
   // all keys are lowercase
   let pairing: Pairing = {
     author: authorList,
-    [goodMode ? 'date' : 'year']: dateOrYear,
+    [goodMode ? "date" : "year"]: dateOrYear,
     title: entry.title,
-    [goodMode ? 'journaltitle' : 'journal']: journal,
+    [goodMode ? "journaltitle" : "journal"]: journal,
     series: goodMode ? entry.series : null,
     maintitle: entry.mainTitle,
     subtitle: entry.subTitle,
@@ -125,16 +156,20 @@ function buildPairing({ entry, settings }: { entry: Entry, settings: Settings })
   };
 
   if (entry.id) {
-    const absURL = `https://arxiv.org/abs/${entry.id}`
+    const absURL = `https://arxiv.org/abs/${entry.id}`;
 
     pairing = {
       ...pairing,
       eprint: <a href={absURL}>{entry.id}</a>,
-      [goodMode ? 'eprinttype' : 'archiveprefix']: 'arXiv',
-      [goodMode ? 'eprintclass' : 'primaryclass']: settings.includePrimaryCategory ? entry.primaryCategory : null,
-      version: (goodMode && settings.includeVersion) ? entry.version : null,
+      [goodMode ? "eprinttype" : "archiveprefix"]: "arXiv",
+      [goodMode
+        ? "eprintclass"
+        : "primaryclass"]: settings.includePrimaryCategory
+        ? entry.primaryCategory
+        : null,
+      version: goodMode && settings.includeVersion ? entry.version : null,
       url: goodMode ? null : absURL,
-    }
+    };
   }
 
   // deal with mode
@@ -143,14 +178,12 @@ function buildPairing({ entry, settings }: { entry: Entry, settings: Settings })
       ...pairing,
       pubstate: entry.pubstate,
       howpublished: journalRefLink,
-    }
+    };
   } else {
     pairing = {
       ...pairing,
-      note: (entry.doi || entry.journalRef)
-        ? journalRefLink
-        : 'Preprint',
-    }
+      note: entry.doi || entry.journalRef ? journalRefLink : "Preprint",
+    };
   }
 
   // add at the end regardless of mode
@@ -163,11 +196,11 @@ function buildPairing({ entry, settings }: { entry: Entry, settings: Settings })
   };
 
   // delete all empty values
-  Object.keys(pairing).forEach(k => !pairing[k] && delete pairing[k]);
+  Object.keys(pairing).forEach((k) => !pairing[k] && delete pairing[k]);
 
   // the wget command, if any
   const wget =
-    (settings.includeFile && entry.pdfLink)
+    settings.includeFile && entry.pdfLink
       ? `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`
       : null;
 
@@ -193,22 +226,21 @@ const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
   const { type, pairing, key, wget } = buildPairing({ entry, settings });
   const formattedEntry = formatEntry({ type, pairing, key });
 
-  return(
-    <Card body bg = "light" text = "dark" >
+  return (
+    <Card body bg="light" text="dark">
       <Button onClick={onClickCopy} className="float-right">
-        <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />
-        {' '}
-        {copied ? 'Copied!' : 'Copy'}
+        <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />{" "}
+        {copied ? "Copied!" : "Copy"}
       </Button>
-      <pre
-        ref={preRef}
-        className="m-0"
-      >
+      <pre ref={preRef} className="m-0">
         {formattedEntry}
       </pre>
-      { settings.includeWget && wget ? <p className="mt-2"><kbd>{wget}</kbd></p> : null
-}
-    </Card >
-  )
+      {settings.includeWget && wget ? (
+        <p className="mt-2">
+          <kbd>{wget}</kbd>
+        </p>
+      ) : null}
+    </Card>
+  );
 };
 export default EntryCard;
