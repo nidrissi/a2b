@@ -1,22 +1,18 @@
 import React from "react";
 
-export type FAQEntryProps = {
-  myKey: string;
+export type HelpEntryProps = {
   q: string | JSX.Element;
   a: string | JSX.Element;
 };
-export type FAQSectionProps = {
+export type HelpSectionProps = {
   title: string;
-  key: string;
-  entries: FAQEntryProps[];
+  entries: HelpEntryProps[];
 };
-const faq: FAQSectionProps[] = [
+const faq: HelpSectionProps[] = [
   {
     title: "This program",
-    key: "program",
     entries: [
       {
-        myKey: "what",
         q: "What (is this)?",
         a: (
           <>
@@ -27,7 +23,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "who",
         q: "Who (wrote it)?",
         a: (
           <>
@@ -37,7 +32,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "why",
         q: "Why (did you write this)?",
         a: (
           <>
@@ -55,7 +49,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "how",
         q: "How (does it work)?",
         a: (
           <>
@@ -66,7 +59,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "where",
         q: "Where (is it hosted)?",
         a: (
           <>
@@ -78,7 +70,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "license",
         q: "What license is this program?",
         a: (
           <>
@@ -96,7 +87,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "work",
         q: "Does it work?",
         a: (
           <>
@@ -112,7 +102,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "bug",
         q: "I found a bug!",
         a: (
           <>
@@ -128,10 +117,8 @@ const faq: FAQSectionProps[] = [
   },
   {
     title: "Search",
-    key: "search",
     entries: [
       {
-        myKey: "api",
         q: "How do you find entries?",
         a: (
           <>
@@ -142,7 +129,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "andor",
         q: "What are the conditions for an entry to be displayed?",
         a: (
           <>
@@ -160,7 +146,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "accents",
         q: "I cannot find entries with special characters",
         a: (
           <>
@@ -177,10 +162,8 @@ const faq: FAQSectionProps[] = [
   },
   {
     title: "Output",
-    key: "output",
     entries: [
       {
-        myKey: "format",
         q: "What format is the output?",
         a: (
           <>
@@ -199,7 +182,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "difference",
         q: "What is the difference between BibLaTeX, natbib, Biber, BibTeX...?",
         a: (
           <>
@@ -223,7 +205,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "usual",
         q: "But I want to use the old bibliography packages!",
         a: (
           <>
@@ -241,7 +222,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "compile-arxiv",
         q:
           "How do I submit an article using BibLaTeX to arXiv? I always get errors…",
         a: (
@@ -285,10 +265,8 @@ const faq: FAQSectionProps[] = [
   },
   {
     title: "Common problems & manual interventions",
-    key: "problems",
     entries: [
       {
-        myKey: "surnames",
         q: "How does the program handle surnames?",
         a: (
           <>
@@ -323,7 +301,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "pubstate",
         q: (
           <>
             What is <code>pubstate</code>?
@@ -344,7 +321,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "howpublished",
         q: (
           <>
             What is <code>howpublished</code>?
@@ -362,7 +338,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "comment",
         q: (
           <>
             What is <code>comment</code>?
@@ -399,7 +374,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "capitals",
         q: "Do you deal with capital letters?",
         a: (
           <>
@@ -424,7 +398,6 @@ const faq: FAQSectionProps[] = [
         ),
       },
       {
-        myKey: "math",
         q: "Do you deal with math?",
         a: (
           <>
