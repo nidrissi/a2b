@@ -14,7 +14,7 @@ type InputFieldProps = {
   placeholder?: string;
   title?: string;
 };
-export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
+const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <BForm.Group as={Row}>
@@ -35,3 +35,4 @@ export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
     </BForm.Group>
   );
 };
+export default InputField;

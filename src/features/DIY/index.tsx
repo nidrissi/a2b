@@ -7,31 +7,13 @@ import Button from "react-bootstrap/Button";
 import BForm from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EntryCard from "../EntryCard";
 import {
   GenericPreFields,
   GenericPostFields,
   SpecificFields,
   FormValues,
 } from "./data";
-
-/** Takes values from the Formik context, creates an entry and formats it with `Entry`.
- */
-const FormattedEntry: React.FC<{ values: FormValues }> = ({ values }) => {
-  // split on &, delete empty values, and trim
-  const authors = values.authors
-    .split("&")
-    .filter((s) => s)
-    .map((s) => s.trim());
-  const entry = {
-    ...values,
-    volume: Number(values.volume),
-    issue: Number(values.issue),
-    authors,
-    date: values.date || "0000", // date must not be empty
-  };
-  return <EntryCard entry={entry} />;
-};
+import FormattedEntry from "./FormattedEntry";
 
 const initialValues = {
   type: "Article",

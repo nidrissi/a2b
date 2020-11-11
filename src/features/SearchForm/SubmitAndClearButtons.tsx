@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 /** The submit and clear buttons used in SearchForm.
     @param isLoading Whether the form is currently loading or not.
  */
-export const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
+const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
   isLoading,
 }) => {
   return (
@@ -34,3 +34,4 @@ export const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
     </BForm.Group>
   );
 };
+export default SubmitAndClearButtons;
