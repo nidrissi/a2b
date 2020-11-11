@@ -5,8 +5,8 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { removeAccents } from "../utils";
-import { RootState } from "../store";
+import { removeAccents, splitter } from "../utils";
+import { selectSettings } from "./Settings/settingsSlice";
 
 // TODO Better pairing type
 type Pairing = {
@@ -22,22 +22,24 @@ type Pairing = {
  * // returns { key: 'DoeDew2020', authorList: "Doe, Jane and Dew, John"}
  * splitAuthors({ authors: ['Jane Doe', 'John Dew'], date: '2020' })
  */
-function splitAuthors({
+function joinAuthorsGetKey({
   authors,
   date,
 }: {
   authors: string[];
   date: string;
 }): { key: string; authorList: string } {
-  const splitAuthors = authors.map((a) => a.split(" "));
-  const year = date.slice(0, 4); // dates have the format YYYY-MM-DD
-  const key =
-    splitAuthors.map((l) => l[l.length - 1]).join("") + year.toString();
-  const formattedKey = removeAccents(key);
+  const splitAuthors = authors.map((a) => splitter(a, /\s+/));
   const authorList = splitAuthors
     .map((l) => l[l.length - 1] + ", " + l.slice(0, -1).join(" "))
     .join(" and ");
-  return { key: formattedKey, authorList };
+
+  const year = date.slice(0, 4); // dates have the format YYYY-MM-DD
+  const unformattedKey =
+    splitAuthors.map((l) => l[l.length - 1]).join("") + year.toString();
+  const key = removeAccents(unformattedKey);
+
+  return { key, authorList };
 }
 
 /** Formats an entry into a BibLaTeX entry.
@@ -103,7 +105,7 @@ function buildPairing({
   const goodMode = settings.mode === "biblatex";
 
   // get the key and the list of authors, separated by 'and'
-  const { key, authorList } = splitAuthors({
+  const { key, authorList } = joinAuthorsGetKey({
     authors: entry.authors,
     date: entry.date,
   });
@@ -221,7 +223,7 @@ const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
     }
   };
 
-  const settings = useSelector((state: RootState) => state.settings);
+  const settings = useSelector(selectSettings);
 
   const { type, pairing, key, wget } = buildPairing({ entry, settings });
   const formattedEntry = formatEntry({ type, pairing, key });
