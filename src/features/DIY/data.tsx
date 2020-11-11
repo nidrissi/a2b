@@ -3,7 +3,8 @@ import React from "react";
 import BForm from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-import { StandardInput, StandardGroup } from "./standard";
+import StandardGroup from "./StandardGroup";
+import StandardInput from "./StandardInputProps";
 
 export type FormValues = {
   authors: string;

@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 
 import { setQuery } from "./searchFormSlice";
 import { selectIsLoading } from "../Results/resultsSlice";
-import { InputField } from "./InputField";
-import { SubmitAndClearButtons } from "./SubmitAndClearButtons";
+
+import SearchFormBody from "./SearchFormBody";
 
 /** Splits a string and removes empty entries.
     @param str The string to be split.
@@ -17,19 +17,20 @@ function splitter(str: string, rx: RegExp) {
 
 /** The full search form. It has
     - three fields:
-      - the ID list;
+    - the ID list;
       - the author list; 
       - the title (words) list;
     - two buttons: 
       - submit;
       - clear.
- */
+      */
 const SearchForm: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
   return (
     <Formik
+      component={SearchFormBody}
       initialValues={{
         ids: "",
         authors: "",
@@ -57,29 +58,7 @@ const SearchForm: React.FC<{}> = () => {
       }}
       validateOnChange={false}
       validateOnBlur={false}
-    >
-      <Form>
-        <InputField
-          label="ID list"
-          name="ids"
-          placeholder="ID1 ID2 ..."
-          title="List of IDs, separated by spaces. Version will be stripped, e.g. 1911.12281v1 ⇒ 1911.12281."
-        />
-        <InputField
-          name="authors"
-          label="Authors"
-          placeholder="Henri Poincaré & David Hilbert & ..."
-          title="Author(s) separated by '&'."
-        />
-        <InputField
-          name="titles"
-          label="Title"
-          placeholder="operad & configuration space & ..."
-          title="Words/sentences to search in the title separated by '&'."
-        />
-        <SubmitAndClearButtons isLoading={isLoading} />
-      </Form>
-    </Formik>
+    />
   );
 };
 export default SearchForm;

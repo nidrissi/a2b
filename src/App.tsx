@@ -11,7 +11,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 // these components are always loaded
 import Footer from "./features/Footer";
-import MyNavbar from "./features/MyNavbar";
+import AppNavbar from "./features/AppNavbar";
 
 // state
 import { selectSettings } from "./features/Settings/settingsSlice";
@@ -59,7 +59,7 @@ const App: React.FC<{}> = () => {
   return (
     <Container>
       <Router history={history}>
-        <MyNavbar />
+        <AppNavbar />
         <Suspense
           fallback={
             <div className="text-center h1">
