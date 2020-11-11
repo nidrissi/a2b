@@ -1,4 +1,6 @@
 import React from "react";
+import { splitter } from "../../utils";
+
 import EntryCard from "../EntryCard";
 import { FormValues } from "./data";
 
@@ -6,10 +8,7 @@ import { FormValues } from "./data";
  */
 const FormattedEntry: React.FC<{ values: FormValues }> = ({ values }) => {
   // split on &, delete empty values, and trim
-  const authors = values.authors
-    .split("&")
-    .filter((s) => s)
-    .map((s) => s.trim());
+  const authors = splitter(values.authors, /&/);
   const entry = {
     ...values,
     volume: Number(values.volume),

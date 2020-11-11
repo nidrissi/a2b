@@ -2,18 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 
+import { splitter } from "../../utils";
+
 import { setQuery } from "./searchFormSlice";
 import { selectIsLoading } from "../Results/resultsSlice";
 
 import SearchFormBody from "./SearchFormBody";
-
-/** Splits a string and removes empty entries.
-    @param str The string to be split.
-    @param rx The regexp along which the string will be split.
- */
-function splitter(str: string, rx: RegExp) {
-  return str.split(rx).filter((s) => s !== "");
-}
 
 /** The full search form. It has
     - three fields:
