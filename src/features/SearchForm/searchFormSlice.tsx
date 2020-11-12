@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 const initialState: Query = {
@@ -11,11 +11,8 @@ export const searchFormSlice = createSlice({
   name: "searchForm",
   initialState,
   reducers: {
-    setQuery(state, action) {
-      const query: Query = action.payload;
-      state.ids = query.ids;
-      state.authors = query.authors;
-      state.titles = query.titles;
+    setQuery(_state: Query, action: PayloadAction<Query>) {
+      return action.payload;
     },
   },
 });
