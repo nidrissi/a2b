@@ -2,7 +2,6 @@ import {
   createEntityAdapter,
   createSlice,
   createAsyncThunk,
-  EntityId,
 } from "@reduxjs/toolkit";
 
 import { ArxivResult, arxivSearch } from "../../api/arxiv";
@@ -36,45 +35,50 @@ const entriesAdapter = createEntityAdapter<Entry>();
 type ResultsExtraState = {
   totalEntriesFound: number | null;
   isLoading: boolean;
-  currentRequestId: EntityId | null;
+  currentRequestId: string | null;
   error: string | null;
 };
+const resultsExtraInitialState: ResultsExtraState = {
+  totalEntriesFound: null,
+  isLoading: false,
+  currentRequestId: null,
+  error: null,
+};
+const initialState = entriesAdapter.getInitialState(resultsExtraInitialState);
+
 export const resultsSlice = createSlice({
   name: "results",
-  initialState: entriesAdapter.getInitialState({
-    totalEntriesFound: null,
-    isLoading: false,
-    currentRequestId: null,
-    error: null,
-  } as ResultsExtraState),
+  initialState,
   reducers: {
     clearError(state) {
       state.error = null;
     },
   },
-  extraReducers: {
-    [String(fetchEntries.pending)]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchEntries.pending, (state, action) => {
       if (!state.isLoading) {
         state.isLoading = true;
         state.error = null;
         state.currentRequestId = action.meta.requestId;
       }
-    },
-    [String(fetchEntries.fulfilled)]: (state, action) => {
+    });
+    builder.addCase(fetchEntries.fulfilled, (state, action) => {
       const { requestId } = action.meta;
       if (state.isLoading && state.currentRequestId === requestId) {
         state.isLoading = false;
-        const { entries, totalEntriesFound } = action.payload;
-        entriesAdapter.setAll(state, entries);
-        state.totalEntriesFound = totalEntriesFound;
         state.currentRequestId = null;
+        if (action.payload) {
+          const { entries, totalEntriesFound } = action.payload;
+          entriesAdapter.setAll(state, entries);
+          state.totalEntriesFound = totalEntriesFound;
+        }
       }
-    },
-    [String(fetchEntries.rejected)]: (state, action) => {
+    });
+    builder.addCase(fetchEntries.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.error.message || null;
       state.currentRequestId = null;
-    },
+    });
   },
 });
 
