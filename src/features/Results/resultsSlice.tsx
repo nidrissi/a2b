@@ -33,16 +33,13 @@ export const fetchEntries = createAsyncThunk<
 const entriesAdapter = createEntityAdapter<Entry>();
 
 type ResultsExtraState = {
-  totalEntriesFound: number | null;
   isLoading: boolean;
-  currentRequestId: string | null;
-  error: string | null;
+  totalEntriesFound?: number;
+  currentRequestId?: string;
+  error?: string;
 };
 const resultsExtraInitialState: ResultsExtraState = {
-  totalEntriesFound: null,
   isLoading: false,
-  currentRequestId: null,
-  error: null,
 };
 const initialState = entriesAdapter.getInitialState(resultsExtraInitialState);
 
@@ -51,14 +48,13 @@ export const resultsSlice = createSlice({
   initialState,
   reducers: {
     clearError(state) {
-      state.error = null;
+      delete state.error;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchEntries.pending, (state, action) => {
       if (!state.isLoading) {
         state.isLoading = true;
-        state.error = null;
         state.currentRequestId = action.meta.requestId;
       }
     });
@@ -66,7 +62,8 @@ export const resultsSlice = createSlice({
       const { requestId } = action.meta;
       if (state.isLoading && state.currentRequestId === requestId) {
         state.isLoading = false;
-        state.currentRequestId = null;
+        delete state.error;
+        delete state.currentRequestId;
         if (action.payload) {
           const { entries, totalEntriesFound } = action.payload;
           entriesAdapter.setAll(state, entries);
@@ -76,8 +73,8 @@ export const resultsSlice = createSlice({
     });
     builder.addCase(fetchEntries.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message || null;
-      state.currentRequestId = null;
+      state.error = action.error.message;
+      delete state.currentRequestId;
     });
   },
 });

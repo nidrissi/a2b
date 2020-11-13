@@ -12,16 +12,20 @@ import CopyAndTotal from "./CopyAndTotal";
  * to the clipboards and counts how many are displayed out of the total.
  */
 const EntryList: React.FC<{}> = () => {
+  const totalEntriesFound = useSelector(selectTotalEntriesFound);
   const entries = useSelector(selectAllEntries);
+  const { mode } = useSelector(selectSettings);
+  const outerRef = useRef<HTMLDivElement>(null);
+
+  if (totalEntriesFound === undefined) {
+    // entries haven't even been fetched or there was an error
+    return null;
+  }
 
   const renderedEntries = entries.map((entry) => (
     <EntryCard key={entry.id} entry={entry} />
   ));
 
-  const outerRef = useRef<HTMLDivElement>(null);
-
-  const { mode } = useSelector(selectSettings);
-  const totalEntriesFound = useSelector(selectTotalEntriesFound);
   const totalText = (
     <>
       Showing {entries.length} entries out of {totalEntriesFound} in total.
@@ -36,8 +40,7 @@ const EntryList: React.FC<{}> = () => {
     </>
   );
 
-  // null means that entries haven't been fetched yet
-  return totalEntriesFound === null ? null : (
+  return (
     <div ref={outerRef}>
       <CopyAndTotal totalText={totalText} outerRef={outerRef} />
       {renderedEntries}
