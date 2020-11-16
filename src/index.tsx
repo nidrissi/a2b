@@ -33,7 +33,7 @@ library.add(
   faTrashAlt
 );
 
-ReactGA.initialize("UA-170792065-1");
+ReactGA.initialize("G-EVTG00G3Z9");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
