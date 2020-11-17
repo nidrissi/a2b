@@ -13,8 +13,7 @@ const Footer: React.FC<{}> = () => {
       <p>
         arXiv2BibLaTeX{" "}
         <span title={sha ? `Commit: ${sha}` : ""}>v{version}</span> • licensed
-        under AGPLv3 •{" "}
-        <a href="https://github.com/nidrissi/arxiv2bib">source</a>
+        under AGPLv3 • <a href="https://github.com/nidrissi/a2b">source</a>
       </p>
     </footer>
   );
