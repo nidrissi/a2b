@@ -65,7 +65,7 @@ function parseEntry(xmlEntry: Element): Entry | null {
   if (match === null) {
     throw Error("bad entry: malformed arXiv URL!");
   }
-  const [id, version] = match;
+  const [id, version] = match.slice(1, 2);
   entry.id = id;
   entry.version = Number(version);
 
