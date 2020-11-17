@@ -230,24 +230,30 @@ const faq: HelpSectionProps[] = [
             <ul className="mb-0">
               <li>
                 ArXiv is not very diligent when it comes to updating their TeX
-                distribution. As of July 2020, they are nominally using TeX Live
-                2016, but{" "}
-                <a href="https://arxiv.org/new/#feb-2017">
-                  they installed it in February 2017
-                </a>{" "}
-                and as such their distribution contains BibLaTeX v3.7, which is
-                found in the historic archives of TeX Live 2017. The current
-                version of BibLaTeX is v3.15a (in September 2020).
+                distribution. They had been using TeX Live 2011 until 2017. Up
+                until September 2020, arXiv was still using TeX Live 2016 (but
+                their distribution, installed in{" "}
+                <a href="https://arxiv.org/new/#feb-2017"> February 2017</a>
+                contained BibLaTeX v3.7 which is part of the historical TeX Live
+                2017 archives). They finally{" "}
+                <a href="https://blog.arxiv.org/2020/09/24/tex-live-2020-release-oct-1-2020/">
+                  upgraded to TeX Live 2020 in October 2020
+                </a>
+                , so we should be good to go until the release of TeX Live 2021.
               </li>
               <li>
                 ArXiv{" "}
                 <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a>{" "}
-                to compile <code>.bib</code> files with Biber or BibTeX. They
-                require authors to send their compiled <code>.bbl</code> file.
-                Unfortunately, files compiled for a newer version of BibLaTeX
-                are not compatible with old versions. BibTeX has not been
-                updated for decades so this is not an issue, but BibLaTeX is
-                under active development.
+                to compile <code>.bib</code> files with Biber or BibTeX. Their
+                reasoning is that such files can be much larger than necessary.
+                (For referece, my personal <code>.bib</code> file containing
+                around 1500 references – all the papers I have ever read or
+                planned to read or found vaguely interesting – is 600 kB.)
+                <br /> They require authors to send their compiled{" "}
+                <code>.bbl</code> file. Unfortunately, files compiled for a
+                newer version of BibLaTeX are not compatible with old versions.
+                BibTeX has not been updated for decades so this is not an issue,
+                but BibLaTeX is under active development.
               </li>
             </ul>
             There are several ways to solve this,{" "}
