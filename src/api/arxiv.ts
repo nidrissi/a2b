@@ -74,7 +74,9 @@ function parseEntry(xmlEntry: Element): Entry | null {
     if (l.getAttribute("title") === "pdf") {
       entry.pdfLink = l.getAttribute("href") || undefined;
     } else if (l.getAttribute("title") === "doi") {
-      entry.doi = l.getAttribute("href")!.replace(/^https?:\/\/dx.doi.org/, "");
+      entry.doi = l
+        .getAttribute("href")!
+        .replace(/^https?:\/\/dx\.doi\.org/, "");
     }
   }
 
