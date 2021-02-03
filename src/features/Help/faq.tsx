@@ -108,8 +108,8 @@ const faq: HelpSectionProps[] = [
             Please{" "}
             <a href="https://github.com/nidrissi/a2b/issues">
               report an issue on Github
-            </a>{" "}
-            (or contact me by email). I cannot really promise anything, though.
+            </a>
+            .
           </>
         ),
       },
@@ -192,10 +192,8 @@ const faq: HelpSectionProps[] = [
             <code>natbib</code>. BibLaTeX is much more powerful than the
             original LaTeX bibliography system, see{" "}
             <a href="https://www.ctan.org/pkg/biblatex">its website</a> for more
-            information.
-            <br />
-            BibTeX and Biber are two external programs that convert a{" "}
-            <code>.bib</code> file into a <code>.bbl</code> file readable by
+            information. BibTeX and Biber are two external programs that convert
+            a <code>.bib</code> file into a <code>.bbl</code> file readable by
             LaTeX. One of the main advantages of Biber over BibTeX is its
             support of Unicode characters.{" "}
             <a href="https://tex.stackexchange.com/q/25701/14965">
@@ -245,15 +243,19 @@ const faq: HelpSectionProps[] = [
                 ArXiv{" "}
                 <a href="https://arxiv.org/help/submit_tex#bibtex">refuses</a>{" "}
                 to compile <code>.bib</code> files with Biber or BibTeX. Their
-                reasoning is that such files can be much larger than necessary.
-                (For referece, my personal <code>.bib</code> file containing
-                around 1500 references – all the papers I have ever read or
-                planned to read or found vaguely interesting – is 600 kB.)
-                <br /> They require authors to send their compiled{" "}
-                <code>.bbl</code> file. Unfortunately, files compiled for a
-                newer version of BibLaTeX are not compatible with old versions.
-                BibTeX has not been updated for decades so this is not an issue,
-                but BibLaTeX is under active development.
+                official reason is that such files can be much larger than
+                necessary. They require authors to send their compiled{" "}
+                <code>.bbl</code> file. (For reference, my personal{" "}
+                <code>.bib</code> library containing around 1500 references –
+                all the papers I have ever read or planned to read or found
+                vaguely interesting – is 600 kB. The formatted <code>.bbl</code>{" "}
+                file of one of my papers that contains around 20 bibliographical
+                entries is 35 kB. You do the math: which one would save arXiv
+                more space in a general situation where authors only include the
+                relevant entries with the article?) <br /> Unfortunately, files
+                compiled for a newer version of BibLaTeX are not compatible with
+                old versions. BibTeX has not been updated for decades so this is
+                not an issue, but BibLaTeX is under active development.
               </li>
             </ul>
             There are several ways to solve this,{" "}
