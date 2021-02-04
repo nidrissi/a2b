@@ -7,6 +7,7 @@ export const defaultInitialState: Settings = {
   includeFile: true,
   filePrefix: false,
   includeWget: false,
+  wgetPowershell: false,
   fileFolder: "~",
   includePrimaryCategory: false,
   includeVersion: false,

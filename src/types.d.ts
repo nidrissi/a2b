@@ -42,6 +42,7 @@ type Settings = {
   includePrimaryCategory: boolean;
   includeVersion: boolean;
   includeWget: boolean;
+  wgetPowershell: boolean;
   maxResults: number;
   mode: string;
   sortBy: string;

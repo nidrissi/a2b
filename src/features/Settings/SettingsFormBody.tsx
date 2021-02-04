@@ -44,31 +44,44 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
           }
         />
       </BForm.Group>
-      <BForm.Group className="ml-3">
-        <Field
-          as={BForm.Check}
-          type="checkbox"
-          name="includeWget"
-          id="includeWget"
-          disabled={!values.includeFile}
-          label={
-            <>
-              Include a <code>wget</code> command for the entries.
-            </>
-          }
-        />
-      </BForm.Group>
-      <BForm.Group className="ml-3">
-        <BForm.Label htmlFor="fileFolder">
-          The folder for the <code>wget</code> command, if any.
-        </BForm.Label>
-        <Field
-          className="form-control"
-          name="fileFolder"
-          id="fileFolder"
-          disabled={!values.includeFile || !values.includeWget}
-        />
-      </BForm.Group>
+      <div className="ml-3">
+        <BForm.Group className="ml-3">
+          <Field
+            as={BForm.Check}
+            type="checkbox"
+            name="includeWget"
+            id="includeWget"
+            disabled={!values.includeFile}
+            label={<>Include a download command for the entries.</>}
+          />
+        </BForm.Group>
+        <BForm.Group className="ml-3">
+          <Field
+            as={BForm.Check}
+            type="checkbox"
+            name="wgetPowershell"
+            id="wgetPowershell"
+            disabled={!values.includeFile || !values.includeWget}
+            label={
+              <>
+                Running on Powershell on Windows (default is <code>wget</code>{" "}
+                on Unix-like platforms).
+              </>
+            }
+          />
+        </BForm.Group>
+        <BForm.Group className="ml-3">
+          <BForm.Label htmlFor="fileFolder">
+            The folder for the download command, if any.
+          </BForm.Label>
+          <Field
+            className="form-control"
+            name="fileFolder"
+            id="fileFolder"
+            disabled={!values.includeFile || !values.includeWget}
+          />
+        </BForm.Group>
+      </div>
       <BForm.Group>
         <Field
           as={BForm.Check}

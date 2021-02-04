@@ -201,10 +201,14 @@ function buildPairing({
   Object.keys(pairing).forEach((k) => !pairing[k] && delete pairing[k]);
 
   // the wget command, if any
-  const wget =
-    settings.includeFile && entry.pdfLink
-      ? `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`
-      : null;
+  let wget = null;
+  if (settings.includeFile && entry.pdfLink) {
+    if (settings.wgetPowershell) {
+      wget = `pwsh -Command Invoke-WebRequest ${entry.pdfLink} -OutFile ${settings.fileFolder}\\${fileName}`;
+    } else {
+      wget = `wget --user-agent='Mozilla' ${entry.pdfLink} -O ${settings.fileFolder}/${fileName}`;
+    }
+  }
 
   return { type: entry.type, pairing, key, wget };
 }
