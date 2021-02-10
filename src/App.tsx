@@ -12,6 +12,7 @@ import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 
 // these components are always loaded
+import { Page } from "./Page";
 import Footer from "./features/Footer";
 import AppNavbar from "./features/AppNavbar";
 
@@ -60,22 +61,32 @@ const App: React.FC<{}> = () => {
         >
           <Switch>
             <Route path="/" exact>
-              <Search />
+              <Page>
+                <Search />
+              </Page>
             </Route>
             <Route path="/settings">
-              <Settings />
+              <Page title="Settings">
+                <Settings />
+              </Page>
             </Route>
             <Route path="/help">
-              <Help />
+              <Page title="Help">
+                <Help />
+              </Page>
             </Route>
             <Route path="/about">
               <Redirect to="/help" />
             </Route>
             <Route path="/diy">
-              <DIY />
+              <Page title="Do It Yourself">
+                <DIY />
+              </Page>
             </Route>
             <Route path="*">
-              <Error404 />
+              <Page title="Not Found">
+                <Error404 />
+              </Page>
             </Route>
           </Switch>
         </Suspense>
