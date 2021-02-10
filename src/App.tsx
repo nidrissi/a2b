@@ -1,10 +1,12 @@
 import React, { Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Switch, Redirect, Route, Router } from "react-router-dom";
-
-import ReactGA from "react-ga";
-import { createBrowserHistory } from "history";
+import {
+  Switch,
+  Redirect,
+  Route,
+  BrowserRouter as Router,
+} from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
@@ -29,18 +31,19 @@ const Help = React.lazy(() => import("./features/Help"));
 const Search = React.lazy(() => import("./features/Search"));
 const Settings = React.lazy(() => import("./features/Settings"));
 
-// GA
-const history = createBrowserHistory();
-history.listen((location) => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
-});
+// Google Analytics
+// @ts-ignore
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  // @ts-ignore
+  dataLayer.push(arguments);
+}
+// @ts-ignore
+gtag("js", new Date());
+// @ts-ignore
+gtag("config", "G-EVTG00G3Z9");
 
 const App: React.FC<{}> = () => {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
-
   // keep here to avoid re-fetching on route change
   const dispatch = useDispatch();
   // query
@@ -58,7 +61,7 @@ const App: React.FC<{}> = () => {
 
   return (
     <Container>
-      <Router history={history}>
+      <Router>
         <AppNavbar />
         <Suspense
           fallback={

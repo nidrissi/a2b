@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactGA from "react-ga";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -32,9 +31,6 @@ library.add(
   faTools,
   faTrashAlt
 );
-
-ReactGA.initialize("G-EVTG00G3Z9");
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
   <React.StrictMode>
