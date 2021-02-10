@@ -31,18 +31,6 @@ const Help = React.lazy(() => import("./features/Help"));
 const Search = React.lazy(() => import("./features/Search"));
 const Settings = React.lazy(() => import("./features/Settings"));
 
-// Google Analytics
-// @ts-ignore
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-  // @ts-ignore
-  dataLayer.push(arguments);
-}
-// @ts-ignore
-gtag("js", new Date());
-// @ts-ignore
-gtag("config", "G-EVTG00G3Z9");
-
 const App: React.FC<{}> = () => {
   // keep here to avoid re-fetching on route change
   const dispatch = useDispatch();

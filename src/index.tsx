@@ -32,6 +32,18 @@ library.add(
   faTrashAlt
 );
 
+// Google Analytics
+// @ts-ignore
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  // @ts-ignore
+  dataLayer.push(arguments);
+}
+// @ts-ignore
+gtag("js", new Date());
+// @ts-ignore
+gtag("config", "G-EVTG00G3Z9");
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
