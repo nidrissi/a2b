@@ -14,11 +14,6 @@ const Help: React.FC<{}> = () => {
       });
   }, []);
 
-  return (
-    <>
-      <h1>Help</h1>
-      <ReactMarkdown source={content} />
-    </>
-  );
+  return <ReactMarkdown source={content} />;
 };
 export default Help;
