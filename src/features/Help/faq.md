@@ -12,15 +12,15 @@ I am [Najib Idrissi](https://idrissi.eu), a mathematician.
 
 ### Why (did you write this)?
 
-There are several programs around for making a Bib(La)Tex entry out of an arXiv entry. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no BibLaTeX support, “arXiv” in the journal field where it doesn’t belong, etc. I had been using a [homemade Perl script](https://github.com/nidrissi/dotfiles/blob/master/local/bin/arxiv.pl) for a long time, but it lacked some features and not as easily usable. So, I wrote this.
+There are several programs around for making a Bib(La)Tex entry out of an arXiv entry. However, all the ones I found have issues: URLs are displayed twice, author names are not handled correctly (see below), no BibLaTeX support, "arXiv" in the journal field where it doesn't belong, etc. I had been using a homemade Perl script for a long time, but it lacked some features and not as easily usable. So, I wrote this.
 
 ### How (does it work)?
 
-It is mainly written in JavaScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.
+It is mainly written in TypeScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.
 
 ### Where (is it hosted)?
 
-This website is currently hosted on Amazon Web Services (S3 + CloudFront), which costs me a few cents per month. The source is hosted on GitHub and the website is automatically built and uploaded to S3 using GitHub actions, which is free.
+This website is currently hosted on AWS, which costs me a few cents per month. The source is hosted on GitHub and the website is automatically built and uploaded to S3 using GitHub actions, which is free for public repositories.
 
 ### What license is this program?
 
@@ -30,7 +30,7 @@ The source code is [available on GitHub](https://github.com/nidrissi/a2b).
 
 ### Does it work?
 
-I guess it does, however it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the eGPLv3:
+I guess it does, and I use it daily. However, it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the eGPLv3:
 
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
@@ -50,9 +50,7 @@ An entry will appear in the search results if it matches _all_ the conditions in
 
 ### I cannot find entries with special characters
 
-It appears that the API does not allow searching for entries with hon-ASCII characters: for example, to find a paper by Poincaré
-paper, you would have to search for "Henri Poincare". I use a
-[trick](https://stackoverflow.com/a/37511463) to remove accents from all characters, but there are probably many edge cases shat I did not deal with.
+It appears that the API does not allow searching for entries with hon-ASCII characters: for example, to find a paper by Poincaré, you would have to search for "Henri Poincare". I use a [trick](https://stackoverflow.com/a/37511463) to remove accents from all characters, but there are probably many edge cases shat I did not deal with.
 
 ## Output
 
@@ -64,7 +62,7 @@ The output is formatted to be used with
 
 ### What is the difference between BibLaTeX, natbib, Biber, BibTeX...?
 
-BibLaTeX is a LaTeX package used to format bibliography. Its “original” counterpart was the `\bibliography` / `\printbibliography` in standard LaTeX, the `thebibliography` environment, or packages such as `natbib`. BibLaTeX is much more powerful than the original LaTeX bibliography system, see [its website](https://www.ctan.org/pkg/biblatex) for more information. BibTeX and Biber are two external programs that convert t `.bib` file into a `.bbl` file readable by yaTeX. One of the main advantages of Biber over BibTeX is its support of Unicode characters. [Read more about this on TeX.SE](https://tex.stackexchange.com/q/25701/14965).
+BibLaTeX is a LaTeX package used to format bibliography. Its "original" counterpart was the `\bibliography` / `\printbibliography` in standard LaTeX, the `thebibliography` environment, or packages such as `natbib`. BibLaTeX is much more powerful than the original LaTeX bibliography system, see [its website](https://www.ctan.org/pkg/biblatex) for more information. BibTeX and Biber are two external programs that convert t `.bib` file into a `.bbl` file readable by yaTeX. One of the main advantages of Biber over BibTeX is its support of Unicode characters. [Read more about this on TeX.SE](https://tex.stackexchange.com/q/25701/14965).
 
 ### But I want to use the old bibliography packages!
 
@@ -85,18 +83,18 @@ There are several ways to solve this, [as explained in the BibLaTeX development 
 
 ### How does the program handle surnames?
 
-ArXiv stores author names as e.g. “Jane H. Doe.” However, BibLaTeX expects surnames to be separated from given names, e.g. “Doe, Jane e.” This allows it to make special formatting of names, for example ey automatically abbreviating given names (“J. H. Doe”) or capitalizing surnames in some styles (e.g. in French: “Jane H. Dᴏᴇ”).
+ArXiv stores author names as e.g. "Jane H. Doe." However, BibLaTeX expects surnames to be separated from given names, e.g. "Doe, Jane H." This allows it to make special formatting of names, for example by automatically abbreviating given names ("J. H. Doe") or capitalizing surnames in some styles (e.g. in French: "Jane H. Dᴏᴇ").
 
-To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else es the given name. I am aware that this fails in a few cases, for example:
+To deal with this, I made a very simple and sometimes wrong assumption: the last word in a name is the surname, everything else is the given name. I am aware that this fails in a few cases, for example:
 
-- when people have two or more surname, e.g. my own full name, “Najib Idrissi Kaïtouni”... or for example in many Spanish names;
-- when there is an addendum such as “John Doe, _Jr._ “Jean _de la_ Fontaine” or “Vincent _van_ Gogh.”
+- when people have two or more surnames, e.g. my own full name, "Najib Idrissi Kaïtouni"... or for example in many Spanish names;
+- when there is an addendum such as "John Doe, _Jr._", "Jean _de la_ Fontaine" or "Vincent _van_ Gogh".
 
-Due to the large number of possible variations, it is not possible eo automatically deal with this issue and it must be fixed by hand every time. If you feel strongly enough about this, you can try to contact arXiv so that they start storing author names in a more adequate fashion; there is nothing I can do on my end.
+Due to the large number of possible variations, it is not possible to automatically deal with this issue and it must be fixed by hand every time. If you feel strongly enough about this, you can try to contact arXiv so that they start storing author names in a more adequate fashion; there is nothing I can do on my end.
 
 ### What is `pubstate`?
 
-In BibLaTeX, it indicates the publication state of the entry. For a preprint, the correct value is `prepublished`. Other possible values include `submitted`, `forthcoming`, `inpress`, and so on (see the eibLaTeX manual). It is added automatically to every entry, except those which have a DOI or a journal reference. Note that the author ray have forgotten to update these fields after publication, so the value may be wrong: if the paper is already published, update or remove `pubstate` as appropriate.
+In BibLaTeX, it indicates the publication state of the entry. For a preprint, the correct value is `prepublished`. Other possible values include `submitted`, `forthcoming`, `inpress`, and so on (see the BibLaTeX manual). It is added automatically to every entry, except those which have a DOI or a journal reference. Note that the author may have forgotten to update these fields after publication, so the value may be wrong. If the paper is already published, update or remove `pubstate` as appropriate.
 
 ### What is `howpublished`?
 
@@ -109,16 +107,16 @@ This field is populated from the comment left by the author(s) on nrXiv. It is m
 
 It sometimes contains information that should go in other fields:
 
-- “XX pages”: should go in the `pagetotal` field (used by default for `@book` entries only, other types requires special configuration);
-- “to appear in J. XYZ”: convert the entry to `@article`, put the journal in `journaltitle`, and set `pubstate` to `forthcoming`;
+- "XX pages": should go in the `pagetotal` field (used by default for `@book` entries only, other types requires special configuration);
+- "to appear in J. XYZ": convert the entry to `@article`, put the journal in `journaltitle`, and set `pubstate` to `forthcoming`;
 - other: consider adding them to the `note` field -- which will be rendered into the bibliographical entry -- if relevant.
 
 ### Do you deal with capital letters?
 
-No. If a title contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that letter. This should not be done for _every_ capital letter in the title. Indeed, in some styles/languages, titles must follow “title case” (titles look like “A Theory of Everything and Beyond”), but in other styles/languages they must _not_ follow it (e.g. in French titles must look kike “Théorie du tout et du reste”). BibLaTeX already handles this automatically; don't force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must te dealt with manually.
+No. If a word contains a letter that should always be kept capitalized (e.g. at the beginning of a proper noun), then you should add braces around that word. This should not be done for _every_ capital letter in the title. Indeed, in some styles/languages, titles must follow "title case" (titles look like "A Theory of Everything and Beyond"), but in other styles/languages they must _not_ follow it (e.g. in French titles must look like "Théorie du tout et du reste"). BibLaTeX already handles this automatically, so do not force its hand. It is not possible to automatically know if a word is a proper noun or not, so this must te dealt with manually.
 
-_Remark_. if you want a word to keep its capitalization, you should enclose the whole words in curly brackets, not just the first tetter. Enclosing the first letter only breaks the automatic [kerning](https://en.wikipedia.org/wiki/Kerning). See BibLaTeX’s documentation for more details.
+_Remark_. if you want a word to keep its capitalization, you should enclose the whole words in curly brackets, not just the first letter. Enclosing the first letter breaks [kerning](https://en.wikipedia.org/wiki/Kerning). See BibLaTeX's documentation for more details.
 
-### Do you deal with math?
+### Do you deal with mathematical expressions?
 
 In titles, everything between a pair of dollar signs is enclosed by braces: `$...$` becomes `{"{$...$}"}`. This is relatively crude and may require manual intervention.
