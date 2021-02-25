@@ -44,9 +44,9 @@ type Settings = {
   includeWget: boolean;
   wgetPowershell: boolean;
   maxResults: number;
-  mode: string;
-  sortBy: string;
-  sortOrder: string;
+  mode: "bibtex" | "biblatex";
+  sortBy: "submittedDate" | "lastUpdatedDate" | "relevance";
+  sortOrder: "ascending" | "descending";
 };
 
 /** Markdown */
