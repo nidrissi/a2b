@@ -45,7 +45,7 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
         />
       </BForm.Group>
       <div className="ml-3">
-        <BForm.Group className="ml-3">
+        <BForm.Group>
           <Field
             as={BForm.Check}
             type="checkbox"
