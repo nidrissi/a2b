@@ -12,12 +12,9 @@ const CopyAndTotal: React.FC<CopyAndTotalProps> = ({ totalText, outerRef }) => {
     if (!outerRef.current) {
       return "";
     }
-    const result = [];
-    for (const pre of Array.from(
-      outerRef.current.getElementsByTagName("pre")
-    )) {
-      result.push(pre.innerText);
-    }
+    const result = Array.from(outerRef.current.getElementsByTagName("pre")).map(
+      (pre) => pre.innerText
+    );
     return result.join("\n\n");
   };
   const onClickCopyAll = (_e: any) => {
