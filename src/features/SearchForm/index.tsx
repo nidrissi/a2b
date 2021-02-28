@@ -10,13 +10,8 @@ import { selectIsLoading } from "../Results/resultsSlice";
 import SearchFormBody from "./SearchFormBody";
 
 /** The full search form. It has
-    - three fields:
-    - the ID list;
-      - the author list; 
-      - the title (words) list;
-    - two buttons: 
-      - submit;
-      - clear.
+    - three fields: the ID list, the author list, and the title (words) list;
+    - two buttons: submit and clear.
       */
 const SearchForm: React.FC<{}> = () => {
   const dispatch = useDispatch();

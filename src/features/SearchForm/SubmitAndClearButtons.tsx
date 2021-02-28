@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import BForm from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -12,7 +12,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
   isLoading,
 }) => {
   return (
-    <BForm.Group as={BForm.Row}>
+    <Form.Group as={Form.Row}>
       <Col sm={10}>
         <Button disabled={isLoading} type="submit" block>
           {isLoading ? (
@@ -31,7 +31,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
           <FontAwesomeIcon icon="trash-alt" /> Clear
         </Button>
       </Col>
-    </BForm.Group>
+    </Form.Group>
   );
 };
 export default SubmitAndClearButtons;

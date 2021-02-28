@@ -1,7 +1,7 @@
 import React from "react";
 import { useField } from "formik";
 import Col from "react-bootstrap/Col";
-import BForm from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 /** Generic input fields for SearchForm.
@@ -17,22 +17,22 @@ type InputFieldProps = {
 const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <BForm.Group as={Row}>
-      <BForm.Label htmlFor={props.name} column sm={2}>
+    <Form.Group as={Row}>
+      <Form.Label htmlFor={props.name} column sm={2}>
         {label}
-      </BForm.Label>
+      </Form.Label>
       <Col sm={10}>
-        <BForm.Control
+        <Form.Control
           id={props.name}
           {...field}
           {...props}
           isInvalid={Boolean(meta.error)}
         />
-        <BForm.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid">
           {meta.error}
-        </BForm.Control.Feedback>
+        </Form.Control.Feedback>
       </Col>
-    </BForm.Group>
+    </Form.Group>
   );
 };
 export default InputField;
