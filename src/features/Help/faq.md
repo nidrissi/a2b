@@ -36,7 +36,7 @@ I guess it does, and I use it daily. However, it is in a preliminary state. Ther
 
 ### I found a bug!
 
-Please [report an issue on Github](https://github.com/nidrissi/a2b/issues).
+Please [report an issue on Github](https://github.com/nidrissi/a2b/issues). Or better yet, [feel free to submit a pull request](https://github.com/nidrissi/a2b/pulls) 🙂.
 
 ## Search
 
