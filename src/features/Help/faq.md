@@ -30,7 +30,7 @@ The source code is [available on GitHub](https://github.com/nidrissi/a2b).
 
 ### Does it work?
 
-I guess it does, and I use it daily. However, it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the eGPLv3:
+I guess it does, and I use it daily. However, it is in a preliminary state. There is little error checking in the code, and no tests. In the words of the AGPLv3:
 
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
