@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -52,3 +53,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+// Progressive Web App
+serviceWorkerRegistration.register();
