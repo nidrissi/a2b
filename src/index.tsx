@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -54,5 +55,5 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// Progressive Web App
 serviceWorkerRegistration.register();
+reportWebVitals();
