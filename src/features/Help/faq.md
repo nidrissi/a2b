@@ -119,4 +119,4 @@ _Remark_. if you want a word to keep its capitalization, you should enclose the 
 
 ### Do you deal with mathematical expressions?
 
-In titles, everything between a pair of dollar signs is enclosed by braces: `$...$` becomes `{"{$...$}"}`. This is relatively crude and may require manual intervention.
+In titles, everything between a pair of dollar signs is enclosed by braces: `$...$` becomes `{$...$}`. This is relatively crude and may require manual intervention.
