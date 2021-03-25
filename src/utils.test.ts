@@ -12,3 +12,27 @@ describe("removeAccents", () => {
     expect(removeAccents("ç")).toEqual("c");
   });
 });
+
+describe("splitter", () => {
+  it("splits along &", () => {
+    expect(splitter("bonjour & au revoir", /&/)).toEqual([
+      "bonjour",
+      "au revoir",
+    ]);
+  });
+
+  it("splits along spaces", () => {
+    expect(splitter("bonjour     au\trevoir", /\s+/)).toEqual([
+      "bonjour",
+      "au",
+      "revoir",
+    ]);
+  });
+
+  it("removes empty parts", () => {
+    expect(splitter("bonjour & & au revoir", /&/)).toEqual([
+      "bonjour",
+      "au revoir",
+    ]);
+  });
+});
