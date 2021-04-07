@@ -1,6 +1,6 @@
 {
-  "short_name": "arXiv2BibLaTeX",
-  "name": "arXiv2BibLaTeX: Create a BibLaTeX entry from an arXiv preprint",
+  "short_name": "a2b",
+  "name": "arXiv2BibLaTeX",
   "icons": [
     {
       "src": "icon-192.png",
