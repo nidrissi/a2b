@@ -10,13 +10,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Install dependencies
+      - name: Install
         run: npm ci
-      - name: Build the website
+      - name: Build
         run: npm run build
-      - name: Sync to AWS
-        run: aws s3 sync build/ s3://a2b-idrissi-eu
+      - name: Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Upload
+        uses: azure/CLI@v1
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+        with:
+          azcliversion: 2.21.0
+          inlineScript: |
+            az storage blob sync --container '$web' --source build
+      - name: Logout
+        run: |
+          az logout
