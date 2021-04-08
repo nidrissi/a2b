@@ -166,7 +166,7 @@ export async function arxivSearch(
 
   const xmlEntries = xmlDoc.getElementsByTagName("entry");
   const entries: Entry[] = [];
-  for (let w of Array.from(xmlEntries)) {
+  for (const w of Array.from(xmlEntries)) {
     checkEntryForErrors(w);
     const parsedEntry = parseEntry(w);
     if (parsedEntry !== null) {
