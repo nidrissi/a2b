@@ -23,7 +23,7 @@ jobs:
         with:
           azcliversion: 2.21.0
           inlineScript: |
-            az storage blob sync --account-name arxiv2biblatex --container '$web' --source build
+            az storage blob sync --account-name sta2b --container '$web' --source build
       - name: Logout
         run: |
           az logout
