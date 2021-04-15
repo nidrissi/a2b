@@ -14,6 +14,6 @@ const Help: React.FC<{}> = () => {
       });
   }, []);
 
-  return <ReactMarkdown source={content} />;
+  return <ReactMarkdown children={content} />;
 };
 export default Help;
