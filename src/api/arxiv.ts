@@ -76,7 +76,7 @@ function parseEntry(xmlEntry: Element): Entry | null {
     } else if (l.getAttribute("title") === "doi") {
       entry.doi = l
         .getAttribute("href")!
-        .replace(/^https?:\/\/dx\.doi\.org/, "");
+        .replace(/^https?:\/\/dx\.doi\.org\//, "");
     }
   }
 
