@@ -63,7 +63,6 @@ const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
 const DIY: React.FC<{}> = () => {
   return (
     <>
-      <h1>Do It Yourself</h1>
       <Alert variant="warning">Not feature complete yet!</Alert>
       <Formik
         initialValues={initialValues}

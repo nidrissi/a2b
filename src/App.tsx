@@ -57,7 +57,7 @@ const App: React.FC<{}> = () => {
           >
             <Switch>
               <Route path="/" exact>
-                <Page>
+                <Page title="Search">
                   <Search />
                 </Page>
               </Route>
