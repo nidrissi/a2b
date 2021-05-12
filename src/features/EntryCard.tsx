@@ -243,9 +243,12 @@ const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
         {formattedEntry}
       </pre>
       {settings.includeWget && wget ? (
-        <pre className="mt-2 inline bg-black text-white whitespace-normal p-1">
-          {wget}
-        </pre>
+        <div className="mt-2 flex">
+          <pre className="bg-black text-white whitespace-normal p-1">
+            {wget}
+          </pre>
+          <div className="flex-grow"></div>
+        </div>
       ) : null}
     </div>
   );
