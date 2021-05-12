@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faBars,
   faClipboard,
   faCheck,
   faCog,
@@ -24,6 +25,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faBars,
   faClipboard,
   faCheck,
   faCog,

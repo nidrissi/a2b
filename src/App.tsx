@@ -11,7 +11,7 @@ import {
 // these components are always loaded
 import { Page } from "./Page";
 import Footer from "./features/Footer";
-import AppNavbar from "./features/AppNavbar";
+import Navbar from "./features/Navbar";
 
 // state
 import { selectSettings } from "./features/Settings/settingsSlice";
@@ -46,48 +46,50 @@ const App: React.FC<{}> = () => {
   }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder]);
 
   return (
-    <div className="container mx-auto">
+    <>
       <Router>
-        <AppNavbar />
-        <Suspense
-          fallback={
-            <div className="text-center text-xl font-bold">Loading…</div>
-          }
-        >
-          <Switch>
-            <Route path="/" exact>
-              <Page>
-                <Search />
-              </Page>
-            </Route>
-            <Route path="/settings">
-              <Page title="Settings">
-                <Settings />
-              </Page>
-            </Route>
-            <Route path="/help">
-              <Page title="Help">
-                <Help />
-              </Page>
-            </Route>
-            <Route path="/about">
-              <Redirect to="/help" />
-            </Route>
-            <Route path="/diy">
-              <Page title="Do It Yourself">
-                <DIY />
-              </Page>
-            </Route>
-            <Route path="*">
-              <Page title="Not Found">
-                <Error404 />
-              </Page>
-            </Route>
-          </Switch>
-        </Suspense>
+        <Navbar />
+        <div className="container mx-auto">
+          <Suspense
+            fallback={
+              <div className="text-center text-xl font-bold">Loading…</div>
+            }
+          >
+            <Switch>
+              <Route path="/" exact>
+                <Page>
+                  <Search />
+                </Page>
+              </Route>
+              <Route path="/settings">
+                <Page title="Settings">
+                  <Settings />
+                </Page>
+              </Route>
+              <Route path="/help">
+                <Page title="Help">
+                  <Help />
+                </Page>
+              </Route>
+              <Route path="/about">
+                <Redirect to="/help" />
+              </Route>
+              <Route path="/diy">
+                <Page title="Do It Yourself">
+                  <DIY />
+                </Page>
+              </Route>
+              <Route path="*">
+                <Page title="Not Found">
+                  <Error404 />
+                </Page>
+              </Route>
+            </Switch>
+          </Suspense>{" "}
+        </div>
       </Router>
       <Footer />
-    </div>
+    </>
   );
 };
 export default App;

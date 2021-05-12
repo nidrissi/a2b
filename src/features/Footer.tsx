@@ -8,7 +8,7 @@ const Footer: React.FC<{}> = () => {
   const sha = process.env.REACT_APP_GITHUB_SHA;
 
   return (
-    <footer className="text-center text-gray-500">
+    <footer className="text-center text-gray-500 mt-2 py-2">
       <hr />
       <p>
         arXiv2BibLaTeX <span title={`Commit: ${sha}`}>v{version}</span> •
