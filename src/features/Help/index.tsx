@@ -14,6 +14,10 @@ const Help: React.FC<{}> = () => {
       });
   }, []);
 
-  return <ReactMarkdown children={content} />;
+  return (
+    <div className="prose prose-blue max-w-none">
+      <ReactMarkdown children={content} />
+    </div>
+  );
 };
 export default Help;
