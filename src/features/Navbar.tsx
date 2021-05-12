@@ -35,7 +35,7 @@ const Navbar: React.FC<{}> = () => {
         className={`grid grid-cols-1 sm:flex gap-6 ${expanded ? "" : "hidden"}`}
       >
         {navbarLinks.map((l) => (
-          <Link to={l.to} className="text-gray-400 hover:text-white block">
+          <Link to={l.to} className="text-gray-300 hover:text-white block">
             <FontAwesomeIcon icon={l.icon} />
             &nbsp;{l.label}
           </Link>
