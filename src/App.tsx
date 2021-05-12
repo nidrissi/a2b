@@ -8,9 +8,6 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 
-import Container from "react-bootstrap/Container";
-import Spinner from "react-bootstrap/Spinner";
-
 // these components are always loaded
 import { Page } from "./Page";
 import Footer from "./features/Footer";
@@ -49,14 +46,12 @@ const App: React.FC<{}> = () => {
   }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder]);
 
   return (
-    <Container>
+    <div className="container mx-auto">
       <Router>
         <AppNavbar />
         <Suspense
           fallback={
-            <div className="text-center h1">
-              <Spinner animation="grow" /> Loading…
-            </div>
+            <div className="text-center text-xl font-bold">Loading…</div>
           }
         >
           <Switch>
@@ -92,7 +87,7 @@ const App: React.FC<{}> = () => {
         </Suspense>
       </Router>
       <Footer />
-    </Container>
+    </div>
   );
 };
 export default App;
