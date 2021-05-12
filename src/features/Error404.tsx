@@ -1,12 +1,11 @@
 import React from "react";
-import Jumbotron from "react-bootstrap/Jumbotron";
 
 /** A generic 404 error */
 const Error404: React.FC<{}> = () => {
   return (
-    <Jumbotron>
-      <h1 className="text-center">404 not found</h1>
-    </Jumbotron>
+    <div className="w-full h-48 rounded-xl bg-gray-300 flex">
+      <h1 className="text-5xl mx-auto my-auto">404 Not found</h1>
+    </div>
   );
 };
 
