@@ -3,6 +3,7 @@
   "version": "0.8.3",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -16,14 +17,10 @@
     "@types/react-dom": "^17.0.3",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
-    "bootstrap": "^4.6.0",
     "eslint-config-prettier": "^8.3.0",
     "formik": "^2.2.6",
-    "jquery": "^3.6.0",
-    "popper.js": "^1.16.1",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
-    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
     "react-markdown": "^6.0.1",
     "react-redux": "^7.2.4",
@@ -45,9 +42,9 @@
     "workbox-streams": "^6.1.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -68,5 +65,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
   }
 }
