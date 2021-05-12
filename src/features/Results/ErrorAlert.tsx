@@ -1,8 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Alert from "react-bootstrap/Alert";
-
 import { selectError, clearError } from "./resultsSlice";
 
 /** A generic error alert. The error is taken from the redux state and
@@ -16,9 +14,12 @@ const ErrorAlert: React.FC<{}> = () => {
     return null;
   }
   return (
-    <Alert variant="danger" dismissible onClose={() => dispatch(clearError())}>
-      {String(error)}
-    </Alert>
+    <div className="bg-red-100 text-red-900 p-2 rounded-lg my-2 flex">
+      <div className="flex-grow">{String(error)}</div>
+      <div>
+        <button onClick={() => dispatch(clearError)}>&times;</button>
+      </div>
+    </div>
   );
 };
 export default ErrorAlert;
