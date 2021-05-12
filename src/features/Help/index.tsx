@@ -15,7 +15,7 @@ const Help: React.FC<{}> = () => {
   }, []);
 
   return (
-    <div className="prose prose-blue max-w-none">
+    <div className="prose prose-indigo max-w-none">
       <ReactMarkdown children={content} />
     </div>
   );
