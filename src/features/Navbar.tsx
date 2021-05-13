@@ -57,7 +57,7 @@ const Navbar: React.FC<{}> = () => {
       </div>
       <div className="flex flex-none sm:hidden justify-end">
         <button
-          className="cursor-pointer p-3 text-lg"
+          className="cursor-pointer p-3 text-lg bg-gray-100"
           onClick={() => setExpanded(!expanded)}
           title="Expand the navbar"
         >
