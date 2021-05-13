@@ -8,7 +8,7 @@ export type StandardInputProps = {
   label: string;
   name: string;
   placeholder?: string;
-  totalColumns?: number;
+  halfSize?: boolean;
   type?: string;
 };
 
@@ -41,32 +41,32 @@ const Tooltip: React.FC<{ help?: string | JSX.Element }> = ({ help }) => {
 };
 
 /** Standard inputs.
-    @param totalColumns The total number of columns for the input. Two columns will be reserved for the label.
-    @param label The text of the label
-    @param help The help text, if any.
-    @param ...props The rest of the props, passed to the input.
+ * @param halfSize Controls whether the input is half-size or full-size.
+ * @param label The text of the label.
+ * @param help The help text, if any.
+ * @param ...props The rest of the props, passed to the input.
  */
 const StandardInput: React.FC<StandardInputProps> = ({
-  totalColumns = 12,
+  halfSize,
   label,
   help,
   ...props
 }) => {
-  const labelColumns = 2;
-  const inputColumns = totalColumns - labelColumns;
-
   const field = <Field {...props} id={props.name} className="w-full" />;
 
   return (
     <>
-      <label
-        className={`block col-span-full sm:col-span-${labelColumns}`}
-        htmlFor={props.name}
-      >
+      <label className="block col-span-full sm:col-span-2" htmlFor={props.name}>
         {label}
         <Tooltip help={help} />
       </label>
-      <div className={`col-span-full sm:col-span-${inputColumns}`}>{field}</div>
+      <div
+        className={`col-span-full ${
+          halfSize ? "sm:col-span-4" : "sm:col-span-10"
+        }`}
+      >
+        {field}
+      </div>
     </>
   );
 };

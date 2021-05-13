@@ -86,13 +86,13 @@ const ArticleFields: React.FC<{}> = () => {
         type="text"
         name="journal"
         label="Journal"
-        totalColumns={6}
+        halfSize={true}
       />
       <StandardInput
         type="text"
         name="series"
         label="Series"
-        totalColumns={6}
+        halfSize={true}
         help={
           <>
             The series of the <em>journal</em>, if any. It can be a number (to
@@ -107,13 +107,13 @@ const ArticleFields: React.FC<{}> = () => {
         label="Volume"
         type="number"
         help="The volume of the journal in which the article was published."
-        totalColumns={6}
+        halfSize={true}
       />
       <StandardInput
         name="number"
         label="Number"
         type="number"
-        totalColumns={6}
+        halfSize={true}
         help="Volumes are sometimes further subdivided in “issues” or something else. This number field refers to this subdivision."
       />
     </>
@@ -129,14 +129,14 @@ const BookFields: React.FC<{}> = () => {
         name="maintitle"
         label="Main title"
         help="If the book is divided in several volumes that each have a different title, then “Main title” is the title of the whole work, and “Title” is the title of the individual volume. Do not use the subtitle in this situation as it will not render correctly (that would the be subtitle of the individual volume, if any)."
-        totalColumns={6}
+        halfSize={true}
       />
       <StandardInput
         name="volume"
         label="Volume"
         type="number"
         help="When you want to quote a specific volume of a book."
-        totalColumns={6}
+        halfSize={true}
       />
 
       <StandardInput
@@ -144,35 +144,35 @@ const BookFields: React.FC<{}> = () => {
         name="series"
         label="Book series"
         help="The name of the series which contains the book (e.g. “Lecture Notes in Mathematics”)."
-        totalColumns={6}
+        halfSize={true}
       />
       <StandardInput
         name="number"
         label="Number"
         type="number"
         help="The number of the book in the given series."
-        totalColumns={6}
+        halfSize={true}
       />
 
       <StandardInput
         type="text"
         name="publisher"
         label="Publisher"
-        totalColumns={6}
+        halfSize={true}
       />
       <StandardInput
         type="text"
         name="location"
         label="Location (of publisher)"
-        totalColumns={6}
+        halfSize={true}
       />
 
-      <StandardInput type="text" name="ISBN" label="ISBN" totalColumns={6} />
+      <StandardInput type="text" name="ISBN" label="ISBN" halfSize={true} />
       <StandardInput
         name="pageTotal"
         label="Number of pages"
         type="number"
-        totalColumns={6}
+        halfSize={true}
       />
     </>
   );
