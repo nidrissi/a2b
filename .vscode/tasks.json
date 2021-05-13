@@ -6,8 +6,16 @@
       "script": "start",
       "problemMatcher": [],
       "label": "npm: start",
-      "detail": "react-scripts start",
+      "detail": "craco start",
       "isBackground": true
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build",
+      "detail": "craco build"
     }
   ]
 }
