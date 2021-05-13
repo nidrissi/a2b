@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-common-types";
 
@@ -7,9 +7,10 @@ type navbarLink = {
   to: string;
   icon: IconName;
   label: string;
+  exact?: boolean;
 };
 const navbarLinks: navbarLink[] = [
-  { to: "/", icon: "search", label: "Search" },
+  { to: "/", icon: "search", label: "Search", exact: true },
   { to: "/diy", icon: "tools", label: "DIY" },
   { to: "/settings", icon: "cog", label: "Settings" },
   { to: "/help", icon: "question", label: "Help" },
@@ -35,10 +36,15 @@ const Navbar: React.FC<{}> = () => {
         className={`grid grid-cols-1 sm:flex gap-2 ${expanded ? "" : "hidden"}`}
       >
         {navbarLinks.map((l) => (
-          <Link to={l.to} className="block p-3 text-lg">
+          <NavLink
+            to={l.to}
+            exact={l.exact}
+            className="block p-3 text-lg"
+            activeClassName="font-semibold"
+          >
             <FontAwesomeIcon icon={l.icon} />
             &nbsp;{l.label}
-          </Link>
+          </NavLink>
         ))}
       </div>
       <div className="flex flex-none sm:hidden justify-end">
