@@ -2,9 +2,6 @@ import React from "react";
 
 import { Formik, Form } from "formik";
 
-import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
-import BForm from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -41,20 +38,21 @@ const initialValues = {
  */
 const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
   return (
-    <>
+    <div>
       <FormattedEntry values={values} />
       <br />
-      <Form>
+      <Form className="grid grid-cols-12 items-center gap-x-4 gap-y-2">
         <GenericPreFields />
         <SpecificFields type={values.type} />
         <GenericPostFields />
-        <BForm.Group>
-          <Button type="reset" variant="secondary" block>
-            <FontAwesomeIcon icon="trash-alt" /> Clear
-          </Button>
-        </BForm.Group>
+        <button
+          type="reset"
+          className="bg-gray-300 block col-span-full p-2 rounded-md"
+        >
+          <FontAwesomeIcon icon="trash-alt" /> Clear
+        </button>
       </Form>
-    </>
+    </div>
   );
 };
 
@@ -63,7 +61,10 @@ const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
 const DIY: React.FC<{}> = () => {
   return (
     <>
-      <Alert variant="warning">Not feature complete yet!</Alert>
+      <div className="bg-yellow-100 p-3" role="alert">
+        <FontAwesomeIcon icon="exclamation-triangle" />
+        &nbsp;Not feature complete yet!
+      </div>
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
