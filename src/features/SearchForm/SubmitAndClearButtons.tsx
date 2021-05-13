@@ -1,5 +1,4 @@
 import React from "react";
-import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /** The submit and clear buttons used in SearchForm.
@@ -11,14 +10,14 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
   return (
     <div className="row-span-full flex space-x-2">
       <button
-        className="block flex-auto p-2 bg-blue-800 text-white rounded-md"
+        className={`block flex-auto p-2 bg-blue-800 text-white rounded-md ${
+          isLoading ? "cursor-not-allowed" : ""
+        }`}
         disabled={isLoading}
         type="submit"
       >
         {isLoading ? (
-          <span>
-            <Spinner animation="border" size="sm" /> Loading...
-          </span>
+          <span>Loading...</span>
         ) : (
           <span>
             <FontAwesomeIcon icon="search" /> Search
