@@ -10,7 +10,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
   return (
     <div className="row-span-full flex space-x-2">
       <button
-        className={`block flex-auto p-2 bg-blue-800 text-white rounded-md ${
+        className={`block flex-grow p-2 bg-blue-800 text-white rounded-md ${
           isLoading ? "cursor-not-allowed" : ""
         }`}
         disabled={isLoading}
@@ -25,7 +25,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
         )}
       </button>
       <button
-        className="block flex-auto p-2 bg-gray-300 rounded-md"
+        className="block w-1/4 flex-shrink p-2 bg-gray-300 rounded-md"
         type="reset"
       >
         <FontAwesomeIcon icon="trash-alt" /> Clear
