@@ -11,19 +11,21 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
     dispatch(saveSettings(values));
   }, [dispatch, values]);
 
+  const sectionStyle = "space-y-4 mb-3";
+  const h3Style = "text-2xl font-semibold mb-2";
   return (
     <Form>
-      <h3>Entry display</h3>
-      <SettingField id="mode" as="select" label="Mode">
-        <option value="biblatex">BibLaTeX (recommended)</option>
-        <option value="bibtex">Legacy BibTeX (see the FAQ!)</option>
-      </SettingField>
-      <SettingField
-        as="checkbox"
-        id="includeFile"
-        label="Include file field in entries"
-      />
-      <div className="ml-3">
+      <h3 className={h3Style}>Entry display</h3>
+      <div className={sectionStyle}>
+        <SettingField id="mode" as="select" label="Mode">
+          <option value="biblatex">BibLaTeX (recommended)</option>
+          <option value="bibtex">Legacy BibTeX (see the FAQ!)</option>
+        </SettingField>
+        <SettingField
+          as="checkbox"
+          id="includeFile"
+          label="Include file field in entries"
+        />
         <SettingField
           as="checkbox"
           id="filePrefix"
@@ -41,62 +43,62 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
           disabled={!values.includeFile}
           label={<>Include a download command for the entries.</>}
         />
-        <div className="ml-3">
-          <SettingField
-            as="checkbox"
-            id="wgetPowershell"
-            disabled={!values.includeFile || !values.includeWget}
-            label={
-              <>
-                Running on Powershell on Windows (default is <code>wget</code>{" "}
-                on Unix-like platforms).
-              </>
-            }
-          />
-          <SettingField
-            as="control"
-            id="fileFolder"
-            label="The folder for the download command, if any."
-            disabled={!values.includeFile || !values.includeWget}
-          />
-        </div>
+        <SettingField
+          as="checkbox"
+          id="wgetPowershell"
+          disabled={!values.includeFile || !values.includeWget}
+          label={
+            <>
+              Running on Powershell on Windows (default is <code>wget</code> on
+              Unix-like platforms).
+            </>
+          }
+        />
+        <SettingField
+          as="control"
+          id="fileFolder"
+          label="The folder for the download command, if any."
+          disabled={!values.includeFile || !values.includeWget}
+        />
+        <SettingField
+          as="checkbox"
+          id="includeAbstract"
+          label="Include the abstract"
+        />
+        <SettingField
+          as="checkbox"
+          id="includePrimaryCategory"
+          label={
+            <>
+              Include the primary category (e.g. <code>math.AT</code>), if any
+            </>
+          }
+        />
+        <SettingField
+          as="checkbox"
+          id="includeVersion"
+          label="Include version information"
+        />
       </div>
-      <SettingField
-        as="checkbox"
-        id="includeAbstract"
-        label="Include the abstract"
-      />
-      <SettingField
-        as="checkbox"
-        id="includePrimaryCategory"
-        label={
-          <>
-            Include the primary category (e.g. <code>math.AT</code>), if any
-          </>
-        }
-      />
-      <SettingField
-        as="checkbox"
-        id="includeVersion"
-        label="Include version information"
-      />
-      <h3>Search settings</h3>
-      <SettingField as="select" id="sortBy" label="Sort by">
-        <option value="submittedDate">Initial submission date</option>
-        <option value="lastUpdatedDate">Last update</option>
-        <option value="relevance">Relevance</option>
-      </SettingField>
-      <SettingField as="select" id="sortOrder" label="Sort order">
-        <option value="descending">Descending</option>
-        <option value="ascending">Ascending</option>
-      </SettingField>
-      <SettingField as="select" id="maxResults" label="Max results">
-        {[10, 20, 50, 100, 200, 500, 1000].map((i) => (
-          <option key={i} value={i}>
-            {i}
-          </option>
-        ))}
-      </SettingField>
+      <h3 className={h3Style}>Search settings</h3>
+      <div className={sectionStyle}>
+        <SettingField as="select" id="sortBy" label="Sort by">
+          <option value="submittedDate">Initial submission date</option>
+          <option value="lastUpdatedDate">Last update</option>
+          <option value="relevance">Relevance</option>
+        </SettingField>
+        <SettingField as="select" id="sortOrder" label="Sort order">
+          <option value="descending">Descending</option>
+          <option value="ascending">Ascending</option>
+        </SettingField>
+        <SettingField as="select" id="maxResults" label="Max results">
+          {[10, 20, 50, 100, 200, 500, 1000].map((i) => (
+            <option key={i} value={i}>
+              {i}
+            </option>
+          ))}
+        </SettingField>
+      </div>
     </Form>
   );
 };
