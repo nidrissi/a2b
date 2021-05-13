@@ -14,7 +14,7 @@ There are several programs around for making a Bib(La)Tex entry out of an arXiv 
 
 ### How (does it work)?
 
-It is mainly written in TypeScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, the Bootstrap framework, and FontAwesome for the icons.
+It is mainly written in TypeScript, using React, Redux (+ React Redux & Redux Toolkit), React Router, TailwindCSS, and FontAwesome for the icons.
 
 ### Where (is it hosted)?
 
