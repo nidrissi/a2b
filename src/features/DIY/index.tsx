@@ -3,6 +3,10 @@ import React from "react";
 import { Formik, Form } from "formik";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faExclamationTriangle,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   GenericPreFields,
@@ -49,7 +53,7 @@ const DIYBody: React.FC<{ values: FormValues }> = ({ values }) => {
           type="reset"
           className="bg-gray-300 block col-span-full p-2 rounded-md"
         >
-          <FontAwesomeIcon icon="trash-alt" /> Clear
+          <FontAwesomeIcon icon={faTrashAlt} /> Clear
         </button>
       </Form>
     </div>
@@ -62,7 +66,7 @@ const DIY: React.FC<{}> = () => {
   return (
     <>
       <div className="bg-yellow-100 p-3" role="alert">
-        <FontAwesomeIcon icon="exclamation-triangle" />
+        <FontAwesomeIcon icon={faExclamationTriangle} />
         &nbsp;Not feature complete yet!
       </div>
       <Formik

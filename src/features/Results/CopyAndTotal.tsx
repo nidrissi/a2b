@@ -1,5 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faClipboard,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 type CopyAndTotalProps = {
   totalText: JSX.Element;
@@ -35,7 +40,7 @@ const CopyAndTotal: React.FC<CopyAndTotalProps> = ({ totalText, outerRef }) => {
   return (
     <div className="bg-green-600 text-white p-2 my-2 rounded-lg block sm:flex items-center gap-3">
       <div className="flex-grow">
-        <FontAwesomeIcon icon="check" className="mr-1" />
+        <FontAwesomeIcon icon={faCheck} className="mr-1" />
         {totalText}
       </div>
       <div>
@@ -43,7 +48,7 @@ const CopyAndTotal: React.FC<CopyAndTotalProps> = ({ totalText, outerRef }) => {
           onClick={onClickCopyAll}
           className="hover:underline focus:bg-green-800 p-1"
         >
-          <FontAwesomeIcon icon="clipboard" /> Copy all
+          <FontAwesomeIcon icon={faClipboard} /> Copy all
         </button>
       </div>
       <div>
@@ -51,7 +56,7 @@ const CopyAndTotal: React.FC<CopyAndTotalProps> = ({ totalText, outerRef }) => {
           onClick={onClickDownloadAll}
           className="hover:underline focus:bg-green-800 p-1"
         >
-          <FontAwesomeIcon icon="save" /> Download all
+          <FontAwesomeIcon icon={faSave} /> Download all
         </button>
       </div>
     </div>

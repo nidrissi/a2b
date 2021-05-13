@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 /** The submit and clear buttons used in SearchForm.
     @param isLoading Whether the form is currently loading or not.
@@ -20,7 +21,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
           <span>Loading...</span>
         ) : (
           <span>
-            <FontAwesomeIcon icon="search" /> Search
+            <FontAwesomeIcon icon={faSearch} /> Search
           </span>
         )}
       </button>
@@ -28,7 +29,7 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
         className="block w-1/4 flex-shrink p-2 bg-gray-300 rounded-md"
         type="reset"
       >
-        <FontAwesomeIcon icon="trash-alt" /> Clear
+        <FontAwesomeIcon icon={faTrashAlt} /> Clear
       </button>
     </div>
   );

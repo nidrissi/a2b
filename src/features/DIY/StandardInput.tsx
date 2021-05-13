@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 
 export type StandardInputProps = {
   as?: string;
@@ -24,7 +25,7 @@ const Tooltip: React.FC<{ help?: string | JSX.Element }> = ({ help }) => {
           onMouseOver={() => setShown(true)}
           onMouseOut={() => setShown(false)}
         >
-          <FontAwesomeIcon icon="question-circle" aria-label="Help" />
+          <FontAwesomeIcon icon={faQuestionCircle} aria-label="Help" />
         </button>
         <div
           className={`${

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 import { removeAccents, splitter } from "../utils";
 import { selectSettings } from "./Settings/settingsSlice";
@@ -236,7 +237,7 @@ const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
         onClick={onClickCopy}
         className="float-right bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded-sm"
       >
-        <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />{" "}
+        <FontAwesomeIcon icon={copied ? faCheck : faClipboard} />{" "}
         {copied ? "Copied!" : "Copy"}
       </button>
       <pre ref={preRef} className="m-0 overflow-hidden">

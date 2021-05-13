@@ -9,35 +9,6 @@ import App from "./App";
 import store from "./store";
 import { Provider } from "react-redux";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faBars,
-  faClipboard,
-  faCheck,
-  faCog,
-  faExclamationTriangle,
-  faQuestion,
-  faQuestionCircle,
-  faSave,
-  faSearch,
-  faTools,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
-
-library.add(
-  faBars,
-  faClipboard,
-  faCheck,
-  faCog,
-  faExclamationTriangle,
-  faQuestion,
-  faQuestionCircle,
-  faSave,
-  faSearch,
-  faTools,
-  faTrashAlt
-);
-
 // Google Analytics
 // @ts-ignore
 window.dataLayer = window.dataLayer || [];

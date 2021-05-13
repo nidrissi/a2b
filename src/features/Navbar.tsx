@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconName } from "@fortawesome/fontawesome-common-types";
+import {
+  faBars,
+  faCog,
+  faQuestion,
+  faSearch,
+  faTools,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 
 type navbarLink = {
   to: string;
-  icon: IconName;
+  icon: IconDefinition;
   label: string;
   exact?: boolean;
 };
 const navbarLinks: navbarLink[] = [
-  { to: "/", icon: "search", label: "Search", exact: true },
-  { to: "/diy", icon: "tools", label: "DIY" },
-  { to: "/settings", icon: "cog", label: "Settings" },
-  { to: "/help", icon: "question", label: "Help" },
+  { to: "/", icon: faSearch, label: "Search", exact: true },
+  { to: "/diy", icon: faTools, label: "DIY" },
+  { to: "/settings", icon: faCog, label: "Settings" },
+  { to: "/help", icon: faQuestion, label: "Help" },
 ];
 
 /** A react-router powered navigation bar. */
@@ -54,7 +61,7 @@ const Navbar: React.FC<{}> = () => {
           onClick={() => setExpanded(!expanded)}
           title="Expand the navbar"
         >
-          <FontAwesomeIcon icon="bars" />
+          <FontAwesomeIcon icon={faBars} />
         </button>
       </div>
     </div>
