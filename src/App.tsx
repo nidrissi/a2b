@@ -49,7 +49,7 @@ const App: React.FC<{}> = () => {
     <>
       <Router>
         <Navbar />
-        <div className="container mx-auto">
+        <div className="container mx-auto px-8">
           <Suspense
             fallback={
               <div className="text-center text-xl font-bold">Loading…</div>
