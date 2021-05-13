@@ -37,6 +37,7 @@ const Navbar: React.FC<{}> = () => {
       >
         {navbarLinks.map((l) => (
           <NavLink
+            key={l.to}
             to={l.to}
             exact={l.exact}
             className="block p-3 text-lg"
@@ -51,6 +52,7 @@ const Navbar: React.FC<{}> = () => {
         <button
           className="cursor-pointer p-3 text-lg"
           onClick={() => setExpanded(!expanded)}
+          title="Expand the navbar"
         >
           <FontAwesomeIcon icon="bars" />
         </button>
