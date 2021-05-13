@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
-import "bootstrap/dist/css/bootstrap.css";
+import "./index.css";
 
 import App from "./App";
 import store from "./store";
@@ -11,9 +11,11 @@ import { Provider } from "react-redux";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faBars,
   faClipboard,
   faCheck,
   faCog,
+  faExclamationTriangle,
   faQuestion,
   faQuestionCircle,
   faSave,
@@ -23,9 +25,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faBars,
   faClipboard,
   faCheck,
   faCog,
+  faExclamationTriangle,
   faQuestion,
   faQuestionCircle,
   faSave,

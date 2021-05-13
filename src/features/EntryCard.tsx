@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { removeAccents, splitter } from "../utils";
@@ -233,20 +231,26 @@ const EntryCard: React.FC<{ entry: Entry }> = ({ entry }) => {
   const formattedEntry = formatEntry({ type, pairing, key });
 
   return (
-    <Card body bg="light" text="dark">
-      <Button onClick={onClickCopy} className="float-right">
+    <div className="bg-gray-200 text-black py-1 px-2 border border-black rounded-md my-2">
+      <button
+        onClick={onClickCopy}
+        className="float-right bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded-sm"
+      >
         <FontAwesomeIcon icon={copied ? "check" : "clipboard"} />{" "}
         {copied ? "Copied!" : "Copy"}
-      </Button>
-      <pre ref={preRef} className="m-0">
+      </button>
+      <pre ref={preRef} className="m-0 overflow-hidden">
         {formattedEntry}
       </pre>
       {settings.includeWget && wget ? (
-        <p className="mt-2">
-          <kbd>{wget}</kbd>
-        </p>
+        <div className="mt-2 flex">
+          <pre className="bg-black text-white whitespace-normal p-1">
+            {wget}
+          </pre>
+          <div className="flex-grow"></div>
+        </div>
       ) : null}
-    </Card>
+    </div>
   );
 };
 export default EntryCard;

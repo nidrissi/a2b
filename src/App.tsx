@@ -8,13 +8,10 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 
-import Container from "react-bootstrap/Container";
-import Spinner from "react-bootstrap/Spinner";
-
 // these components are always loaded
 import { Page } from "./Page";
 import Footer from "./features/Footer";
-import AppNavbar from "./features/AppNavbar";
+import Navbar from "./features/Navbar";
 
 // state
 import { selectSettings } from "./features/Settings/settingsSlice";
@@ -49,50 +46,50 @@ const App: React.FC<{}> = () => {
   }, [dispatch, ids, authors, titles, maxResults, sortBy, sortOrder]);
 
   return (
-    <Container>
+    <>
       <Router>
-        <AppNavbar />
-        <Suspense
-          fallback={
-            <div className="text-center h1">
-              <Spinner animation="grow" /> Loading…
-            </div>
-          }
-        >
-          <Switch>
-            <Route path="/" exact>
-              <Page>
-                <Search />
-              </Page>
-            </Route>
-            <Route path="/settings">
-              <Page title="Settings">
-                <Settings />
-              </Page>
-            </Route>
-            <Route path="/help">
-              <Page title="Help">
-                <Help />
-              </Page>
-            </Route>
-            <Route path="/about">
-              <Redirect to="/help" />
-            </Route>
-            <Route path="/diy">
-              <Page title="Do It Yourself">
-                <DIY />
-              </Page>
-            </Route>
-            <Route path="*">
-              <Page title="Not Found">
-                <Error404 />
-              </Page>
-            </Route>
-          </Switch>
-        </Suspense>
+        <Navbar />
+        <div className="container mx-auto px-8">
+          <Suspense
+            fallback={
+              <div className="text-center text-xl font-bold">Loading…</div>
+            }
+          >
+            <Switch>
+              <Route path="/" exact>
+                <Page title="Search">
+                  <Search />
+                </Page>
+              </Route>
+              <Route path="/settings">
+                <Page title="Settings">
+                  <Settings />
+                </Page>
+              </Route>
+              <Route path="/help">
+                <Page title="Help">
+                  <Help />
+                </Page>
+              </Route>
+              <Route path="/about">
+                <Redirect to="/help" />
+              </Route>
+              <Route path="/diy">
+                <Page title="Do It Yourself">
+                  <DIY />
+                </Page>
+              </Route>
+              <Route path="*">
+                <Page title="Not Found">
+                  <Error404 />
+                </Page>
+              </Route>
+            </Switch>
+          </Suspense>{" "}
+        </div>
       </Router>
       <Footer />
-    </Container>
+    </>
   );
 };
 export default App;

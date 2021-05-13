@@ -1,6 +1,4 @@
 import React from "react";
-import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type CopyAndTotalProps = {
@@ -35,26 +33,28 @@ const CopyAndTotal: React.FC<CopyAndTotalProps> = ({ totalText, outerRef }) => {
   };
 
   return (
-    <Alert variant="success">
-      <FontAwesomeIcon icon="check" className="mr-1" />
-      {totalText}
-      <Button
-        size="sm"
-        variant="success"
-        className="float-right mx-1"
-        onClick={onClickCopyAll}
-      >
-        <FontAwesomeIcon icon="clipboard" /> Copy all
-      </Button>
-      <Button
-        size="sm"
-        variant="success"
-        className="float-right mx-1"
-        onClick={onClickDownloadAll}
-      >
-        <FontAwesomeIcon icon="save" /> Download all
-      </Button>
-    </Alert>
+    <div className="bg-green-600 text-white p-2 my-2 rounded-lg block sm:flex items-center gap-3">
+      <div className="flex-grow">
+        <FontAwesomeIcon icon="check" className="mr-1" />
+        {totalText}
+      </div>
+      <div>
+        <button
+          onClick={onClickCopyAll}
+          className="hover:underline focus:bg-green-800 p-1"
+        >
+          <FontAwesomeIcon icon="clipboard" /> Copy all
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={onClickDownloadAll}
+          className="hover:underline focus:bg-green-800 p-1"
+        >
+          <FontAwesomeIcon icon="save" /> Download all
+        </button>
+      </div>
+    </div>
   );
 };
 export default CopyAndTotal;

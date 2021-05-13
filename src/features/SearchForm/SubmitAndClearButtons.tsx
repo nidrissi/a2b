@@ -1,8 +1,4 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Spinner from "react-bootstrap/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /** The submit and clear buttons used in SearchForm.
@@ -12,26 +8,29 @@ const SubmitAndClearButtons: React.FC<{ isLoading: boolean }> = ({
   isLoading,
 }) => {
   return (
-    <Form.Group as={Form.Row}>
-      <Col sm={10}>
-        <Button disabled={isLoading} type="submit" block>
-          {isLoading ? (
-            <span>
-              <Spinner animation="border" size="sm" /> Loading...
-            </span>
-          ) : (
-            <span>
-              <FontAwesomeIcon icon="search" /> Search
-            </span>
-          )}
-        </Button>
-      </Col>
-      <Col>
-        <Button type="reset" variant="secondary" block>
-          <FontAwesomeIcon icon="trash-alt" /> Clear
-        </Button>
-      </Col>
-    </Form.Group>
+    <div className="row-span-full flex space-x-2">
+      <button
+        className={`block flex-auto p-2 bg-blue-800 text-white rounded-md ${
+          isLoading ? "cursor-not-allowed" : ""
+        }`}
+        disabled={isLoading}
+        type="submit"
+      >
+        {isLoading ? (
+          <span>Loading...</span>
+        ) : (
+          <span>
+            <FontAwesomeIcon icon="search" /> Search
+          </span>
+        )}
+      </button>
+      <button
+        className="block flex-auto p-2 bg-gray-300 rounded-md"
+        type="reset"
+      >
+        <FontAwesomeIcon icon="trash-alt" /> Clear
+      </button>
+    </div>
   );
 };
 export default SubmitAndClearButtons;

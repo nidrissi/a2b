@@ -1,5 +1,4 @@
 import React from "react";
-import BForm from "react-bootstrap/Form";
 import { Field } from "formik";
 
 type SettingFieldProps = {
@@ -16,43 +15,59 @@ export const SettingField: React.FC<SettingFieldProps> = ({
   disabled,
   children,
 }) => {
-  let result;
   if (as === "control") {
-    result = (
-      <>
-        <BForm.Label htmlFor={id}>{label}</BForm.Label>
-        <Field className="form-control" name={id} id={id} disabled={disabled} />
-      </>
+    return (
+      <div>
+        <label htmlFor={id} className="block mb-1">
+          {label}
+        </label>
+        <Field
+          type="text"
+          className={`block w-full ${
+            disabled ? "bg-gray-100 cursor-not-allowed" : null
+          }`}
+          name={id}
+          id={id}
+          disabled={disabled}
+        />
+      </div>
     );
   } else if (as === "checkbox") {
-    result = (
-      <Field
-        as={BForm.Check}
-        type="checkbox"
-        id={id}
-        name={id}
-        label={label}
-        disabled={disabled}
-      />
+    return (
+      <div className="flex items-center gap-2">
+        <Field
+          className={
+            disabled
+              ? "bg-gray-100 checked:bg-gray-500 text-gray-500 cursor-not-allowed"
+              : null
+          }
+          type="checkbox"
+          id={id}
+          name={id}
+          disabled={disabled}
+        />
+        <label htmlFor={id}>{label}</label>
+      </div>
     );
   } else if (as === "select") {
-    result = (
-      <>
-        <BForm.Label htmlFor={id}>{label}</BForm.Label>
+    return (
+      <div>
+        <label htmlFor={id} className="block mb-1">
+          {label}
+        </label>
         <Field
-          className="form-control"
           as="select"
+          className="block w-full"
           name={id}
           id={id}
           disabled={disabled}
         >
           {children}
         </Field>
-      </>
+      </div>
     );
   } else {
     // hopefully won't happen...
     throw Error("Bad type of SettingField");
   }
-  return <BForm.Group>{result}</BForm.Group>;
 };
