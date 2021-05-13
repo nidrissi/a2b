@@ -18,18 +18,18 @@ const Tooltip: React.FC<{ help?: string | JSX.Element }> = ({ help }) => {
     return (
       <>
         <button
-          className="ml-1 p-2 cursor-help"
+          className="p-2 cursor-help"
           onFocus={() => setShown(true)}
           onBlur={() => setShown(false)}
           onMouseOver={() => setShown(true)}
           onMouseOut={() => setShown(false)}
         >
-          <FontAwesomeIcon icon="question-circle" title="Help" />
+          <FontAwesomeIcon icon="question-circle" aria-label="Help" />
         </button>
         <div
           className={`${
             shown ? "block" : "hidden"
-          } absolute mt-1 z-10 w-48 bg-gray-200 rounded-md p-1`}
+          } absolute mt-1 z-10 w-48 bg-black text-gray-100 rounded-md p-1.5`}
         >
           {help}
         </div>
