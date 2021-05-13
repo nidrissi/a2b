@@ -11,7 +11,7 @@ const SearchFormBody: React.FC<{}> = () => {
   const isLoading = useSelector(selectIsLoading);
 
   return (
-    <Form>
+    <Form className="grid grid-flow-row gap-3 grid-cols-6 auto-rows-max items-center">
       <InputField
         label="ID list"
         name="ids"
@@ -30,7 +30,9 @@ const SearchFormBody: React.FC<{}> = () => {
         placeholder="operad & configuration space & ..."
         title="Words/sentences to search in the title separated by '&'."
       />
-      <SubmitAndClearButtons isLoading={isLoading} />
+      <div className="col-span-full">
+        <SubmitAndClearButtons isLoading={isLoading} />
+      </div>
     </Form>
   );
 };
