@@ -14,7 +14,7 @@ const Footer: React.FC<{}> = () => {
         arXiv2BibLaTeX <span title={`Commit: ${sha}`}>v{version}</span> •
         licensed under AGPLv3 •{" "}
         <a
-          className="text-blue-500 hover:underline"
+          className="text-blue-700 hover:underline"
           href="https://github.com/nidrissi/a2b"
         >
           source

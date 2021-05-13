@@ -12,10 +12,10 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
   }, [dispatch, values]);
 
   const sectionStyle = "space-y-4 mb-3";
-  const h3Style = "text-2xl font-semibold mb-2";
+  const h2Style = "text-2xl font-semibold mb-2";
   return (
     <Form>
-      <h3 className={h3Style}>Entry display</h3>
+      <h2 className={h2Style}>Entry display</h2>
       <div className={sectionStyle}>
         <SettingField id="mode" as="select" label="Mode">
           <option value="biblatex">BibLaTeX (recommended)</option>
@@ -80,7 +80,7 @@ const SettingsFormBody: React.FC<{ values: Settings }> = ({ values }) => {
           label="Include version information"
         />
       </div>
-      <h3 className={h3Style}>Search settings</h3>
+      <h2 className={h2Style}>Search settings</h2>
       <div className={sectionStyle}>
         <SettingField as="select" id="sortBy" label="Sort by">
           <option value="submittedDate">Initial submission date</option>
