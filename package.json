@@ -1,6 +1,6 @@
 {
   "name": "arxiv2biblatex",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.2",
