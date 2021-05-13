@@ -23,19 +23,19 @@ const Navbar: React.FC<{}> = () => {
     <div
       className={`sticky top-0 w-full ${
         expanded ? "grid grid-cols-1" : "flex"
-      } items-center gap-8 p-3 mb-3 bg-indigo-900`}
+      } items-center gap-4 mb-3 bg-white text-black z-50`}
     >
       <div className="flex-grow sm:flex-grow-0">
-        <Link to="/" className="text-xl text-white">
+        <Link to="/" className="p-3 text-2xl font-semibold">
           arXiv2BibLaTeX
         </Link>
       </div>
       <div
         id="navbar-content"
-        className={`grid grid-cols-1 sm:flex gap-6 ${expanded ? "" : "hidden"}`}
+        className={`grid grid-cols-1 sm:flex gap-2 ${expanded ? "" : "hidden"}`}
       >
         {navbarLinks.map((l) => (
-          <Link to={l.to} className="text-gray-300 hover:text-white block">
+          <Link to={l.to} className="block p-3 text-lg">
             <FontAwesomeIcon icon={l.icon} />
             &nbsp;{l.label}
           </Link>
@@ -43,7 +43,7 @@ const Navbar: React.FC<{}> = () => {
       </div>
       <div className="flex flex-none sm:hidden justify-end">
         <button
-          className="border-gray-500 border rounded-sm cursor-pointer py-1 px-2"
+          className="cursor-pointer p-3 text-lg"
           onClick={() => setExpanded(!expanded)}
         >
           <FontAwesomeIcon icon="bars" />
